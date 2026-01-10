@@ -1,5 +1,22 @@
 # Academic Infrastructure Suite 🔋
 
+<div align="center">
+  <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/REFINE-22C55E?style=for-the-badge&logo=refine&logoColor=white" />
+  <img src="https://img.shields.io/badge/TAILWIND-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <br />
+  <img src="https://img.shields.io/badge/POSTGRESQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/NEONDB-00E599?style=for-the-badge&logo=neon&logoColor=white" />
+  <img src="https://img.shields.io/badge/DRIZZLE-C5F74F?style=for-the-badge&logo=drizzle&logoColor=black" />
+  <img src="https://img.shields.io/badge/BETTER--AUTH-000000?style=for-the-badge&logo=better-auth&logoColor=white" />
+  <br />
+  <img src="https://img.shields.io/badge/CLOUDINARY-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white" />
+  <img src="https://img.shields.io/badge/ARCJET-2D1F6E?style=for-the-badge&logo=arcjet&logoColor=white" />
+  <img src="https://img.shields.io/badge/SITE24X7-2ECC71?style=for-the-badge&logo=site24x7&logoColor=white" />
+  <img src="https://img.shields.io/badge/CODERABBIT-FF6600?style=for-the-badge&logo=coderabbit&logoColor=white" />
+</div>
+
 A state-of-the-art, comprehensive academic management system built with Next.js 15, Refine, and Drizzle ORM. Designed for scalability, security, and visual excellence.
 
 ## 🛠️ Tech Stack
