@@ -1,0 +1,62 @@
+▲ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 35.5s
+  Running TypeScript ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/25) ...
+  Generating static pages using 3 workers (6/25) 
+  Generating static pages using 3 workers (12/25) 
+  Generating static pages using 3 workers (18/25) 
+✓ Generating static pages using 3 workers (25/25) in 4.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/[...all]
+├ ƒ /api/classes
+├ ƒ /api/classes/[id]
+├ ƒ /api/classes/[id]/users
+├ ƒ /api/departments
+├ ƒ /api/departments/[id]
+├ ƒ /api/departments/[id]/classes
+├ ƒ /api/departments/[id]/subjects
+├ ƒ /api/departments/[id]/users
+├ ƒ /api/enrollments
+├ ƒ /api/enrollments/join
+├ ƒ /api/stats/charts
+├ ƒ /api/stats/latest
+├ ƒ /api/stats/overview
+├ ƒ /api/subjects
+├ ƒ /api/subjects/[id]
+├ ƒ /api/subjects/[id]/classes
+├ ƒ /api/subjects/[id]/users
+├ ƒ /api/users
+├ ƒ /api/users/[id]
+├ ƒ /api/users/[id]/departments
+├ ƒ /api/users/[id]/subjects
+├ ○ /classes
+├ ○ /classes/create
+├ ƒ /classes/show/[id]
+├ ○ /departments
+├ ○ /departments/create
+├ ƒ /departments/show/[id]
+├ ○ /enrollments/confirm
+├ ○ /enrollments/create
+├ ○ /enrollments/join
+├ ○ /faculty
+├ ƒ /faculty/show/[id]
+├ ○ /login
+├ ○ /register
+├ ○ /subjects
+├ ○ /subjects/create
+└ ƒ /subjects/show/[id]
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -1,0 +1,42 @@
+
+> academic-infrastructure-suite@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.160.18.86:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 3.2s
+⨯ ReferenceError: localStorage is not defined
+    at <unknown> (components\refine-ui\theme\theme-provider.tsx:32:33)
+    at ThemeProvider (components\refine-ui\theme\theme-provider.tsx:31:37)
+  30 | }: ThemeProviderProps) {
+  31 |   const [theme, setTheme] = useState<Theme>(
+> 32 |     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+     |                                 ^
+  33 |   );
+  34 |
+  35 |   useEffect(() => { {
+  digest: '4132814062'
+}
+ GET /login 500 in 4.5s (compile: 2.4s, render: 2.1s)
+ GET /api/auth/get-session 200 in 4.0s (compile: 3.9s, render: 43ms)
+⨯ ReferenceError: localStorage is not defined
+    at <unknown> (components\refine-ui\theme\theme-provider.tsx:32:33)
+    at ThemeProvider (components\refine-ui\theme\theme-provider.tsx:31:37)
+  30 | }: ThemeProviderProps) {
+  31 |   const [theme, setTheme] = useState<Theme>(
+> 32 |     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+     |                                 ^
+  33 |   );
+  34 |
+  35 |   useEffect(() => { {
+  digest: '4132814062'
+}
+ GET /login 500 in 475ms (compile: 10ms, render: 465ms)
+✓ Compiled in 596ms
+ GET /api/auth/get-session 200 in 43ms (compile: 25ms, render: 19ms)
+ GET /login 200 in 422ms (compile: 84ms, render: 338ms)
+✓ Finished filesystem cache database compaction in 15.5s

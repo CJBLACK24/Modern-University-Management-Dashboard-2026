@@ -1,0 +1,3 @@
+module.exports=[13117,a=>{"use strict";var b=a.i(87924),c=a.i(72131);function d(){return(0,b.jsx)(c.Suspense,{fallback:(0,b.jsx)("div",{children:"Loading..."}),children:(0,b.jsx)("div",{className:"flex h-screen items-center justify-center",children:(0,b.jsx)("h1",{className:"text-4xl font-bold",children:"404 - Page Not Found"})})})}a.s(["default",()=>d])}];
+
+//# sourceMappingURL=app_not-found_tsx_ae011abe._.js.map

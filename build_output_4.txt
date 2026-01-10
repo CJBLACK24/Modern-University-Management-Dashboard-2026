@@ -1,0 +1,19 @@
+▲ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 37.1s
+  Running TypeScript ...
+Failed to compile.
+
+.next/dev/types/routes.d.ts:103:7
+Type error: Declaration or statement expected.
+
+[0m [90m 101 |[39m   }
+ [90m 102 |[39m }
+[31m[1m>[22m[39m[90m 103 |[39m ildren}[33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m     |[39m       [31m[1m^[22m[39m
+ [90m 104 |[39m    [33m*[39m }
+ [90m 105 |[39m    [33m*[39m [32m``[39m[32m`[39m
+ [90m 106 |[39m [32m   */[39m[0m
+Next.js build worker exited with code: 1 and signal: null
