@@ -21,16 +21,30 @@ A state-of-the-art, comprehensive academic management system built with Next.js 
 
 ## 🛠️ Tech Stack
 
-- **Framework:** [Next.js 15](https://nextjs.org/) (App Router, Turbopack)
+### **Front End**
+
+- **Framework:** [Next.js 16 (Canary)](https://nextjs.org/) (App Router, Turbopack)
 - **Admin Engine:** [Refine.js](https://refine.dev/) (Data Provider, Auth Provider, Live Provider)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS, Shadcn UI, Framer Motion (Glassmorphism & Micro-animations)
+- **Styling:** Tailwind CSS, Shadcn UI, [Framer Motion](https://www.framer.com/motion/) & [GSAP](https://gsap.com/)
+- **Components:** [Lucide React](https://lucide.dev/), [Sonner](https://sonner.stevenly.me/), [Shadcn UI](https://ui.shadcn.com/)
+- **Data Visualization:** [Recharts](https://recharts.org/)
+
+### **Back End**
+
 - **Database:** PostgreSQL ([Neon DB](https://neon.tech/)), [Drizzle ORM](https://orm.drizzle.team/)
 - **Authentication:** [Better Auth](https://www.better-auth.com/) (Magic Link, Google & GitHub OAuth)
-- **Email Delivery:** [Resend](https://resend.com/)
-- **Real-time Updates:** [Pusher WebSockets](https://pusher.com/)
-- **File Management:** [Cloudinary](https://cloudinary.com/) (Hosted profile & class assets)
+- **Real-time:** [Pusher WebSockets](https://pusher.com/)
+- **Email:** [Resend](https://resend.com/)
+- **Storage:** [Cloudinary](https://cloudinary.com/)
 - **Security:** [Arcjet](https://arcjet.com/) (Bot protection & Rate limiting)
+
+### **DevTools**
+
+- **Language:** TypeScript
+- **Database Management:** [Drizzle Kit](https://orm.drizzle.team/kit-docs/overview)
+- **Monitoring:** [Site24x7](https://www.site24x7.com/)
+- **AI Review:** [CodeRabbit](https://coderabbit.ai/)
+- **Schema Validation:** [Zod](https://zod.dev/)
 
 ## ✨ Core Features
 
