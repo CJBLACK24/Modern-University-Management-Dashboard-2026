@@ -19,6 +19,7 @@ import React, { Suspense } from "react";
 
 import { dataProvider } from "@/providers/data";
 import { authProvider } from "@/providers/auth";
+import { liveProvider } from "@/providers/live";
 
 export function RefineContext({ children }: { children: React.ReactNode }) {
   return (
@@ -29,6 +30,7 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
             <Refine
               dataProvider={dataProvider}
               authProvider={authProvider}
+              liveProvider={liveProvider}
               notificationProvider={useNotificationProvider}
               routerProvider={routerProvider}
               options={{

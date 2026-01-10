@@ -44,21 +44,25 @@ const Dashboard = () => {
   const { query: usersQuery } = useList<User>({
     resource: "users",
     pagination: { mode: "off" },
+    liveMode: "auto",
   });
 
   const { query: subjectsQuery } = useList<Subject>({
     resource: "subjects",
     pagination: { mode: "off" },
+    liveMode: "auto",
   });
 
   const { query: departmentsQuery } = useList<Department>({
     resource: "departments",
     pagination: { mode: "off" },
+    liveMode: "auto",
   });
 
   const { query: classesQuery } = useList<ClassListItem>({
     resource: "classes",
     pagination: { mode: "off" },
+    liveMode: "auto",
   });
 
   const users = usersQuery.data?.data ?? [];
@@ -254,8 +258,7 @@ const Dashboard = () => {
                   <span
                     className="h-2 w-2 rounded-full"
                     style={{
-                      backgroundColor:
-                        roleColors[index % roleColors.length],
+                      backgroundColor: roleColors[index % roleColors.length],
                     }}
                   />
                   {entry.role} · {entry.total}

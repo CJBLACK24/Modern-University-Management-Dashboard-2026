@@ -1,9 +1,14 @@
+import { magicLinkClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import { USER_ROLES } from "@/constants";
 
 export const authClient = createAuthClient({
   baseURL:
-    (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api") + "/auth",
+    typeof window !== "undefined"
+      ? `${window.location.origin}/api/auth`
+      : (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api") +
+        "/auth",
+
   user: {
     additionalFields: {
       role: {
@@ -24,4 +29,5 @@ export const authClient = createAuthClient({
       },
     },
   },
+  plugins: [magicLinkClient()],
 });

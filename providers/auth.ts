@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { AuthProvider } from "@refinedev/core";
 import { User, SignUpPayload } from "@/types";
 import { authClient } from "@/lib/auth-client";
@@ -117,9 +118,9 @@ export const authProvider: AuthProvider = {
     return { error };
   },
   check: async () => {
-    const user = localStorage.getItem("user");
+    const { data: session } = await authClient.getSession();
 
-    if (user) {
+    if (session) {
       return {
         authenticated: true,
       };
@@ -129,35 +130,27 @@ export const authProvider: AuthProvider = {
       authenticated: false,
       logout: true,
       redirectTo: "/login",
-      error: {
-        name: "Unauthorized",
-        message: "Check failed",
-      },
     };
   },
   getPermissions: async () => {
-    const user = localStorage.getItem("user");
-
-    if (!user) return null;
-    const parsedUser: User = JSON.parse(user);
+    const { data: session } = await authClient.getSession();
+    if (!session) return null;
 
     return {
-      role: parsedUser.role,
+      role: (session.user as any).role,
     };
   },
   getIdentity: async () => {
-    const user = localStorage.getItem("user");
-
-    if (!user) return null;
-    const parsedUser: User = JSON.parse(user);
+    const { data: session } = await authClient.getSession();
+    if (!session) return null;
 
     return {
-      id: parsedUser.id,
-      name: parsedUser.name,
-      email: parsedUser.email,
-      image: parsedUser.image,
-      role: parsedUser.role,
-      imageCldPubId: parsedUser.imageCldPubId,
+      id: session.user.id,
+      name: session.user.name,
+      email: session.user.email,
+      image: session.user.image,
+      role: (session.user as any).role,
+      imageCldPubId: (session.user as any).imageCldPubId,
     };
   },
 };

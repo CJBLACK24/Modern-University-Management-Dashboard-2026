@@ -1,133 +1,101 @@
-# 🎓 University Dashboard Management
+# Academic Infrastructure Suite 🔋
 
-A professional, high-performance academic infrastructure suite designed to streamline university operations. From student enrollment to faculty management, this platform provides a unified experience for Students, Teachers, and Admins.
+A state-of-the-art, comprehensive academic management system built with Next.js 15, Refine, and Drizzle ORM. Designed for scalability, security, and visual excellence.
 
----
+## 🛠️ Tech Stack
 
-## 📋 Table of Contents
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router, Turbopack)
+- **Admin Engine:** [Refine.js](https://refine.dev/) (Data Provider, Auth Provider, Live Provider)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS, Shadcn UI, Framer Motion (Glassmorphism & Micro-animations)
+- **Database:** PostgreSQL ([Neon DB](https://neon.tech/)), [Drizzle ORM](https://orm.drizzle.team/)
+- **Authentication:** [Better Auth](https://www.better-auth.com/) (Magic Link, Google & GitHub OAuth)
+- **Email Delivery:** [Resend](https://resend.com/)
+- **Real-time Updates:** [Pusher WebSockets](https://pusher.com/)
+- **File Management:** [Cloudinary](https://cloudinary.com/) (Hosted profile & class assets)
+- **Security:** [Arcjet](https://arcjet.com/) (Bot protection & Rate limiting)
 
-- [✨ Introduction](#-introduction)
-- [⚙️ Tech Stack](#️-tech-stack)
-- [🔋 Features](#-features)
-- [🤸 Quick Start](#-quick-start)
-- [🛠️ Development](#️-development)
+## ✨ Core Features
 
----
+### 🔐 Multi-Role Authentication & Security
 
-## ✨ Introduction
+- **Passwordless Entry**: Secure login via **Better Auth Magic Links** delivered through **Resend**.
+- **OAuth Support**: Instant access using Google or GitHub accounts.
+- **Dynamic Routing**: Automatic redirection to Student, Teacher, or Admin dashboards based on role-based permissions.
 
-**Academic Suite** is an intelligent management ecosystem built for modern educational institutions. It simplifies complex administrative workflows, providing real-time analytics and automated orchestration of classes, departments, and enrollment through a secure, role-based architecture.
+### 📊 Unified Analytics Dashboard
 
----
+- **Real-Time Statistics**: High-level overview of users, active classes, subjects, and departments.
+- **Pusher Integration**: Charts and metrics update instantly as soon as data changes in the database via the **Refine Live Provider**.
 
-## ⚙️ Tech Stack
+### 📖 Academic Management
 
-### 🎨 Frontend Stack
+- **Intelligent Subjects**: Centralized curriculum control with advanced filtering and drill-down class views.
+- **Departmental Governance**: Structural organization of subjects and faculties.
+- **Class Orchestration**: Schedule sessions, manage capacity, and assign teachers using a robust Drizzle-powered engine.
 
-- **Framework:** Next.js 15 (App Router)
-- **UI Framework:** Refine.js (Enterprise-ready internal tools)
-- **Styling:** Vanilla CSS + Tailwind CSS (for layout)
-- **Animations:** Framer Motion (Transitions) & GSAP (Reveal effects)
-- **State Management:** Zustand
-- **Analytics:** Vercel Analytics
+### 🎟️ Code-Based Enrollment System
 
-### 🗄️ Backend Stack
+- **"Google Classroom" Style**: Students can join courses instantly by entering a unique **6-8 digit invite code**, ensuring a friction-less enrollment process.
 
-- **Database:** PostgreSQL (via Neon) with Drizzle ORM
-- **Authentication:** Better Auth (Google, GitHub, and Credentials)
-- **Security:** Arcjet (Bot protection & Rate limiting)
-- **WebSockets:** Pusher (Real-time events)
-- **Media:** Cloudinary (Asset management)
+### 👤 Faculty & Profile Management
 
-### 🛠️ Dev Tools
-
-- **Language:** TypeScript (Strict mode)
-- **Validation:** Zod
-- **Forms:** React Hook Form
-- **Toasts:** Sonner
+- **Dynamic Directory**: Paginated directory with advanced search functionality.
+- **Cloudinary Integration**: Fully integrated profile image uploads and automatic asset optimization.
 
 ---
 
-## 🔋 Features
+## 🚦 Getting Started
 
-- **👉 Multi-Role Authentication:** Secure entry with Google, GitHub, and Email/Password. Dynamic routing for Students, Teachers, and Admins.
-- **👉 Real-Time Connectivity:** Full WebSocket integration via Pusher for instant dashboard updates and notifications.
-- **👉 Unified Analytics Dashboard:** Real-time statistics on enrollment and faculty distribution, monitored via Vercel Analytics.
-- **👉 Intelligent Subject Management:** Centralized curriculum control with advanced filtering and drill-down class views.
-- **👉 Departmental Governance:** Organizational layer for managing subjects and faculties across academic branches.
-- **👉 Dynamic Faculty Directory:** Paginated directory with advanced search and Cloudinary-hosted profile assets.
-- **👉 Advanced Class Orchestration:** Scheduling and capacity management built with Drizzle ORM.
-- **👉 Code-Based Enrollment:** unique 6-8 digit code entry for students to join courses instantly.
-- **👉 Password Intelligence:** Dynamic password strength evaluation with animated Framer Motion feedback.
+1.  **Clone the repository:**
 
----
+    ```bash
+    git clone <repository-url>
+    cd academic-infrastructure-suite
+    ```
 
-## 🤸 Quick Start
+2.  **Install dependencies:**
 
-### Prerequisites
+    ```bash
+    npm install
+    ```
 
-- Node.js 18+
-- Neon PostgreSQL Database
-- Cloudinary Account
-- Pusher Account
+3.  **Environment Setup:**
+    Copy `.env.example` to `.env.local` and provide your API keys.
 
-### Set Up Environment Variables
+    ```bash
+    cp .env.example .env.local
+    ```
 
-Create a `.env.local` file in the root directory:
+    > [!IMPORTANT]
+    > For local development, ensure `BETTER_AUTH_URL` is set to `http://localhost:3000`.
 
-```env
-# Database
-DATABASE_URL=your_neon_postgresql_url
+4.  **Database Sync:**
 
-# Better Auth
-BETTER_AUTH_SECRET=your_auth_secret
-BETTER_AUTH_URL=http://localhost:3000
+    ```bash
+    npx drizzle-kit push
+    ```
 
-# Social Auth
-GOOGLE_CLIENT_ID=your_google_id
-GOOGLE_CLIENT_SECRET=your_google_secret
-GITHUB_CLIENT_ID=your_github_id
-GITHUB_CLIENT_SECRET=your_github_secret
-
-# Pusher (WebSockets)
-PUSHER_APP_ID=your_pusher_app_id
-NEXT_PUBLIC_PUSHER_KEY=your_pusher_key
-PUSHER_SECRET=your_pusher_secret
-NEXT_PUBLIC_PUSHER_CLUSTER=your_pusher_cluster
-
-# Cloudinary
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_preset
-
-# Arcjet
-ARCJET_KEY=your_key
-```
-
-### Installation
-
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Sync Database:
-   ```bash
-   npx drizzle-kit push
-   ```
-4. Start development server:
-   ```bash
-   npm run dev
-   ```
+5.  **Run Development Server:**
+    ```bash
+    npm run dev
+    ```
 
 ---
 
-## 🛠️ Development
+## 🏗️ Architecture
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run linting checks
-- `npm run db:generate` - Generate Drizzle snapshots
+The project follows a modular architecture:
+
+- `app/api`: Serverless route handlers for data management.
+- `providers/`: Refine bridge for data, auth, and live updates.
+- `views/`: Feature-specific UI components grouped inside Refine routes.
+- `db/schema/`: Type-safe schema definitions for Drizzle.
 
 ---
 
-Managed with 💖 for Academic Excellence.
+## 🔋 Highlights
+
+- **Vibrant Aesthetics**: Modern dark mode with glowing gradients and responsive layouts.
+- **Scalability**: Optimized for hundreds of concurrent users with real-time feedback.
+- **Performance**: Leveraging Next.js 15 Turbopack for ultra-fast development and deployment.

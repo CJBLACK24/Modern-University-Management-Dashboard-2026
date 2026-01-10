@@ -59,9 +59,17 @@ export const CLOUDINARY_UPLOAD_URL =
   process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL ?? "";
 export const CLOUDINARY_CLOUD_NAME =
   process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "";
-export const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL ?? "";
 
-export const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+const isBrowser = typeof window !== "undefined";
+
+export const BACKEND_BASE_URL = isBrowser
+  ? `${window.location.origin}/api`
+  : process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:3000/api";
+
+export const BASE_URL = isBrowser
+  ? `${window.location.origin}/api`
+  : process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+
 export const ACCESS_TOKEN_KEY = process.env.NEXT_PUBLIC_ACCESS_TOKEN_KEY ?? "";
 export const REFRESH_TOKEN_KEY =
   process.env.NEXT_PUBLIC_REFRESH_TOKEN_KEY ?? "";

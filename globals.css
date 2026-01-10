@@ -217,18 +217,18 @@ body {
   }
 
   .sign-up {
-    @apply flex flex-col items-center justify-center px-6 py-8 min-h-svh;
+    @apply flex flex-col items-center justify-center px-3 md:px-6 py-8 min-h-svh;
 
     .logo {
       @apply flex items-center justify-center;
 
       img {
-        @apply h-12 w-12;
+        @apply h-20 w-20;
       }
     }
 
     .card {
-      @apply w-full max-w-xl p-12 mt-6;
+      @apply w-full max-w-xl p-3.5 sm:p-12 mt-6;
     }
 
     .header {
@@ -301,26 +301,26 @@ body {
   }
 
   .sign-in {
-    @apply flex flex-col items-center justify-center px-6 py-8 min-h-svh;
+    @apply flex flex-col items-center justify-center px-3 md:px-6 py-8 min-h-svh;
 
     .logo {
       @apply flex items-center justify-center;
 
       img {
-        @apply h-12 w-12;
+        @apply h-20 w-20;
       }
     }
 
     .card {
-      @apply w-full max-w-xl p-12 mt-6;
+      @apply w-full max-w-xl p-2 sm:p-12 mt-6;
     }
 
     .header {
-      @apply px-0;
+      @apply px-0 text-center;
     }
 
     .title {
-      @apply text-3xl font-semibold;
+      @apply text-[clamp(1.5rem,5vw,1.875rem)] font-semibold whitespace-nowrap;
     }
 
     .description {
@@ -368,7 +368,7 @@ body {
     }
 
     .split {
-      @apply flex items-center gap-4 mt-6;
+      @apply flex items-center gap-4;
 
       span {
         @apply text-sm text-muted-foreground;
@@ -388,24 +388,29 @@ body {
       }
 
       .social-grid {
-        @apply grid grid-cols-2 gap-6;
+        @apply flex flex-col gap-3;
       }
 
       .social-button {
-        @apply flex items-center gap-2;
+        @apply w-full flex items-center justify-center gap-2;
       }
     }
 
     .footer {
-      @apply w-full text-center text-sm space-x-1;
+      @apply w-full text-center text-sm flex flex-row items-center justify-center gap-1.5 whitespace-nowrap;
 
       span {
         @apply text-sm text-muted-foreground;
       }
 
       a {
-        @apply font-semibold underline;
+        @apply font-semibold no-underline hover:underline;
       }
+    }
+
+    /* Target FormMessage within our forms */
+    .form p[data-slot="form-message"] {
+      @apply text-rose-500 font-medium;
     }
   }
 

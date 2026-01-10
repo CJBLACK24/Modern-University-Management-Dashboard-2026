@@ -1,22 +1,20 @@
 /* eslint-disable react-hooks/static-components */
 "use client";
 
-import { CircleHelp } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { InputPassword } from "@/components/refine-ui/form/input-password";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -27,23 +25,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useLink, useLogin } from "@refinedev/core";
+import { useLink } from "@refinedev/core";
 import { AnimatedLogo } from "@/components/ui/animated-logo";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 
 const signInSchema = z.object({
   email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
-  rememberMe: z.boolean().optional(),
 });
 
 type SignInFormValues = z.infer<typeof signInSchema>;
 
 export const SignInForm = () => {
   const Link = useLink();
-
-  const { mutate: login, isPending: isLoggingIn } = useLogin();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSocialSignIn = async (provider: "google" | "github") => {
     try {
@@ -61,16 +56,37 @@ export const SignInForm = () => {
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
-      password: "",
-      rememberMe: false,
     },
   });
 
   const handleSignIn = async (values: SignInFormValues) => {
-    login({
-      email: values.email,
-      password: values.password,
-    });
+    setIsSubmitting(true);
+    try {
+      await authClient.signIn.magicLink(
+        {
+          email: values.email,
+          callbackURL: "/",
+        },
+        {
+          onRequest: () => {
+            toast.success("Please check your email!", {
+              description: "Login link sent",
+              richColors: true,
+              className: "bg-green-500 text-white border-none",
+            });
+            setIsSubmitting(false);
+            form.reset();
+          },
+          onError: (ctx) => {
+            toast.error(ctx.error.message);
+            setIsSubmitting(false);
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Magic link error", error);
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -86,10 +102,7 @@ export const SignInForm = () => {
 
       <Card className="card">
         <CardHeader className="header">
-          <CardTitle className="title">Sign in to Academic Suite</CardTitle>
-          <CardDescription className="description">
-            Welcome back
-          </CardDescription>
+          <CardTitle className="title">Login to your account</CardTitle>
         </CardHeader>
 
         <CardContent className="content">
@@ -99,13 +112,13 @@ export const SignInForm = () => {
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem className="field">
-                    <FormLabel htmlFor="email">Email</FormLabel>
+                  <FormItem className="field mt-6 mb-6">
+                    <FormLabel htmlFor="email">Email address</FormLabel>
                     <FormControl>
                       <Input
                         id="email"
                         type="email"
-                        placeholder=""
+                        placeholder=" Your email address"
                         {...field}
                       />
                     </FormControl>
@@ -114,59 +127,13 @@ export const SignInForm = () => {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="field">
-                    <FormLabel htmlFor="password">Password</FormLabel>
-                    <FormControl>
-                      <InputPassword id="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className="row">
-                <FormField
-                  control={form.control}
-                  name="rememberMe"
-                  render={({ field }) => (
-                    <FormItem className="remember flex flex-row items-center space-x-2 space-y-0">
-                      <FormLabel
-                        htmlFor="remember"
-                        className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                        Remember me
-                      </FormLabel>
-                      <FormControl>
-                        <Checkbox
-                          id="remember"
-                          checked={field.value}
-                          onCheckedChange={(checked) =>
-                            field.onChange(
-                              checked === "indeterminate" ? false : checked
-                            )
-                          }
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <Link to="/forgot-password" className="forgot-link">
-                  <span>Forgot password</span>
-                  <CircleHelp />
-                </Link>
-              </div>
-
               <Button
                 type="submit"
                 size="lg"
                 className="submit"
-                disabled={isLoggingIn}
+                disabled={isSubmitting}
               >
-                {isLoggingIn ? "Signing in..." : "Sign in"}
+                {isSubmitting ? <Loader2 className="animate-spin" /> : "Log in"}
               </Button>
 
               <div className="split">
@@ -176,10 +143,10 @@ export const SignInForm = () => {
               </div>
 
               <div className="social">
-                <div className="social-grid">
+                <div className="social-grid flex flex-col gap-3">
                   <Button
                     variant="outline"
-                    className="social-button"
+                    className="social-button w-full"
                     type="button"
                     onClick={() => handleSocialSignIn("google")}
                   >
@@ -195,11 +162,11 @@ export const SignInForm = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <div>Google</div>
+                    <div>Log in with Google</div>
                   </Button>
                   <Button
                     variant="outline"
-                    className="social-button"
+                    className="social-button w-full"
                     type="button"
                     onClick={() => handleSocialSignIn("github")}
                   >
@@ -217,7 +184,7 @@ export const SignInForm = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <div>GitHub</div>
+                    <div>Log in with GitHub</div>
                   </Button>
                 </div>
               </div>
@@ -228,8 +195,8 @@ export const SignInForm = () => {
         <Separator className="divider" />
 
         <CardFooter className="footer">
-          <span>Don&apos;t have an account?</span>
-          <Link to="/register">Sign up</Link>
+          <span>Are you new here?</span>
+          <Link to="/register">Create an account</Link>
         </CardFooter>
       </Card>
     </div>
