@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 "use client";
 
 import { CircleHelp } from "lucide-react";
@@ -27,6 +28,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useLink, useLogin } from "@refinedev/core";
+import { AnimatedLogo } from "@/components/ui/animated-logo";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 const signInSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -40,6 +44,18 @@ export const SignInForm = () => {
   const Link = useLink();
 
   const { mutate: login, isPending: isLoggingIn } = useLogin();
+
+  const handleSocialSignIn = async (provider: "google" | "github") => {
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
+      });
+    } catch (error) {
+      console.error(`${provider} sign in error:`, error);
+      toast.error(`Failed to sign in with ${provider}`);
+    }
+  };
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
@@ -60,12 +76,17 @@ export const SignInForm = () => {
   return (
     <div className="sign-in">
       <div className="logo">
-        <img src="/logo.png" alt="Logo" />
+        <AnimatedLogo
+          src="/logo.png"
+          alt="Academic Suite Logo"
+          width={48}
+          height={48}
+        />
       </div>
 
       <Card className="card">
         <CardHeader className="header">
-          <CardTitle className="title">Sign in</CardTitle>
+          <CardTitle className="title">Sign in to Academic Suite</CardTitle>
           <CardDescription className="description">
             Welcome back
           </CardDescription>
@@ -112,7 +133,13 @@ export const SignInForm = () => {
                   control={form.control}
                   name="rememberMe"
                   render={({ field }) => (
-                    <FormItem className="remember">
+                    <FormItem className="remember flex flex-row items-center space-x-2 space-y-0">
+                      <FormLabel
+                        htmlFor="remember"
+                        className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Remember me
+                      </FormLabel>
                       <FormControl>
                         <Checkbox
                           id="remember"
@@ -124,7 +151,6 @@ export const SignInForm = () => {
                           }
                         />
                       </FormControl>
-                      <FormLabel htmlFor="remember">Remember me</FormLabel>
                     </FormItem>
                   )}
                 />
@@ -150,12 +176,12 @@ export const SignInForm = () => {
               </div>
 
               <div className="social">
-                <p>Sign in using</p>
                 <div className="social-grid">
                   <Button
                     variant="outline"
                     className="social-button"
                     type="button"
+                    onClick={() => handleSocialSignIn("google")}
                   >
                     <svg
                       width="21"
@@ -175,6 +201,7 @@ export const SignInForm = () => {
                     variant="outline"
                     className="social-button"
                     type="button"
+                    onClick={() => handleSocialSignIn("github")}
                   >
                     <svg
                       width="21"
@@ -201,8 +228,8 @@ export const SignInForm = () => {
         <Separator className="divider" />
 
         <CardFooter className="footer">
-          <span>No account?</span>
-          <Link to="/register"> Sign up</Link>
+          <span>Don&apos;t have an account?</span>
+          <Link to="/register">Sign up</Link>
         </CardFooter>
       </Card>
     </div>

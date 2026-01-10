@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { useRegister, useLink } from "@refinedev/core";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +30,8 @@ import { ROLE_OPTIONS } from "@/constants";
 import UploadWidget from "@/components/upload-widget";
 import { UserRole } from "@/types";
 import { toast } from "sonner";
+import { PasswordPopover } from "@/components/ui/password-popover";
+import { AnimatedLogo } from "@/components/ui/animated-logo";
 
 const registerSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -56,6 +61,8 @@ export const SignUpForm = () => {
   });
 
   const imagePublicId = form.watch("imageCldPubId");
+  const passwordValue = form.watch("password");
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const onSubmit = async (values: RegisterFormValues) => {
     try {
@@ -93,7 +100,12 @@ export const SignUpForm = () => {
   return (
     <div className="sign-up">
       <div className="logo">
-        <img src="/logo.png" alt="Logo" />
+        <AnimatedLogo
+          src="/logo.png"
+          alt="Academic Suite Logo"
+          width={48}
+          height={48}
+        />
       </div>
 
       <Card className="card">
@@ -220,8 +232,14 @@ export const SignUpForm = () => {
                       <InputPassword
                         {...field}
                         placeholder="Enter your password"
+                        onFocus={() => setIsPasswordFocused(true)}
+                        onBlur={() => setIsPasswordFocused(false)}
                       />
                     </FormControl>
+                    <PasswordPopover
+                      visible={isPasswordFocused || passwordValue.length > 0}
+                      value={passwordValue}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}

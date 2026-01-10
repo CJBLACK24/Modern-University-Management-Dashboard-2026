@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { betterFetch } from "@better-fetch/fetch";
 import { type NextRequest, NextResponse } from "next/server";
 
@@ -16,5 +17,7 @@ export default async function authMiddleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|login|register).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|logo\\.png|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$|login|register).*)",
+  ],
 };

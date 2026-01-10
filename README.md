@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 University Dashboard Management
 
-## Getting Started
+A professional, high-performance academic infrastructure suite designed to streamline university operations. From student enrollment to faculty management, this platform provides a unified experience for Students, Teachers, and Admins.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📋 Table of Contents
+
+- [✨ Introduction](#-introduction)
+- [⚙️ Tech Stack](#️-tech-stack)
+- [🔋 Features](#-features)
+- [🤸 Quick Start](#-quick-start)
+- [🛠️ Development](#️-development)
+
+---
+
+## ✨ Introduction
+
+**Academic Suite** is an intelligent management ecosystem built for modern educational institutions. It simplifies complex administrative workflows, providing real-time analytics and automated orchestration of classes, departments, and enrollment through a secure, role-based architecture.
+
+---
+
+## ⚙️ Tech Stack
+
+### 🎨 Frontend Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **UI Framework:** Refine.js (Enterprise-ready internal tools)
+- **Styling:** Vanilla CSS + Tailwind CSS (for layout)
+- **Animations:** Framer Motion (Transitions) & GSAP (Reveal effects)
+- **Icons:** Lucide React
+
+### 🗄️ Backend Stack
+
+- **Database:** PostgreSQL (with Drizzle ORM)
+- **Authentication:** Better Auth (Secure role-based access)
+- **Security:** Arcjet (API protection & Rate limiting)
+- **Media:** Cloudinary (Profile & banner hosting)
+
+### 🛠️ Dev Tools
+
+- **Language:** TypeScript (Strict mode)
+- **Validation:** Zod
+- **Forms:** React Hook Form
+- **Toasts:** Sonner
+
+---
+
+## 🔋 Features
+
+- **👉 Multi-Role Authentication:** Secure entry powered by Better Auth & Arcjet. Dynamic routing for Students, Teachers, and Admins with strict role permissions.
+- **👉 Unified Analytics Dashboard:** Real-time statistics on enrollment, active classes, and faculty distribution via Refine data providers.
+- **👉 Intelligent Subject Management:** Centralized curriculum control with instant filters and drill-down views for class assignments.
+- **👉 Departmental Governance:** Structural organization layer for subjects and faculties within academic branches.
+- **👉 Dynamic Faculty Directory:** Robust, paginated directory with advanced search, Cloudinary profile hosting, and schedule visibility.
+- **👉 Advanced Class Orchestration:** Built with Drizzle ORM for scheduling sessions, setting capacity limits, and managing teacher assignments.
+- **👉 Code-Based Enrollment:** "Google Classroom" style workflow where students join courses via unique 6-8 digit codes.
+- **👉 Password Intelligence:** Integrated password strength indicator with real-time feedback and animated popovers.
+
+---
+
+## 🤸 Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- PostgreSQL Database
+- Cloudinary Account (for image uploads)
+
+### Set Up Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# Database
+DATABASE_URL=your_postgresql_url
+
+# Better Auth
+BETTER_AUTH_SECRET=your_secret
+NEXT_PUBLIC_API_URL=http://localhost:3000
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_preset
+
+# Arcjet
+ARCJET_KEY=your_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run migrations (if using Drizzle):
+   ```bash
+   npm run db:push
+   ```
+4. Start development server:
+   ```bash
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Development
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run linting checks
+- `npm run db:generate` - Generate Drizzle migrations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Managed with 💖 for Academic Excellence.
