@@ -28,14 +28,16 @@ A professional, high-performance academic infrastructure suite designed to strea
 - **UI Framework:** Refine.js (Enterprise-ready internal tools)
 - **Styling:** Vanilla CSS + Tailwind CSS (for layout)
 - **Animations:** Framer Motion (Transitions) & GSAP (Reveal effects)
-- **Icons:** Lucide React
+- **State Management:** Zustand
+- **Analytics:** Vercel Analytics
 
 ### 🗄️ Backend Stack
 
-- **Database:** PostgreSQL (with Drizzle ORM)
-- **Authentication:** Better Auth (Secure role-based access)
-- **Security:** Arcjet (API protection & Rate limiting)
-- **Media:** Cloudinary (Profile & banner hosting)
+- **Database:** PostgreSQL (via Neon) with Drizzle ORM
+- **Authentication:** Better Auth (Google, GitHub, and Credentials)
+- **Security:** Arcjet (Bot protection & Rate limiting)
+- **WebSockets:** Pusher (Real-time events)
+- **Media:** Cloudinary (Asset management)
 
 ### 🛠️ Dev Tools
 
@@ -48,14 +50,15 @@ A professional, high-performance academic infrastructure suite designed to strea
 
 ## 🔋 Features
 
-- **👉 Multi-Role Authentication:** Secure entry powered by Better Auth & Arcjet. Dynamic routing for Students, Teachers, and Admins with strict role permissions.
-- **👉 Unified Analytics Dashboard:** Real-time statistics on enrollment, active classes, and faculty distribution via Refine data providers.
-- **👉 Intelligent Subject Management:** Centralized curriculum control with instant filters and drill-down views for class assignments.
-- **👉 Departmental Governance:** Structural organization layer for subjects and faculties within academic branches.
-- **👉 Dynamic Faculty Directory:** Robust, paginated directory with advanced search, Cloudinary profile hosting, and schedule visibility.
-- **👉 Advanced Class Orchestration:** Built with Drizzle ORM for scheduling sessions, setting capacity limits, and managing teacher assignments.
-- **👉 Code-Based Enrollment:** "Google Classroom" style workflow where students join courses via unique 6-8 digit codes.
-- **👉 Password Intelligence:** Integrated password strength indicator with real-time feedback and animated popovers.
+- **👉 Multi-Role Authentication:** Secure entry with Google, GitHub, and Email/Password. Dynamic routing for Students, Teachers, and Admins.
+- **👉 Real-Time Connectivity:** Full WebSocket integration via Pusher for instant dashboard updates and notifications.
+- **👉 Unified Analytics Dashboard:** Real-time statistics on enrollment and faculty distribution, monitored via Vercel Analytics.
+- **👉 Intelligent Subject Management:** Centralized curriculum control with advanced filtering and drill-down class views.
+- **👉 Departmental Governance:** Organizational layer for managing subjects and faculties across academic branches.
+- **👉 Dynamic Faculty Directory:** Paginated directory with advanced search and Cloudinary-hosted profile assets.
+- **👉 Advanced Class Orchestration:** Scheduling and capacity management built with Drizzle ORM.
+- **👉 Code-Based Enrollment:** unique 6-8 digit code entry for students to join courses instantly.
+- **👉 Password Intelligence:** Dynamic password strength evaluation with animated Framer Motion feedback.
 
 ---
 
@@ -64,8 +67,9 @@ A professional, high-performance academic infrastructure suite designed to strea
 ### Prerequisites
 
 - Node.js 18+
-- PostgreSQL Database
-- Cloudinary Account (for image uploads)
+- Neon PostgreSQL Database
+- Cloudinary Account
+- Pusher Account
 
 ### Set Up Environment Variables
 
@@ -73,11 +77,23 @@ Create a `.env.local` file in the root directory:
 
 ```env
 # Database
-DATABASE_URL=your_postgresql_url
+DATABASE_URL=your_neon_postgresql_url
 
 # Better Auth
-BETTER_AUTH_SECRET=your_secret
-NEXT_PUBLIC_API_URL=http://localhost:3000
+BETTER_AUTH_SECRET=your_auth_secret
+BETTER_AUTH_URL=http://localhost:3000
+
+# Social Auth
+GOOGLE_CLIENT_ID=your_google_id
+GOOGLE_CLIENT_SECRET=your_google_secret
+GITHUB_CLIENT_ID=your_github_id
+GITHUB_CLIENT_SECRET=your_github_secret
+
+# Pusher (WebSockets)
+PUSHER_APP_ID=your_pusher_app_id
+NEXT_PUBLIC_PUSHER_KEY=your_pusher_key
+PUSHER_SECRET=your_pusher_secret
+NEXT_PUBLIC_PUSHER_CLUSTER=your_pusher_cluster
 
 # Cloudinary
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -94,9 +110,9 @@ ARCJET_KEY=your_key
    ```bash
    npm install
    ```
-3. Run migrations (if using Drizzle):
+3. Sync Database:
    ```bash
-   npm run db:push
+   npx drizzle-kit push
    ```
 4. Start development server:
    ```bash
@@ -110,7 +126,7 @@ ARCJET_KEY=your_key
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run lint` - Run linting checks
-- `npm run db:generate` - Generate Drizzle migrations
+- `npm run db:generate` - Generate Drizzle snapshots
 
 ---
 
