@@ -31,8 +31,10 @@
 1. 🚀 [Introduction](#introduction)
 2. ⚙️ [Tech Stack](#tech-stack)
 3. 🔋 [Features](#features)
-4. 🤸 [Quick Start](#quick-start)
-5. 🛡️ [Project Architecture](#project-architecture)
+4. 🧠 [Logic Workflow](#logic-workflow)
+5. 🤸 [Quick Start](#quick-start)
+6. 🐋 [Docker Deployment](#docker)
+7. 🛡️ [Project Architecture](#project-architecture)
 
 <a name="introduction"></a>
 
@@ -63,7 +65,7 @@ Designed for administrators, teachers, and students, AIS provides a seamless exp
 
 ### Tools & Integrations
 
-- **Cloudinary**: Management and delivery of image assets.
+- **Cloudinary**: Management and delivery of image assets for faculty and class banners.
 - **Pusher**: Real-time subscriptions and updates.
 - **Nodemailer / Resend**: Transactional email services.
 
@@ -71,21 +73,31 @@ Designed for administrators, teachers, and students, AIS provides a seamless exp
 
 ## 🔋 Features
 
-👉 **Multi-Role Authentication**: Secure login and signup powered by Better-Auth with role-based access control.
+👉 **Multi-Role Authentication**: A secure entry system powered by **Better Auth** and **Arcjet** that dynamically routes Students, Teachers, and Admins to protected dashboards with strict role-based permissions.
 
-👉 **Unified Analytics Dashboard**: Real-time overview of university performance, student enrollment, and faculty distribution.
+👉 **Unified Analytics Dashboard**: A high-level overview of the institution's health, featuring real-time statistics on student enrollment, active classes, and faculty distribution via Refine's data providers.
 
-👉 **Subject Management**: Comprehensive system for managing academic curriculum with advanced filtering and search.
+👉 **Intelligent Subject Management**: Centralized control for curriculum where you can create subjects, apply instant filters, and drill down into specific class assignments and teacher workloads.
 
-👉 **Departmental Governance**: Strategic organization and management of academic branches.
+👉 **Departmental Governance**: A structural management layer that organizes subjects and faculties into departments, providing detailed views of every student and educator within a specific academic branch.
 
-👉 **Faculty Directory**: Dynamic, paginated directory for managing educators and staff profiles.
+👉 **Dynamic Faculty Directory**: A robust, paginated directory of all professors featuring advanced search by name or email, profile image hosting via Cloudinary, and full teaching schedule visibility.
 
-👉 **Class Orchestration**: Advanced engine for scheduling classes, tracking capacity, and room assignments.
+👉 **Advanced Class Orchestration**: The core engine of the app built with **Drizzle ORM**, allowing Admins to schedule sessions, set capacity limits, and manage complex assignments of multiple teachers across different sections.
 
-👉 **Skeleton Loading**: Zero-layout-shift (CLS) experience using layout-locked skeletons.
+👉 **Code-Based Enrollment System**: A "Google Classroom" inspired workflow where students gain instant access to courses by entering a unique 6-8 digit joining code, ensuring a secure and controlled-access environment.
 
-👉 **Real-time Notifications**: Instant updates via Pusher integration.
+<a name="logic-workflow"></a>
+
+## 🧠 Logic Workflow
+
+The AIS system operates on a hierarchical logic flow designed for academic integrity and operational efficiency:
+
+1.  **Identity & Access (IAM)**: Upon registration, users are assigned specific roles. **Arcjet** monitors for suspicious activity, while **Better Auth** manages session security. Access to resources (Actions, Views) is strictly gated by these roles.
+2.  **Structural Foundation**: Admins first define **Departments**. These departments then house **Subjects**. This hierarchy ensures that every piece of curriculum is logically anchored within the institution.
+3.  **The Orchestration Engine**: Once subjects are created, Admins use the **Class Orchestration** module to instantiate specific class sections. This involves linking a Subject to a Teacher, setting a Banner via Cloudinary, and defining capacity constraints using Drizzle-powered relations.
+4.  **Enrollment Lifecycle**: Students interact with the system primarily through the **Code-Based Enrollment System**. When an Admin generates a class, a unique code is attached. Students input this code, triggering a backend validation that checks capacity and prerequisites before creating an enrollment record.
+5.  **Data Feedback Loop**: Every interaction (new user, new class, new enrollment) is captured and processed into the **Unified Analytics Dashboard**. This provides a real-time pulse of the university's operations.
 
 <a name="quick-start"></a>
 
@@ -140,6 +152,20 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
+
+<a name="docker"></a>
+
+## 🐋 Docker Deployment
+
+Deploy the AIS system instantly using Docker:
+
+```bash
+# Build the image
+docker build -t ais-platform .
+
+# Run the container
+docker run -p 3000:3000 --env-file .env.local ais-platform
+```
 
 <a name="project-architecture"></a>
 
