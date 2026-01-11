@@ -81,7 +81,7 @@ const EnrollmentsCreate = () => {
         toast.success("Successfully enrolled!");
         router.push("/");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to enroll.");
     }
   };
@@ -106,7 +106,7 @@ const EnrollmentsCreate = () => {
       } else {
         toast.error(result.error || "Failed to join class.");
       }
-    } catch (error) {
+    } catch {
       toast.error("Network error. Please try again.");
     } finally {
       setIsJoining(false);
@@ -133,7 +133,7 @@ const EnrollmentsCreate = () => {
 
       <div className="grid gap-6 md:grid-cols-2 mt-6">
         {/* Join by Code Column */}
-        <Card className="class-form-card border-orange-200/50">
+        <Card className="class-form-card">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-gradient-orange">
               Join by Code
@@ -164,7 +164,7 @@ const EnrollmentsCreate = () => {
         {/* Manual Enrollment Column (Admin/Faculty choice) */}
         <Card className="class-form-card">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-slate-800">
+            <CardTitle className="text-2xl font-bold text-white">
               Manual Enrollment
             </CardTitle>
           </CardHeader>

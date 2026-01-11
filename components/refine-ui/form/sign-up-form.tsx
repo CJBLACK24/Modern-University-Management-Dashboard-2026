@@ -204,7 +204,11 @@ export const SignUpForm = () => {
                   <FormItem>
                     <FormLabel>Full Name *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your full name" {...field} />
+                      <Input
+                        placeholder="Your full name"
+                        variantSize="lg"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -221,6 +225,7 @@ export const SignUpForm = () => {
                       <Input
                         type="email"
                         placeholder="Your email address"
+                        variantSize="lg"
                         {...field}
                       />
                     </FormControl>

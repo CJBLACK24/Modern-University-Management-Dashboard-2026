@@ -119,6 +119,7 @@ export const SignInForm = () => {
                         id="email"
                         type="email"
                         placeholder=" Your email address"
+                        variantSize="lg"
                         {...field}
                       />
                     </FormControl>

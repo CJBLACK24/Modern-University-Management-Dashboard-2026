@@ -1,6 +1,6 @@
 "use client";
 
-import { Authenticated, Refine } from "@refinedev/core";
+import { Refine } from "@refinedev/core";
 import { DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import routerProvider from "@refinedev/nextjs-router";
@@ -51,6 +51,7 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   name: "subjects",
                   list: "/subjects",
                   create: "/subjects/create",
+                  edit: "/subjects/edit/:id",
                   show: "/subjects/show/:id",
                   meta: {
                     label: "Subjects",
@@ -61,6 +62,7 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   name: "departments",
                   list: "/departments",
                   show: "/departments/show/:id",
+                  edit: "/departments/edit/:id",
                   create: "/departments/create",
                   meta: {
                     label: "Departments",
@@ -71,6 +73,7 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   name: "users",
                   list: "/faculty",
                   show: "/faculty/show/:id",
+                  edit: "/faculty/edit/:id",
                   meta: {
                     label: "Faculty",
                     icon: <Users />,
@@ -89,6 +92,7 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   name: "classes",
                   list: "/classes",
                   create: "/classes/create",
+                  edit: "/classes/edit/:id",
                   show: "/classes/show/:id",
                   meta: {
                     label: "Classes",
