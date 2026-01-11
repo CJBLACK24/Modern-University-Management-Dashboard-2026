@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,6 +14,18 @@ import {
   subjects,
   user,
 } from "../db/schema";
+
+async function checkConnection() {
+  try {
+    console.log("🔌 Testing database connection...");
+    // Just a simple query to see if it works
+    await db.select().from(user).limit(1);
+    console.log("✅ Database connection successful!");
+  } catch (error) {
+    console.error("❌ Database connection failed:", error);
+    process.exit(1);
+  }
+}
 
 type SeedUser = {
   id: string;
@@ -199,12 +212,16 @@ const seed = async () => {
     .where(inArray(classes.inviteCode, classInviteCodes));
 };
 
-seed()
-  .then(() => {
-    console.log("Seed completed.");
+const main = async () => {
+  try {
+    await checkConnection();
+    await seed();
+    console.log("✅ Seed completed.");
     process.exit(0);
-  })
-  .catch((error) => {
-    console.error("Seed failed:", error);
+  } catch (error) {
+    console.error("❌ Seed failed:", error);
     process.exit(1);
-  });
+  }
+};
+
+main();

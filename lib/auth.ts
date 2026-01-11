@@ -1,12 +1,21 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { magicLink } from "better-auth/plugins";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 import { db } from "@/db"; // your drizzle instance
 import * as schema from "@/db/schema/auth";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Create Gmail SMTP transporter
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.EMAIL_USER!,
+    pass: process.env.EMAIL_PASSWORD!,
+  },
+});
 
 export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET!,
@@ -23,8 +32,10 @@ export const auth = betterAuth({
     magicLink({
       sendMagicLink: async ({ email, url }: { email: string; url: string }) => {
         try {
-          const { data, error } = await resend.emails.send({
-            from: process.env.BETTER_AUTH_EMAIL_FROM || "onboarding@resend.dev",
+          const info = await transporter.sendMail({
+            from:
+              process.env.EMAIL_FROM ||
+              '"Academic Suite" <duquechristianjohncalderon@gmail.com>',
             to: email,
             subject: "Login to Academic Infrastructure Suite",
             html: `
@@ -50,15 +61,11 @@ export const auth = betterAuth({
             `,
           });
 
-          if (error) {
-            console.error("Resend API Error:", error);
-          } else {
-            console.log(
-              `Magic link sent successfully to ${email}. ID: ${data?.id}`
-            );
-          }
+          console.log(
+            `Magic link sent successfully to ${email}. Message ID: ${info.messageId}`
+          );
         } catch (error) {
-          console.error("Resend connection error:", error);
+          console.error("Gmail SMTP Error:", error);
         }
       },
     }),

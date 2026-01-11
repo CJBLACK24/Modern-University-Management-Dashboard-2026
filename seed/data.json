@@ -1,491 +1,251 @@
 {
   "users": [
     {
-      "id": "admin_1",
-      "name": "Ava Collins",
-      "email": "ava.admin@classroom.dev",
+      "id": "admin_001",
+      "name": "Dr. Sarah Martinez",
+      "email": "admin@academic-suite.test",
       "role": "admin",
-      "password": "Admin#1234",
-      "image": "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=400&q=80"
+      "image": "https://res.cloudinary.com/demo/image/upload/v1/sample_woman_profile.jpg"
     },
     {
-      "id": "teacher_1",
-      "name": "Liam Patel",
-      "email": "liam.patel@classroom.dev",
+      "id": "teacher_001",
+      "name": "Prof. Michael Chen",
+      "email": "mchen@academic-suite.test",
       "role": "teacher",
-      "password": "Teach#1234",
-      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
+      "image": "https://res.cloudinary.com/demo/image/upload/v1/sample_man_profile.jpg"
     },
     {
-      "id": "teacher_2",
-      "name": "Noah Kim",
-      "email": "noah.kim@classroom.dev",
+      "id": "teacher_002",
+      "name": "Dr. Emily Rodriguez",
+      "email": "erodriguez@academic-suite.test",
       "role": "teacher",
-      "password": "Teach#5678",
-      "image": "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=80"
+      "image": "https://res.cloudinary.com/demo/image/upload/v1/sample_woman_profile2.jpg"
     },
     {
-      "id": "teacher_3",
-      "name": "Mia Lopez",
-      "email": "mia.lopez@classroom.dev",
+      "id": "teacher_003",
+      "name": "Prof. James Wilson",
+      "email": "jwilson@academic-suite.test",
       "role": "teacher",
-      "password": "Teach#9012",
-      "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80"
+      "image": "https://res.cloudinary.com/demo/image/upload/v1/sample_man_profile2.jpg"
     },
     {
-      "id": "teacher_4",
-      "name": "Ethan Brooks",
-      "email": "ethan.brooks@classroom.dev",
-      "role": "teacher",
-      "password": "Teach#3456",
-      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "id": "teacher_5",
-      "name": "Priya Nair",
-      "email": "priya.nair@classroom.dev",
-      "role": "teacher",
-      "password": "Teach#7890",
-      "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "id": "student_1",
-      "name": "Arjun Singh",
-      "email": "arjun.singh@classroom.dev",
+      "id": "student_001",
+      "name": "Alex Johnson",
+      "email": "ajohnson@academic-suite.test",
       "role": "student",
-      "password": "Student#123",
-      "image": "https://images.unsplash.com/photo-1545996124-0501ebae84d0?auto=format&fit=crop&w=400&q=80"
+      "image": "https://res.cloudinary.com/demo/image/upload/v1/sample_student1.jpg"
     },
     {
-      "id": "student_2",
-      "name": "Emily Chen",
-      "email": "emily.chen@classroom.dev",
+      "id": "student_002",
+      "name": "Maria Garcia",
+      "email": "mgarcia@academic-suite.test",
       "role": "student",
-      "password": "Student#234",
-      "image": "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=400&q=80"
+      "image": "https://res.cloudinary.com/demo/image/upload/v1/sample_student2.jpg"
     },
     {
-      "id": "student_3",
-      "name": "Zoe Parker",
-      "email": "zoe.parker@classroom.dev",
+      "id": "student_003",
+      "name": "David Kim",
+      "email": "dkim@academic-suite.test",
       "role": "student",
-      "password": "Student#345",
-      "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"
+      "image": "https://res.cloudinary.com/demo/image/upload/v1/sample_student3.jpg"
     },
     {
-      "id": "student_4",
-      "name": "Jacob Miller",
-      "email": "jacob.miller@classroom.dev",
+      "id": "student_004",
+      "name": "Sophie Anderson",
+      "email": "sanderson@academic-suite.test",
       "role": "student",
-      "password": "Student#456",
-      "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+      "image": "https://res.cloudinary.com/demo/image/upload/v1/sample_student4.jpg"
     },
     {
-      "id": "student_5",
-      "name": "Sara James",
-      "email": "sara.james@classroom.dev",
+      "id": "student_005",
+      "name": "Carlos Ramirez",
+      "email": "cramirez@academic-suite.test",
       "role": "student",
-      "password": "Student#567",
-      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "id": "student_6",
-      "name": "Daniel Wright",
-      "email": "daniel.wright@classroom.dev",
-      "role": "student",
-      "password": "Student#678",
-      "image": "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "id": "student_7",
-      "name": "Nina Alvarez",
-      "email": "nina.alvarez@classroom.dev",
-      "role": "student",
-      "password": "Student#789",
-      "image": "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "id": "student_8",
-      "name": "Omar Farouk",
-      "email": "omar.farouk@classroom.dev",
-      "role": "student",
-      "password": "Student#890",
-      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "id": "student_9",
-      "name": "Grace Wilson",
-      "email": "grace.wilson@classroom.dev",
-      "role": "student",
-      "password": "Student#901",
-      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "id": "student_10",
-      "name": "Leo Andersen",
-      "email": "leo.andersen@classroom.dev",
-      "role": "student",
-      "password": "Student#012",
-      "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "id": "student_11",
-      "name": "Hannah Ross",
-      "email": "hannah.ross@classroom.dev",
-      "role": "student",
-      "password": "Student#135",
-      "image": "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=400&q=80"
-    },
-    {
-      "id": "student_12",
-      "name": "Ibrahim Yusuf",
-      "email": "ibrahim.yusuf@classroom.dev",
-      "role": "student",
-      "password": "Student#246",
-      "image": "https://images.unsplash.com/photo-1545996124-0501ebae84d0?auto=format&fit=crop&w=400&q=80"
+      "image": "https://res.cloudinary.com/demo/image/upload/v1/sample_student5.jpg"
     }
   ],
   "departments": [
     {
       "code": "CS",
       "name": "Computer Science",
-      "description": "Programming, data structures, and systems fundamentals."
+      "description": "Department focused on computing, programming, algorithms, and software development"
     },
     {
       "code": "MATH",
       "name": "Mathematics",
-      "description": "Foundations of calculus, algebra, and statistics."
+      "description": "Department dedicated to pure and applied mathematics, statistics, and computational mathematics"
+    },
+    {
+      "code": "ENG",
+      "name": "English",
+      "description": "Department specializing in literature, creative writing, and language studies"
     },
     {
       "code": "BIO",
       "name": "Biology",
-      "description": "Life sciences and laboratory methods."
-    },
-    {
-      "code": "BUS",
-      "name": "Business",
-      "description": "Management, finance, and entrepreneurship."
+      "description": "Department covering life sciences, ecology, genetics, and molecular biology"
     }
   ],
   "subjects": [
     {
       "code": "CS101",
-      "name": "Intro to Programming",
-      "description": "Python basics and computational thinking.",
-      "departmentCode": "CS"
-    },
-    {
-      "code": "CS102",
-      "name": "Programming Fundamentals",
-      "description": "Control flow, functions, and debugging.",
+      "name": "Introduction to Programming",
+      "description": "Fundamental programming concepts using Python. Learn variables, loops, functions, and basic algorithms.",
       "departmentCode": "CS"
     },
     {
       "code": "CS201",
-      "name": "Web Development",
-      "description": "Modern frontend and backend fundamentals.",
-      "departmentCode": "CS"
-    },
-    {
-      "code": "CS202",
-      "name": "Databases",
-      "description": "SQL, schema design, and data modeling.",
+      "name": "Data Structures and Algorithms",
+      "description": "Advanced study of data structures (trees, graphs, hash tables) and algorithm complexity analysis.",
       "departmentCode": "CS"
     },
     {
       "code": "CS301",
-      "name": "Data Structures",
-      "description": "Lists, trees, graphs, and complexity.",
-      "departmentCode": "CS"
-    },
-    {
-      "code": "CS401",
-      "name": "Software Engineering",
-      "description": "Team workflows, testing, and delivery.",
+      "name": "Web Development",
+      "description": "Modern web development with React, Next.js, and full-stack JavaScript technologies.",
       "departmentCode": "CS"
     },
     {
       "code": "MATH101",
       "name": "Calculus I",
-      "description": "Limits, derivatives, and integrals.",
-      "departmentCode": "MATH"
-    },
-    {
-      "code": "MATH102",
-      "name": "Calculus II",
-      "description": "Series, sequences, and applications.",
+      "description": "Limits, derivatives, integration, and applications of differential calculus.",
       "departmentCode": "MATH"
     },
     {
       "code": "MATH201",
       "name": "Linear Algebra",
-      "description": "Vectors, matrices, and transformations.",
+      "description": "Vector spaces, matrices, eigenvalues, and linear transformations.",
       "departmentCode": "MATH"
     },
     {
-      "code": "MATH301",
-      "name": "Statistics",
-      "description": "Probability, inference, and modeling.",
-      "departmentCode": "MATH"
-    },
-    {
-      "code": "MATH302",
-      "name": "Discrete Mathematics",
-      "description": "Logic, sets, and combinatorics.",
-      "departmentCode": "MATH"
+      "code": "ENG101",
+      "name": "English Composition",
+      "description": "Academic writing, essay structure, research methods, and critical analysis.",
+      "departmentCode": "ENG"
     },
     {
       "code": "BIO101",
       "name": "General Biology",
-      "description": "Cells, genetics, and ecosystems.",
+      "description": "Introduction to cellular biology, genetics, evolution, and ecology.",
       "departmentCode": "BIO"
-    },
-    {
-      "code": "BIO201",
-      "name": "Human Anatomy",
-      "description": "Systems, structures, and functions.",
-      "departmentCode": "BIO"
-    },
-    {
-      "code": "BIO202",
-      "name": "Microbiology",
-      "description": "Microbes, immunity, and lab techniques.",
-      "departmentCode": "BIO"
-    },
-    {
-      "code": "BIO301",
-      "name": "Genetics",
-      "description": "Genes, inheritance, and biotech.",
-      "departmentCode": "BIO"
-    },
-    {
-      "code": "BUS101",
-      "name": "Intro to Business",
-      "description": "Business models, markets, and operations.",
-      "departmentCode": "BUS"
-    },
-    {
-      "code": "BUS201",
-      "name": "Marketing Essentials",
-      "description": "Branding, campaigns, and analytics.",
-      "departmentCode": "BUS"
-    },
-    {
-      "code": "BUS301",
-      "name": "Finance Basics",
-      "description": "Budgets, cash flow, and valuation.",
-      "departmentCode": "BUS"
     }
   ],
   "classes": [
     {
-      "name": "Intro to Programming - Section A",
-      "description": "Hands-on coding labs and weekly challenges.",
-      "capacity": 35,
+      "name": "Intro to Python - Spring 2026",
+      "description": "Learn Python from scratch. Perfect for beginners. Covers basics to object-oriented programming.",
+      "capacity": 30,
       "status": "active",
-      "inviteCode": "cs101-a",
+      "inviteCode": "PYTHON2026",
       "subjectCode": "CS101",
-      "teacherId": "teacher_1",
-      "bannerUrl": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80"
+      "teacherId": "teacher_001",
+      "bannerUrl": "https://res.cloudinary.com/demo/image/upload/v1/python_class_banner.jpg"
     },
     {
-      "name": "Programming Fundamentals - Section B",
-      "description": "Practice sessions with weekly quizzes.",
-      "capacity": 30,
-      "status": "active",
-      "inviteCode": "cs102-b",
-      "subjectCode": "CS102",
-      "teacherId": "teacher_4",
-      "bannerUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Web Development Bootcamp",
-      "description": "Build full-stack apps and deploy them.",
-      "capacity": 40,
-      "status": "active",
-      "inviteCode": "cs201-bootcamp",
-      "subjectCode": "CS201",
-      "teacherId": "teacher_2",
-      "bannerUrl": "https://images.unsplash.com/photo-1498079022511-d15614cb1c02?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Databases - Practical",
-      "description": "Schema design and query workshops.",
-      "capacity": 32,
-      "status": "active",
-      "inviteCode": "cs202-practical",
-      "subjectCode": "CS202",
-      "teacherId": "teacher_5",
-      "bannerUrl": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Data Structures - Section A",
-      "description": "Implementation deep dives and coding drills.",
-      "capacity": 28,
-      "status": "active",
-      "inviteCode": "cs301-a",
-      "subjectCode": "CS301",
-      "teacherId": "teacher_3",
-      "bannerUrl": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Software Engineering Studio",
-      "description": "Agile sprints and peer reviews.",
-      "capacity": 36,
-      "status": "active",
-      "inviteCode": "cs401-studio",
-      "subjectCode": "CS401",
-      "teacherId": "teacher_1",
-      "bannerUrl": "https://images.unsplash.com/photo-1485217988980-11786ced9454?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Calculus I - Morning",
-      "description": "Problem solving sessions and review quizzes.",
-      "capacity": 30,
-      "status": "active",
-      "inviteCode": "math101-morning",
-      "subjectCode": "MATH101",
-      "teacherId": "teacher_3",
-      "bannerUrl": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Calculus II - Evening",
-      "description": "Advanced integration and applications.",
-      "capacity": 30,
-      "status": "active",
-      "inviteCode": "math102-evening",
-      "subjectCode": "MATH102",
-      "teacherId": "teacher_4",
-      "bannerUrl": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Linear Algebra - Section A",
-      "description": "Matrix methods with weekly labs.",
-      "capacity": 32,
-      "status": "active",
-      "inviteCode": "math201-a",
-      "subjectCode": "MATH201",
-      "teacherId": "teacher_1",
-      "bannerUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Statistics - Applied",
-      "description": "Data analysis with real-world datasets.",
-      "capacity": 34,
-      "status": "active",
-      "inviteCode": "math301-applied",
-      "subjectCode": "MATH301",
-      "teacherId": "teacher_3",
-      "bannerUrl": "https://images.unsplash.com/photo-1498079022511-d15614cb1c02?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Discrete Mathematics - Workshop",
-      "description": "Logic puzzles and proofs.",
-      "capacity": 26,
-      "status": "active",
-      "inviteCode": "math302-workshop",
-      "subjectCode": "MATH302",
-      "teacherId": "teacher_5",
-      "bannerUrl": "https://images.unsplash.com/photo-1485217988980-11786ced9454?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "General Biology Lab",
-      "description": "Lab-focused biology with weekly experiments.",
+      "name": "Advanced Data Structures",
+      "description": "Deep dive into trees, graphs, and advanced algorithms. Prepare for technical interviews.",
       "capacity": 25,
       "status": "active",
-      "inviteCode": "bio101-lab",
-      "subjectCode": "BIO101",
-      "teacherId": "teacher_1",
-      "bannerUrl": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80"
+      "inviteCode": "DATASTR2026",
+      "subjectCode": "CS201",
+      "teacherId": "teacher_001",
+      "bannerUrl": "https://res.cloudinary.com/demo/image/upload/v1/algorithms_class_banner.jpg"
     },
     {
-      "name": "Human Anatomy - Section A",
-      "description": "Detailed anatomy with guided labs.",
+      "name": "Modern Web Dev with React",
+      "description": "Build production-ready web apps with React, Next.js, TypeScript, and Tailwind CSS.",
+      "capacity": 20,
+      "status": "active",
+      "inviteCode": "WEBDEV2026",
+      "subjectCode": "CS301",
+      "teacherId": "teacher_002",
+      "bannerUrl": "https://res.cloudinary.com/demo/image/upload/v1/webdev_class_banner.jpg"
+    },
+    {
+      "name": "Calculus Fundamentals",
+      "description": "Master derivatives and integrals. Strong foundation for advanced mathematics and physics.",
+      "capacity": 35,
+      "status": "active",
+      "inviteCode": "CALC2026",
+      "subjectCode": "MATH101",
+      "teacherId": "teacher_003",
+      "bannerUrl": "https://res.cloudinary.com/demo/image/upload/v1/calculus_class_banner.jpg"
+    },
+    {
+      "name": "Linear Algebra Applications",
+      "description": "Practical applications of linear algebra in data science, machine learning, and graphics.",
       "capacity": 28,
       "status": "active",
-      "inviteCode": "bio201-a",
-      "subjectCode": "BIO201",
-      "teacherId": "teacher_4",
-      "bannerUrl": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80"
+      "inviteCode": "LINALG2026",
+      "subjectCode": "MATH201",
+      "teacherId": "teacher_003",
+      "bannerUrl": "https://res.cloudinary.com/demo/image/upload/v1/linalg_class_banner.jpg"
     },
     {
-      "name": "Microbiology - Intensive",
-      "description": "Microbes, immunology, and lab safety.",
-      "capacity": 24,
+      "name": "Academic Writing Workshop",
+      "description": "Improve your essay writing skills. Learn research, citations, and persuasive arguments.",
+      "capacity": 22,
       "status": "active",
-      "inviteCode": "bio202-intensive",
-      "subjectCode": "BIO202",
-      "teacherId": "teacher_5",
-      "bannerUrl": "https://images.unsplash.com/photo-1485217988980-11786ced9454?auto=format&fit=crop&w=1200&q=80"
+      "inviteCode": "ENGWRITE2026",
+      "subjectCode": "ENG101",
+      "teacherId": "teacher_002",
+      "bannerUrl": "https://res.cloudinary.com/demo/image/upload/v1/writing_class_banner.jpg"
     },
     {
-      "name": "Genetics - Research Focus",
-      "description": "Genetics projects and case studies.",
-      "capacity": 26,
+      "name": "Biology Lab - Cell & Genetics",
+      "description": "Hands-on laboratory experience with microscopy, DNA extraction, and genetic analysis.",
+      "capacity": 18,
       "status": "active",
-      "inviteCode": "bio301-research",
-      "subjectCode": "BIO301",
-      "teacherId": "teacher_1",
-      "bannerUrl": "https://images.unsplash.com/photo-1498079022511-d15614cb1c02?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Intro to Business - Evening",
-      "description": "Case studies and team presentations.",
-      "capacity": 45,
-      "status": "active",
-      "inviteCode": "bus101-evening",
-      "subjectCode": "BUS101",
-      "teacherId": "teacher_2",
-      "bannerUrl": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Marketing Essentials - Lab",
-      "description": "Campaign planning and analytics tools.",
-      "capacity": 38,
-      "status": "active",
-      "inviteCode": "bus201-lab",
-      "subjectCode": "BUS201",
-      "teacherId": "teacher_4",
-      "bannerUrl": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80"
-    },
-    {
-      "name": "Finance Basics - Section A",
-      "description": "Budgeting, cash flow, and valuation.",
-      "capacity": 36,
-      "status": "active",
-      "inviteCode": "bus301-a",
-      "subjectCode": "BUS301",
-      "teacherId": "teacher_1",
-      "bannerUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80"
+      "inviteCode": "BIOLAB2026",
+      "subjectCode": "BIO101",
+      "teacherId": "teacher_002",
+      "bannerUrl": "https://res.cloudinary.com/demo/image/upload/v1/biology_class_banner.jpg"
     }
   ],
   "enrollments": [
-    { "classInviteCode": "cs101-a", "studentId": "student_1" },
-    { "classInviteCode": "cs101-a", "studentId": "student_2" },
-    { "classInviteCode": "cs102-b", "studentId": "student_3" },
-    { "classInviteCode": "cs201-bootcamp", "studentId": "student_4" },
-    { "classInviteCode": "cs202-practical", "studentId": "student_5" },
-    { "classInviteCode": "cs301-a", "studentId": "student_6" },
-    { "classInviteCode": "cs401-studio", "studentId": "student_1" },
-    { "classInviteCode": "math101-morning", "studentId": "student_2" },
-    { "classInviteCode": "math201-a", "studentId": "student_3" },
-    { "classInviteCode": "math301-applied", "studentId": "student_4" },
-    { "classInviteCode": "bio101-lab", "studentId": "student_5" },
-    { "classInviteCode": "bio202-intensive", "studentId": "student_6" },
-    { "classInviteCode": "bus101-evening", "studentId": "student_1" },
-    { "classInviteCode": "bus201-lab", "studentId": "student_2" },
-    { "classInviteCode": "bus301-a", "studentId": "student_3" },
-    { "classInviteCode": "cs102-b", "studentId": "student_7" },
-    { "classInviteCode": "cs201-bootcamp", "studentId": "student_8" },
-    { "classInviteCode": "cs301-a", "studentId": "student_9" },
-    { "classInviteCode": "math102-evening", "studentId": "student_10" },
-    { "classInviteCode": "math302-workshop", "studentId": "student_11" },
-    { "classInviteCode": "bio201-a", "studentId": "student_12" },
-    { "classInviteCode": "bus201-lab", "studentId": "student_7" },
-    { "classInviteCode": "bus301-a", "studentId": "student_8" },
-    { "classInviteCode": "cs401-studio", "studentId": "student_9" },
-    { "classInviteCode": "bio301-research", "studentId": "student_10" },
-    { "classInviteCode": "math301-applied", "studentId": "student_11" },
-    { "classInviteCode": "cs202-practical", "studentId": "student_12" }
+    {
+      "classInviteCode": "PYTHON2026",
+      "studentId": "student_001"
+    },
+    {
+      "classInviteCode": "PYTHON2026",
+      "studentId": "student_002"
+    },
+    {
+      "classInviteCode": "PYTHON2026",
+      "studentId": "student_003"
+    },
+    {
+      "classInviteCode": "DATASTR2026",
+      "studentId": "student_001"
+    },
+    {
+      "classInviteCode": "WEBDEV2026",
+      "studentId": "student_001"
+    },
+    {
+      "classInviteCode": "WEBDEV2026",
+      "studentId": "student_004"
+    },
+    {
+      "classInviteCode": "CALC2026",
+      "studentId": "student_002"
+    },
+    {
+      "classInviteCode": "CALC2026",
+      "studentId": "student_005"
+    },
+    {
+      "classInviteCode": "LINALG2026",
+      "studentId": "student_003"
+    },
+    {
+      "classInviteCode": "ENGWRITE2026",
+      "studentId": "student_004"
+    },
+    {
+      "classInviteCode": "BIOLAB2026",
+      "studentId": "student_005"
+    }
   ]
 }
