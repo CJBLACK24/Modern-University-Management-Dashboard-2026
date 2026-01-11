@@ -16,7 +16,11 @@ export const authProvider: AuthProvider = {
       const { error } = await authClient.signIn.magicLink({
         email,
         callbackURL: "/",
-      });
+        name,
+        image,
+        role,
+        imageCldPubId,
+      } as any);
 
       if (error) {
         return {

@@ -85,7 +85,7 @@ export const SignUpForm = () => {
           image: values.image,
           role: values.role,
           imageCldPubId: values.imageCldPubId,
-        },
+        } as any,
         {
           onRequest: () => {
             toast.success("Please check your email!", {

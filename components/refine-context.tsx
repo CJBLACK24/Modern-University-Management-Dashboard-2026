@@ -21,11 +21,13 @@ import { dataProvider } from "@/providers/data";
 import { authProvider } from "@/providers/auth";
 import { liveProvider } from "@/providers/live";
 
+import { PageSkeleton } from "@/components/refine-ui/layout/page-skeleton";
+
 export function RefineContext({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
       <RefineKbarProvider>
-        <Suspense fallback={null}>
+        <Suspense fallback={<PageSkeleton type="dashboard" />}>
           <DevtoolsProvider>
             <Refine
               dataProvider={dataProvider}

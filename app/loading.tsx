@@ -1,3 +1,5 @@
+import { PageSkeleton } from "@/components/refine-ui/layout/page-skeleton";
+
 export default function Loading() {
-  return null;
+  return <PageSkeleton type="dashboard" />;
 }
