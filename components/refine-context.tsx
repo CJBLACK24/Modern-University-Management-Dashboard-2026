@@ -23,9 +23,9 @@ import { liveProvider } from "@/providers/live";
 
 export function RefineContext({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback="Loading App...">
+    <ThemeProvider>
       <RefineKbarProvider>
-        <ThemeProvider>
+        <Suspense fallback={null}>
           <DevtoolsProvider>
             <Refine
               dataProvider={dataProvider}
@@ -124,13 +124,13 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                 },
               ]}
             >
-              {children}
+              <div className="bg-background min-h-screen">{children}</div>
               <Toaster />
               <RefineKbar />
             </Refine>
           </DevtoolsProvider>
-        </ThemeProvider>
+        </Suspense>
       </RefineKbarProvider>
-    </Suspense>
+    </ThemeProvider>
   );
 }

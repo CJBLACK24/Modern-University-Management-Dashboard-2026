@@ -82,6 +82,9 @@ export const SignUpForm = () => {
           email: values.email,
           callbackURL: "/",
           name: values.name,
+          image: values.image,
+          role: values.role,
+          imageCldPubId: values.imageCldPubId,
         },
         {
           onRequest: () => {
