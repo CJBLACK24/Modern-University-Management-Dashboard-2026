@@ -133,16 +133,52 @@ npm install
 Create a new file named `.env.local` in the root of your project and add the content from `.env.example`. Replace the placeholders with your actual credentials:
 
 ```env
-# Database
-DATABASE_URL=your_neon_db_url
+# Database (NEVER commit real database URLs)
+DATABASE_URL="postgresql://username:password@host/database?sslmode=require"
 
-# Auth
-BETTER_AUTH_SECRET=your_auth_secret
-BETTER_AUTH_URL=http://localhost:3000
+# Arcjet
+ARCJET_KEY="your_arcjet_key_here"
+ARCJET_ENV="development"
 
-# Third Party
-CLOUDINARY_URL=your_cloudinary_url
-PUSHER_APP_ID=your_pusher_id
+# Application URLs
+FRONTEND_URL="http://localhost:3000"
+NEXT_PUBLIC_BACKEND_BASE_URL="http://localhost:3000/api"
+NEXT_PUBLIC_API_URL="http://localhost:3000/api"
+
+# Better Auth
+BETTER_AUTH_SECRET="your_better_auth_secret_here"
+BETTER_AUTH_URL="http://localhost:3000"
+BETTER_AUTH_EMAIL_FROM="noreply@example.com"
+
+# Cloudinary Configuration
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="your_cloud_name"
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET="your_upload_preset"
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL="https://api.cloudinary.com/v1_1/your_cloud_name/image/upload"
+
+# Internal Auth Token Keys
+NEXT_PUBLIC_ACCESS_TOKEN_KEY="access_token"
+NEXT_PUBLIC_REFRESH_TOKEN_KEY="refresh_token"
+
+# Google OAuth
+GOOGLE_CLIENT_ID="your_google_client_id.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET="your_google_client_secret"
+
+# GitHub OAuth
+GITHUB_CLIENT_ID="your_github_client_id"
+GITHUB_CLIENT_SECRET="your_github_client_secret"
+
+# Pusher (WebSockets)
+PUSHER_APP_ID="your_pusher_app_id"
+NEXT_PUBLIC_PUSHER_KEY="your_pusher_key"
+PUSHER_SECRET="your_pusher_secret"
+NEXT_PUBLIC_PUSHER_CLUSTER="ap1"
+
+# Resend
+RESEND_API_KEY="your_resend_api_key"
+
+EMAIL_USER=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX@gmail.com
+EMAIL_PASSWORD=APPPASSWORD
+EMAIL_FROM="Academic Suite <XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX@gmail.com>"
 ```
 
 **Running the Project**
