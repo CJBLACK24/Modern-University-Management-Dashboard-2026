@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/immutability */
 "use client";
 
 import { useTranslate, type CrudOperators } from "@refinedev/core";

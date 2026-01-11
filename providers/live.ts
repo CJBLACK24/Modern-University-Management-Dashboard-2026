@@ -3,7 +3,7 @@ import { LiveProvider } from "@refinedev/core";
 import { pusherClient } from "@/lib/pusher";
 
 export const liveProvider: LiveProvider = {
-  subscribe: ({ channel, types, params, callback }) => {
+  subscribe: ({ channel, types, callback }) => {
     const pusherChannel = pusherClient.subscribe(channel);
 
     pusherChannel.bind_global((event: string, data: any) => {

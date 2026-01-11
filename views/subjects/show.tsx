@@ -1,8 +1,9 @@
-import { useLink, useShow } from "@refinedev/core";
+import { useShow } from "@refinedev/core";
 import { useTable } from "@refinedev/react-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -15,10 +16,8 @@ import {
 } from "@/components/refine-ui/views/show-view";
 import type { Department, Subject } from "@/types";
 
-type SubjectDetails = {
-  subject: Subject & {
-    department?: Department | null;
-  };
+type SubjectDetails = Subject & {
+  department?: Department | null;
   totals: {
     classes: number;
   };
@@ -46,7 +45,6 @@ type SubjectUser = {
 };
 
 const SubjectsShow = () => {
-  const Link = useLink();
   const { id } = useParams();
   const subjectId = id ?? "";
 
@@ -249,17 +247,17 @@ const SubjectsShow = () => {
 
   return (
     <ShowView className="class-view space-y-6">
-      <ShowViewHeader resource="subjects" title={details.subject.name} />
+      <ShowViewHeader resource="subjects" title={details.name} />
 
       <Card className="hover:shadow-md transition-shadow">
         <CardHeader className="flex w-full flex-row items-center justify-between">
           <CardTitle>Subject Overview</CardTitle>
-          <Badge variant="secondary">{details.subject.code}</Badge>
+          <Badge variant="secondary">{details.code}</Badge>
         </CardHeader>
 
         <CardContent className="space-y-3">
           <p className="text-sm text-muted-foreground">
-            {details.subject.description ?? "No description provided."}
+            {details.description ?? "No description provided."}
           </p>
         </CardContent>
       </Card>
@@ -269,16 +267,16 @@ const SubjectsShow = () => {
           <CardTitle>Department</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
-          {details.subject.department ? (
+          {details.department ? (
             <>
               <Link
-                to={`/departments/show/${details.subject.department.id}`}
+                href={`/departments/show/${details.department.id}`}
                 className="text-lg font-semibold text-foreground hover:underline"
               >
-                {details.subject.department.name}
+                {details.department.name}
               </Link>
               <p className="text-sm text-muted-foreground">
-                {details.subject.department.description ??
+                {details.department.description ??
                   "No department description provided."}
               </p>
             </>

@@ -1,10 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "@refinedev/react-hook-form";
-import { useBack, useList, type BaseRecord, type HttpError } from "@refinedev/core";
+import { useList, type BaseRecord, type HttpError } from "@refinedev/core";
 import * as z from "zod";
 
 import { CreateView } from "@/components/refine-ui/views/create-view";
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
+import { BackButton } from "@/components/refine-ui/buttons/back";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -44,8 +45,6 @@ const subjectCreateSchema = z.object({
 type SubjectFormValues = z.infer<typeof subjectCreateSchema>;
 
 const SubjectsCreate = () => {
-  const back = useBack();
-
   const form = useForm<BaseRecord, HttpError, SubjectFormValues>({
     resolver: zodResolver(subjectCreateSchema),
     refineCoreProps: {
@@ -92,7 +91,7 @@ const SubjectsCreate = () => {
       <h1 className="page-title">Create a Subject</h1>
       <div className="intro-row">
         <p>Provide the required information below to add a subject.</p>
-        <Button onClick={() => back()}>Go Back</Button>
+        <BackButton>Go Back</BackButton>
       </div>
 
       <Separator />
@@ -119,9 +118,7 @@ const SubjectsCreate = () => {
                         Department <span className="text-orange-600">*</span>
                       </FormLabel>
                       <Select
-                        onValueChange={(value) =>
-                          field.onChange(Number(value))
-                        }
+                        onValueChange={(value) => field.onChange(Number(value))}
                         value={field.value ? String(field.value) : ""}
                         disabled={departmentsLoading}
                       >

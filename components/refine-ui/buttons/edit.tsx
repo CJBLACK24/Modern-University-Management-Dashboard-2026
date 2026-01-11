@@ -45,7 +45,9 @@ export const EditButton = React.forwardRef<
       meta,
     });
 
-    const isDisabled = disabled || rest.disabled;
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    const isDisabled = disabled || rest.disabled || isLoading;
     const isHidden = hidden || rest.hidden;
 
     if (isHidden) return null;
@@ -60,17 +62,23 @@ export const EditButton = React.forwardRef<
               e.preventDefault();
               return;
             }
+            setIsLoading(true);
             if (onClick) {
-              e.preventDefault();
               onClick(e);
             }
           }}
         >
-          {children ?? (
+          {isLoading ? (
             <div className="flex items-center gap-2 font-semibold">
-              <Pencil className="h-4 w-4" />
-              <span>{label}</span>
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
             </div>
+          ) : (
+            children ?? (
+              <div className="flex items-center gap-2 font-semibold">
+                <Pencil className="h-4 w-4" />
+                <span>{label}</span>
+              </div>
+            )
           )}
         </LinkComponent>
       </Button>

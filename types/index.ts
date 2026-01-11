@@ -117,7 +117,6 @@ export type ClassDetails = {
 export type SignUpPayload = {
   email: string;
   name: string;
-  password: string;
   image?: string;
   imageCldPubId?: string;
   role: UserRole;

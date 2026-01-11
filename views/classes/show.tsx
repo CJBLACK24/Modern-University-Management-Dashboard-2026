@@ -143,11 +143,14 @@ const ClassesShow = () => {
               alt="Class Banner"
             />
           ) : (
-            <img
-              src={classDetails.bannerUrl}
-              alt={classDetails.name}
-              loading="lazy"
-            />
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={classDetails.bannerUrl}
+                alt={classDetails.name}
+                loading="lazy"
+              />
+            </>
           )
         ) : (
           <div className="placeholder" />
@@ -180,6 +183,7 @@ const ClassesShow = () => {
             <div className="instructor">
               <p>👨‍🏫 Instructor</p>
               <div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={classDetails.teacher?.image ?? placeholderUrl}
                   alt={teacherName}

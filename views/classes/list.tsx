@@ -47,13 +47,14 @@ const ClassesList = () => {
         accessorKey: "bannerUrl",
         size: 120,
         header: () => <p className="column-title ml-2">Banner</p>,
-        cell: ({ getValue }) => {
+        cell: ({ getValue, row }) => {
           const bannerUrl = getValue<string>();
 
           return bannerUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={bannerUrl}
-              alt="Class banner"
+              alt={row.original.name}
               className="ml-2 h-10 w-10 rounded-md object-cover"
               loading="lazy"
             />

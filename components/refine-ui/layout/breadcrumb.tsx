@@ -10,14 +10,13 @@ import {
 import {
   matchResourceFromRoute,
   useBreadcrumb,
-  useLink,
   useResourceParams,
 } from "@refinedev/core";
+import Link from "next/link";
 import { Home } from "lucide-react";
 import { Fragment, useMemo } from "react";
 
 export function Breadcrumb() {
-  const Link = useLink();
   const { breadcrumbs } = useBreadcrumb();
   const { resources } = useResourceParams();
   const rootRouteResource = matchResourceFromRoute("/", resources);
@@ -33,7 +32,7 @@ export function Breadcrumb() {
       key: "breadcrumb-item-home",
       href: rootRouteResource.matchedRoute ?? "/",
       Component: (
-        <Link to={rootRouteResource.matchedRoute ?? "/"}>
+        <Link href={rootRouteResource.matchedRoute ?? "/"}>
           {rootRouteResource?.resource?.meta?.icon ?? (
             <Home className="h-4 w-4" />
           )}
@@ -45,12 +44,16 @@ export function Breadcrumb() {
       list.push({
         key: `breadcrumb-item-${label}`,
         href: href ?? "",
-        Component: href ? <Link to={href}>{label}</Link> : <span>{label}</span>,
+        Component: href ? (
+          <Link href={href}>{label}</Link>
+        ) : (
+          <span>{label}</span>
+        ),
       });
     }
 
     return list;
-  }, [breadcrumbs, Link, rootRouteResource]);
+  }, [breadcrumbs, rootRouteResource]);
 
   return (
     <ShadcnBreadcrumb>

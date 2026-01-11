@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { magicLink } from "better-auth/plugins";
@@ -22,10 +21,7 @@ export const auth = betterAuth({
   }),
   plugins: [
     magicLink({
-      sendMagicLink: async (
-        { email, token, url }: { email: string; token: string; url: string },
-        request?: any
-      ) => {
+      sendMagicLink: async ({ email, url }: { email: string; url: string }) => {
         try {
           const { data, error } = await resend.emails.send({
             from: process.env.BETTER_AUTH_EMAIL_FROM || "onboarding@resend.dev",

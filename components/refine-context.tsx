@@ -38,6 +38,29 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                 warnWhenUnsavedChanges: true,
                 projectId: "kkWuv7-GgBIfw-P8CGy0",
               }}
+              // @ts-expect-error documentTitleHandler exists but is not in the type definition for this version
+              documentTitleHandler={({
+                resource,
+              }: {
+                resource: { name: string; meta?: { label?: string } };
+              }) => {
+                const appName = "University Dashboard";
+                const resourceName = resource?.meta?.label ?? resource?.name;
+                if (!resourceName) return appName;
+                const capitalized =
+                  resourceName.charAt(0).toUpperCase() + resourceName.slice(1);
+                return `${capitalized} | ${appName}`;
+              }}
+              title={({ collapsed }: { collapsed: boolean }) => (
+                <div className="flex items-center gap-2 px-4 py-2">
+                  <BookOpen className="h-6 w-6 text-primary" />
+                  {!collapsed && (
+                    <span className="text-lg font-bold">
+                      University Dashboard
+                    </span>
+                  )}
+                </div>
+              )}
               resources={[
                 {
                   name: "dashboard",

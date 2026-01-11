@@ -1,10 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "@refinedev/react-hook-form";
-import { useBack, type BaseRecord, type HttpError } from "@refinedev/core";
+import { type BaseRecord, type HttpError } from "@refinedev/core";
 import * as z from "zod";
 
 import { CreateView } from "@/components/refine-ui/views/create-view";
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
+import { BackButton } from "@/components/refine-ui/buttons/back";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -30,8 +31,6 @@ const departmentSchema = z.object({
 type DepartmentFormValues = z.infer<typeof departmentSchema>;
 
 const DepartmentsCreate = () => {
-  const back = useBack();
-
   const form = useForm<BaseRecord, HttpError, DepartmentFormValues>({
     resolver: zodResolver(departmentSchema),
     refineCoreProps: {
@@ -67,7 +66,7 @@ const DepartmentsCreate = () => {
       <h1 className="page-title">Create a Department</h1>
       <div className="intro-row">
         <p>Provide the required information below to add a department.</p>
-        <Button onClick={() => back()}>Go Back</Button>
+        <BackButton>Go Back</BackButton>
       </div>
 
       <Separator />
@@ -91,7 +90,8 @@ const DepartmentsCreate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Department Code <span className="text-orange-600">*</span>
+                        Department Code{" "}
+                        <span className="text-orange-600">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input placeholder="CS" {...field} />
@@ -107,7 +107,8 @@ const DepartmentsCreate = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Department Name <span className="text-orange-600">*</span>
+                        Department Name{" "}
+                        <span className="text-orange-600">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input placeholder="Computer Science" {...field} />

@@ -22,9 +22,10 @@ import {
 
 import { CreateView } from "@/components/refine-ui/views/create-view";
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
+import { BackButton } from "@/components/refine-ui/buttons/back";
 
 import { Textarea } from "@/components/ui/textarea";
-import { useBack, useList } from "@refinedev/core";
+import { useList } from "@refinedev/core";
 import { Loader2 } from "lucide-react";
 import { classSchema } from "@/lib/schema";
 import UploadWidget from "@/components/upload-widget";
@@ -32,8 +33,6 @@ import { Subject, User } from "@/types";
 import z from "zod";
 
 const ClassesCreate = () => {
-  const back = useBack();
-
   const form = useForm({
     resolver: zodResolver(classSchema),
     refineCoreProps: {
@@ -98,7 +97,7 @@ const ClassesCreate = () => {
       <h1 className="page-title">Create a Class</h1>
       <div className="intro-row">
         <p>Provide the required information below to add a class.</p>
-        <Button onClick={() => back()}>Go Back</Button>
+        <BackButton>Go Back</BackButton>
       </div>
 
       <Separator />

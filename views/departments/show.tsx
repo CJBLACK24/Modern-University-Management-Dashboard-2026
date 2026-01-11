@@ -16,8 +16,7 @@ import {
 } from "@/components/refine-ui/views/show-view";
 import type { Department } from "@/types";
 
-type DepartmentDetails = {
-  department: Department;
+type DepartmentDetails = Department & {
   totals: {
     subjects: number;
     classes: number;
@@ -350,7 +349,7 @@ const DepartmentShow = () => {
 
   return (
     <ShowView className="class-view space-y-6">
-      <ShowViewHeader resource="departments" title={details.department.name} />
+      <ShowViewHeader resource="departments" title={details.name} />
 
       <Card className="hover:shadow-md transition-shadow">
         <CardHeader>
@@ -358,7 +357,7 @@ const DepartmentShow = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            {details.department.description ?? "No description provided."}
+            {details.description ?? "No description provided."}
           </p>
 
           <div className="grid gap-4 sm:grid-cols-3">

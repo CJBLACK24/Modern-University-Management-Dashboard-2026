@@ -21,12 +21,8 @@ import {
   useSidebar as useShadcnSidebar,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import {
-  useLink,
-  useMenu,
-  useRefineOptions,
-  type TreeMenuItem,
-} from "@refinedev/core";
+import { useMenu, useRefineOptions, type TreeMenuItem } from "@refinedev/core";
+import Link from "next/link";
 import { ChevronRight, ListIcon } from "lucide-react";
 import React from "react";
 
@@ -169,7 +165,6 @@ function SidebarItemCollapsible({ item, selectedKey }: MenuItemProps) {
 
 function SidebarItemDropdown({ item, selectedKey }: MenuItemProps) {
   const { children } = item;
-  const Link = useLink();
 
   return (
     <DropdownMenu>
@@ -184,7 +179,7 @@ function SidebarItemDropdown({ item, selectedKey }: MenuItemProps) {
           return (
             <DropdownMenuItem key={childKey || child.name} asChild>
               <Link
-                to={child.route || ""}
+                href={child.route || ""}
                 className={cn("flex w-full items-center gap-2", {
                   "bg-accent text-accent-foreground": isSelected,
                 })}
@@ -311,8 +306,6 @@ function SidebarButton({
   onClick,
   ...props
 }: SidebarButtonProps) {
-  const Link = useLink();
-
   const buttonContent = (
     <>
       <ItemIcon icon={item.meta?.icon ?? item.icon} isSelected={isSelected} />
@@ -353,7 +346,10 @@ function SidebarButton({
       {...props}
     >
       {asLink && item.route ? (
-        <Link to={item.route} className={cn("flex w-full items-center gap-2")}>
+        <Link
+          href={item.route}
+          className={cn("flex w-full items-center gap-2")}
+        >
           {buttonContent}
         </Link>
       ) : (

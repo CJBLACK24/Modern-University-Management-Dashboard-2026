@@ -1,15 +1,12 @@
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "@refinedev/react-hook-form";
-import {
-  useBack,
-  useList,
-  type BaseRecord,
-  type HttpError,
-} from "@refinedev/core";
+import { useList, type BaseRecord, type HttpError } from "@refinedev/core";
 import * as z from "zod";
 
 import { EditView } from "@/components/refine-ui/views/edit-view";
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
+import { BackButton } from "@/components/refine-ui/buttons/back";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -49,10 +46,14 @@ const subjectEditSchema = z.object({
 type SubjectFormValues = z.infer<typeof subjectEditSchema>;
 
 const SubjectsEdit = () => {
-  const back = useBack();
-
   const form = useForm<BaseRecord, HttpError, SubjectFormValues>({
     resolver: zodResolver(subjectEditSchema),
+    defaultValues: {
+      name: "",
+      code: "",
+      description: "",
+      departmentId: 0,
+    },
     refineCoreProps: {
       resource: "subjects",
       action: "edit",
@@ -64,7 +65,20 @@ const SubjectsEdit = () => {
     handleSubmit,
     formState: { isSubmitting },
     control,
+    reset,
   } = form;
+
+  useEffect(() => {
+    if (queryResult?.data?.data) {
+      const subject = queryResult.data.data;
+      reset({
+        name: subject.name || "",
+        code: subject.code || "",
+        description: subject.description || "",
+        departmentId: subject.departmentId ?? subject.department?.id ?? 0,
+      });
+    }
+  }, [queryResult?.data?.data, reset]);
 
   const { query: departmentsQuery } = useList<Department>({
     resource: "departments",
@@ -91,7 +105,7 @@ const SubjectsEdit = () => {
       <h1 className="page-title">Edit Subject</h1>
       <div className="intro-row">
         <p>Update the subject information below.</p>
-        <Button onClick={() => back()}>Go Back</Button>
+        <BackButton>Go Back</BackButton>
       </div>
 
       <Separator />

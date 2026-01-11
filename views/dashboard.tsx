@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo } from "react";
 import { useLink, useList } from "@refinedev/core";
 import {
   Bar,
   BarChart,
+  CartesianGrid,
   Cell,
   Pie,
   PieChart,
@@ -39,6 +41,29 @@ type ClassListItem = {
 
 const roleColors = ["#f97316", "#0ea5e9", "#22c55e", "#a855f7"];
 
+const ChartTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="rounded-lg border border-border bg-background/95 p-3 shadow-xl backdrop-blur-sm">
+        <p className="mb-1 text-sm font-bold text-foreground">{label}</p>
+        <div className="flex items-center gap-2">
+          <div
+            className="h-2 w-2 rounded-full"
+            style={{ backgroundColor: payload[0].fill }}
+          />
+          <span className="text-xs font-medium text-muted-foreground uppercase">
+            {payload[0].name.replace(/([A-Z])/g, " $1").trim()}:
+          </span>
+          <span className="text-sm font-bold text-foreground">
+            {payload[0].value}
+          </span>
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 const Dashboard = () => {
   const Link = useLink();
   const { query: usersQuery } = useList<User>({
@@ -65,10 +90,15 @@ const Dashboard = () => {
     liveMode: "auto",
   });
 
-  const users = usersQuery.data?.data ?? [];
-  const subjects = subjectsQuery.data?.data ?? [];
-  const departments = departmentsQuery.data?.data ?? [];
-  const classes = classesQuery.data?.data ?? [];
+  const usersData = usersQuery.data?.data;
+  const subjectsData = subjectsQuery.data?.data;
+  const departmentsData = departmentsQuery.data?.data;
+  const classesData = classesQuery.data?.data;
+
+  const users = useMemo(() => usersData ?? [], [usersData]);
+  const subjects = useMemo(() => subjectsData ?? [], [subjectsData]);
+  const departments = useMemo(() => departmentsData ?? [], [departmentsData]);
+  const classes = useMemo(() => classesData ?? [], [classesData]);
 
   const usersByRole = useMemo(() => {
     const counts = users.reduce<Record<string, number>>((acc, user) => {
@@ -245,7 +275,32 @@ const Dashboard = () => {
                       />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        return (
+                          <div className="rounded-lg border border-border bg-background/95 p-3 shadow-xl backdrop-blur-sm">
+                            <div className="flex items-center gap-2">
+                              <div
+                                className="h-2 w-2 rounded-full"
+                                style={{
+                                  backgroundColor:
+                                    payload[0].payload.fill || payload[0].color,
+                                }}
+                              />
+                              <span className="text-xs font-medium text-muted-foreground uppercase">
+                                {payload[0].name}:
+                              </span>
+                              <span className="text-sm font-bold text-foreground">
+                                {payload[0].value}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -309,14 +364,44 @@ const Dashboard = () => {
             </h3>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={subjectsByDepartment}>
-                  <XAxis dataKey="departmentName" tick={{ fontSize: 12 }} />
-                  <YAxis allowDecimals={false} />
-                  <Tooltip />
+                <BarChart
+                  data={subjectsByDepartment}
+                  margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                >
+                  <CartesianGrid
+                    vertical={false}
+                    strokeDasharray="3 3"
+                    stroke="hsl(var(--muted-foreground))"
+                    opacity={0.1}
+                  />
+                  <XAxis
+                    dataKey="departmentName"
+                    tick={{
+                      fontSize: 11,
+                      fill: "#888888",
+                    }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    allowDecimals={false}
+                    tick={{
+                      fontSize: 11,
+                      fill: "#888888",
+                    }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip
+                    content={<ChartTooltip />}
+                    cursor={{ fill: "hsl(var(--muted))", opacity: 0.15 }}
+                  />
                   <Bar
                     dataKey="totalSubjects"
+                    name="Subjects"
                     fill="#f97316"
-                    radius={[6, 6, 0, 0]}
+                    radius={[4, 4, 0, 0]}
+                    barSize={40}
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -329,14 +414,44 @@ const Dashboard = () => {
             </h3>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={classesBySubject}>
-                  <XAxis dataKey="subjectName" tick={{ fontSize: 12 }} />
-                  <YAxis allowDecimals={false} />
-                  <Tooltip />
+                <BarChart
+                  data={classesBySubject}
+                  margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                >
+                  <CartesianGrid
+                    vertical={false}
+                    strokeDasharray="3 3"
+                    stroke="hsl(var(--muted-foreground))"
+                    opacity={0.1}
+                  />
+                  <XAxis
+                    dataKey="subjectName"
+                    tick={{
+                      fontSize: 11,
+                      fill: "#888888",
+                    }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    allowDecimals={false}
+                    tick={{
+                      fontSize: 11,
+                      fill: "#888888",
+                    }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip
+                    content={<ChartTooltip />}
+                    cursor={{ fill: "hsl(var(--muted))", opacity: 0.15 }}
+                  />
                   <Bar
                     dataKey="totalClasses"
+                    name="Classes"
                     fill="#0ea5e9"
-                    radius={[6, 6, 0, 0]}
+                    radius={[4, 4, 0, 0]}
+                    barSize={40}
                   />
                 </BarChart>
               </ResponsiveContainer>

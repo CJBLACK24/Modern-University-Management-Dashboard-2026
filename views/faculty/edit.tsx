@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "@refinedev/react-hook-form";
 import { useBack } from "@refinedev/core";
@@ -32,6 +33,13 @@ const FacultyEdit = () => {
 
   const form = useForm({
     resolver: zodResolver(facultySchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      role: "teacher",
+      image: "",
+      imageCldPubId: "",
+    },
     refineCoreProps: {
       resource: "users",
       action: "edit",
@@ -43,7 +51,21 @@ const FacultyEdit = () => {
     handleSubmit,
     formState: { isSubmitting },
     control,
+    reset,
   } = form;
+
+  useEffect(() => {
+    if (queryResult?.data?.data) {
+      const data = queryResult.data.data;
+      reset({
+        name: data.name || "",
+        email: data.email || "",
+        role: data.role || "teacher",
+        image: data.image || "",
+        imageCldPubId: data.imageCldPubId || "",
+      });
+    }
+  }, [queryResult?.data?.data, reset]);
 
   const imagePublicId = form.watch("imageCldPubId");
 

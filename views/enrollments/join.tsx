@@ -41,6 +41,7 @@ const EnrollmentsJoin = () => {
     },
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const inviteCode = form.watch("inviteCode");
 
   const onSubmit = async (values: JoinFormValues) => {

@@ -111,6 +111,7 @@ function UploadWidget({
     <div className="space-y-2">
       {preview ? (
         <div className="upload-preview">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={preview.url} alt="Uploaded file" />
 
           <Button

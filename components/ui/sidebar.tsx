@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity */
 import { Slot } from "@radix-ui/react-slot";
 import { cva, VariantProps } from "class-variance-authority";
 import { PanelLeftIcon } from "lucide-react";

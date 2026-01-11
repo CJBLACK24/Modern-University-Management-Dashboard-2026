@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "@refinedev/react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -22,9 +23,10 @@ import {
 
 import { EditView } from "@/components/refine-ui/views/edit-view";
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
+import { BackButton } from "@/components/refine-ui/buttons/back";
 
 import { Textarea } from "@/components/ui/textarea";
-import { useBack, useList } from "@refinedev/core";
+import { useList } from "@refinedev/core";
 import { Loader2 } from "lucide-react";
 import { classSchema } from "@/lib/schema";
 import UploadWidget from "@/components/upload-widget";
@@ -32,10 +34,18 @@ import { Subject, User } from "@/types";
 import z from "zod";
 
 const ClassesEdit = () => {
-  const back = useBack();
-
   const form = useForm({
     resolver: zodResolver(classSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      capacity: 30,
+      status: "active",
+      subjectId: 1,
+      teacherId: "",
+      bannerUrl: "",
+      bannerCldPubId: "",
+    },
     refineCoreProps: {
       resource: "classes",
       action: "edit",
@@ -47,7 +57,24 @@ const ClassesEdit = () => {
     handleSubmit,
     formState: { isSubmitting, errors },
     control,
+    reset,
   } = form;
+
+  useEffect(() => {
+    if (queryResult?.data?.data) {
+      const data = queryResult.data.data;
+      reset({
+        name: data.name || "",
+        description: data.description || "",
+        status: data.status || "active",
+        capacity: data.capacity || 30,
+        subjectId: data.subjectId ?? data.subject?.id ?? 1,
+        teacherId: data.teacherId ?? data.teacher?.id ?? "",
+        bannerUrl: data.bannerUrl || "",
+        bannerCldPubId: data.bannerCldPubId || "",
+      });
+    }
+  }, [queryResult?.data?.data, reset]);
 
   const bannerPublicId = form.watch("bannerCldPubId");
 
@@ -95,7 +122,7 @@ const ClassesEdit = () => {
       <h1 className="page-title">Edit Class</h1>
       <div className="intro-row">
         <p>Update the class information below.</p>
-        <Button onClick={() => back()}>Go Back</Button>
+        <BackButton>Go Back</BackButton>
       </div>
 
       <Separator />

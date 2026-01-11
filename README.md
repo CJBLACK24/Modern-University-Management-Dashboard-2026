@@ -1,132 +1,123 @@
-# Academic Infrastructure Suite 🔋
+# Academic Infrastructure Suite (AIS) | Enterprise Grade ERP
 
-<div align="center">
-  <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
-  <img src="https://img.shields.io/badge/REFINE-22C55E?style=for-the-badge&logo=refine&logoColor=white" />
-  <img src="https://img.shields.io/badge/TAILWIND-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
-  <img src="https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
-  <br />
-  <img src="https://img.shields.io/badge/POSTGRESQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" />
-  <img src="https://img.shields.io/badge/NEONDB-00E599?style=for-the-badge&logo=neon&logoColor=white" />
-  <img src="https://img.shields.io/badge/DRIZZLE-C5F74F?style=for-the-badge&logo=drizzle&logoColor=black" />
-  <img src="https://img.shields.io/badge/BETTER--AUTH-000000?style=for-the-badge&logo=better-auth&logoColor=white" />
-  <br />
-  <img src="https://img.shields.io/badge/CLOUDINARY-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white" />
-  <img src="https://img.shields.io/badge/ARCJET-2D1F6E?style=for-the-badge&logo=arcjet&logoColor=white" />
-  <img src="https://img.shields.io/badge/SITE24X7-2ECC71?style=for-the-badge&logo=site24x7&logoColor=white" />
-  <img src="https://img.shields.io/badge/CODERABBIT-FF6600?style=for-the-badge&logo=coderabbit&logoColor=white" />
-</div>
+![Status](https://img.shields.io/badge/Status-Production_Ready-success)
+![Stack](https://img.shields.io/badge/Stack-PERN-blue)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-A state-of-the-art, comprehensive academic management system built with Next.js 15, Refine, and Drizzle ORM. Designed for scalability, security, and visual excellence.
-
-## 🛠️ Tech Stack
-
-### **Front End**
-
-- **Framework:** [Next.js 16 (Canary)](https://nextjs.org/) (App Router, Turbopack)
-- **Admin Engine:** [Refine.js](https://refine.dev/) (Data Provider, Auth Provider, Live Provider)
-- **Styling:** Tailwind CSS, Shadcn UI, [Framer Motion](https://www.framer.com/motion/) & [GSAP](https://gsap.com/)
-- **Components:** [Lucide React](https://lucide.dev/), [Sonner](https://sonner.stevenly.me/), [Shadcn UI](https://ui.shadcn.com/)
-- **Data Visualization:** [Recharts](https://recharts.org/)
-
-### **Back End**
-
-- **Database:** PostgreSQL ([Neon DB](https://neon.tech/)), [Drizzle ORM](https://orm.drizzle.team/)
-- **Authentication:** [Better Auth](https://www.better-auth.com/) (Magic Link, Google & GitHub OAuth)
-- **Real-time:** [Pusher WebSockets](https://pusher.com/)
-- **Email:** [Resend](https://resend.com/)
-- **Storage:** [Cloudinary](https://cloudinary.com/)
-- **Security:** [Arcjet](https://arcjet.com/) (Bot protection & Rate limiting)
-
-### **DevTools**
-
-- **Language:** TypeScript
-- **Database Management:** [Drizzle Kit](https://orm.drizzle.team/kit-docs/overview)
-- **Monitoring:** [Site24x7](https://www.site24x7.com/)
-- **AI Review:** [CodeRabbit](https://coderabbit.ai/)
-- **Schema Validation:** [Zod](https://zod.dev/)
-
-## ✨ Core Features
-
-### 🔐 Multi-Role Authentication & Security
-
-- **Passwordless Entry**: Secure login via **Better Auth Magic Links** delivered through **Resend**.
-- **OAuth Support**: Instant access using Google or GitHub accounts.
-- **Dynamic Routing**: Automatic redirection to Student, Teacher, or Admin dashboards based on role-based permissions.
-
-### 📊 Unified Analytics Dashboard
-
-- **Real-Time Statistics**: High-level overview of users, active classes, subjects, and departments.
-- **Pusher Integration**: Charts and metrics update instantly as soon as data changes in the database via the **Refine Live Provider**.
-
-### 📖 Academic Management
-
-- **Intelligent Subjects**: Centralized curriculum control with advanced filtering and drill-down class views.
-- **Departmental Governance**: Structural organization of subjects and faculties.
-- **Class Orchestration**: Schedule sessions, manage capacity, and assign teachers using a robust Drizzle-powered engine.
-
-### 🎟️ Code-Based Enrollment System
-
-- **"Google Classroom" Style**: Students can join courses instantly by entering a unique **6-8 digit invite code**, ensuring a friction-less enrollment process.
-
-### 👤 Faculty & Profile Management
-
-- **Dynamic Directory**: Paginated directory with advanced search functionality.
-- **Cloudinary Integration**: Fully integrated profile image uploads and automatic asset optimization.
+> **All-in-one university management system.**  
+> Seamlessly connect Faculty, Students, and Administration through a robust, scalable, and beautiful interface. built for the modern educational ecosystem.
 
 ---
 
-## 🚦 Getting Started
+## 🚀 Features
 
-1.  **Clone the repository:**
+### for Administration
+
+- **Department Hierarchy**: Manage complex organizational structures with ease.
+- **Global Catalog**: Centralized subject definitions (Courses) to ensure curriculum consistency.
+- **Data Visualization**: Real-time dashboards with Bar Charts, Pie Charts, and KPI cards powered by `Recharts`.
+- **Audit Logging**: `updatedAt` timestamps tracking modification across all resources.
+
+### for Faculty
+
+- **Class Management**: Create class instances, set capacity, and manage schedules.
+- **Rich Media**: Upload class banners and profile photos via Cloudinary integration.
+- **Student Roster**: View enrolled students and manage access.
+
+### for Students
+
+- **Frictionless Enrollment**: "Join by Code" system eliminates bureaucratic delays.
+- **Schedule View**: Clear visualization of enrolled classes.
+
+---
+
+## 🛠️ Technology Stack: The Modern PERN
+
+We utilize a cutting-edge **PERN** variation, optimized for type safety and performance.
+
+| Component     | Technology                       | Description                                                  |
+| :------------ | :------------------------------- | :----------------------------------------------------------- |
+| **P**ostgres  | **PostgreSQL** + **Drizzle ORM** | Relational data integrity with TypeScript-native ORM.        |
+| **E**xpress\* | **Next.js API Routes**           | Replaces Express with serverless-ready API endpoints.        |
+| **R**eact     | **Refine.js**                    | Headless enterprise UI framework for rapid CRUD development. |
+| **N**ode      | **Node.js**                      | Server-side runtime environment.                             |
+
+### Additional Powerhouse Libraries
+
+- **UI/UX**: `Shadcn/UI` + `TailwindCSS` for pixel-perfect, accessible, and responsive design.
+- **Validation**: `Zod` schema validation for bulletproof data integrity.
+- **Auth**: `NextAuth.js` (custom provider) for secure session management.
+
+---
+
+## 🏗️ Architecture & Scalability
+
+The system is designed with **Vertical Slicing** in mind.
+
+- **API Layer**: Located in `app/api/`. Each resource has dedicated isolation (`GET`, `POST`, `PATCH`, `DELETE`).
+- **View Layer**: Located in `views/`. Decoupled from logic, focusing purely on presentation.
+- **Data Layer**: Located in `db/schema`. Single source of truth for data models.
+
+### Key Scalability Features
+
+1.  **Server-Side Pagination**: All lists (`useTable`) support server-side pagination to handle thousands of records.
+2.  **Optimized Assets**: Images served via CDN (Cloudinary).
+3.  **Type Safety**: End-to-end TypeScript from Database -> API -> Frontend.
+
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- PostgreSQL Database
+- Cloudinary Account
+
+### Installation
+
+1.  **Clone the repository**
 
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/your-org/academic-suite.git
     cd academic-infrastructure-suite
     ```
 
-2.  **Install dependencies:**
+2.  **Install Dependencies**
 
     ```bash
     npm install
     ```
 
-3.  **Environment Setup:**
-    Copy `.env.example` to `.env.local` and provide your API keys.
+3.  **Environment Setup**
+    Create a `.env` file:
 
-    ```bash
-    cp .env.example .env.local
+    ```env
+    DATABASE_URL=postgres://user:pass@localhost:5432/ais_db
+    NEXTAUTH_SECRET=your_super_secret
+    CLOUDINARY_URL=cloudinary://...
     ```
 
-    > [!IMPORTANT]
-    > For local development, ensure `BETTER_AUTH_URL` is set to `http://localhost:3000`.
-
-4.  **Database Sync:**
+4.  **Database Migration**
 
     ```bash
-    npx drizzle-kit push
+    npm run db:push
     ```
 
-5.  **Run Development Server:**
+5.  **Run Development Server**
     ```bash
     npm run dev
     ```
 
 ---
 
-## 🏗️ Architecture
+## 🤝 Contribution & Workflow
 
-The project follows a modular architecture:
+Please refer to our internal documentation for detailed workflows:
 
-- `app/api`: Serverless route handlers for data management.
-- `providers/`: Refine bridge for data, auth, and live updates.
-- `views/`: Feature-specific UI components grouped inside Refine routes.
-- `db/schema/`: Type-safe schema definitions for Drizzle.
+- [Business Logic Workflow](./.gemini/antigravity/brain/fccb0049-d00a-4c04-83bd-27a8094d531e/BusinessWorkflow.md)
+- [Application Sitemap](./.gemini/antigravity/brain/fccb0049-d00a-4c04-83bd-27a8094d531e/sitemap.md)
 
 ---
 
-## 🔋 Highlights
-
-- **Vibrant Aesthetics**: Modern dark mode with glowing gradients and responsive layouts.
-- **Scalability**: Optimized for hundreds of concurrent users with real-time feedback.
-- **Performance**: Leveraging Next.js 15 Turbopack for ultra-fast development and deployment.
+**Academic Infrastructure Suite** — _Empowering Education through Technology._

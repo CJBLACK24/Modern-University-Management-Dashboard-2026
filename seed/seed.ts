@@ -193,14 +193,10 @@ const seed = async () => {
   const classInviteCodes = data.classes.map(
     (classItem) => classItem.inviteCode
   );
-  const classRows =
-    classInviteCodes.length === 0
-      ? []
-      : await db
-          .select({ id: classes.id, inviteCode: classes.inviteCode })
-          .from(classes)
-          .where(inArray(classes.inviteCode, classInviteCodes));
-  const classMap = new Map(classRows.map((row) => [row.inviteCode, row.id]));
+  await db
+    .select({ id: classes.id, inviteCode: classes.inviteCode })
+    .from(classes)
+    .where(inArray(classes.inviteCode, classInviteCodes));
 };
 
 seed()

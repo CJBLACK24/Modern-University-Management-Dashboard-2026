@@ -58,7 +58,7 @@ export async function GET(
 
     return NextResponse.json({
       data: {
-        department,
+        ...department,
         totals: {
           subjects: subjectsCount[0]?.count ?? 0,
           classes: classesCount[0]?.count ?? 0,
@@ -70,6 +70,50 @@ export async function GET(
     console.error("GET /departments/:id error:", error);
     return NextResponse.json(
       { error: "Failed to fetch department details" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const departmentId = Number(id);
+    const body = await request.json();
+
+    if (!Number.isFinite(departmentId)) {
+      return NextResponse.json(
+        { error: "Invalid department id" },
+        { status: 400 }
+      );
+    }
+
+    const [updatedDepartment] = await db
+      .update(departments)
+      .set({
+        name: body.name,
+        code: body.code,
+        description: body.description,
+        updatedAt: sql`now()`,
+      })
+      .where(eq(departments.id, departmentId))
+      .returning();
+
+    if (!updatedDepartment) {
+      return NextResponse.json(
+        { error: "Department not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ data: updatedDepartment });
+  } catch (error) {
+    console.error("PATCH /departments/:id error:", error);
+    return NextResponse.json(
+      { error: "Failed to update department" },
       { status: 500 }
     );
   }

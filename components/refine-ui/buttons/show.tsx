@@ -33,49 +33,50 @@ type ShowButtonProps = {
 export const ShowButton = React.forwardRef<
   React.ComponentRef<typeof Button>,
   ShowButtonProps
->(
-  (
-    { resource, recordItemId, accessControl, meta, children, onClick, ...rest },
-    ref
-  ) => {
-    const { hidden, disabled, LinkComponent, to, label } = useShowButton({
-      resource,
-      id: recordItemId,
-      accessControl,
-      meta,
-    });
+>(({ resource, recordItemId, accessControl, meta, onClick, ...rest }, ref) => {
+  const { hidden, disabled, LinkComponent, to, label } = useShowButton({
+    resource,
+    id: recordItemId,
+    accessControl,
+    meta,
+  });
 
-    const isDisabled = disabled || rest.disabled;
-    const isHidden = hidden || rest.hidden;
+  const [isLoading, setIsLoading] = React.useState(false);
 
-    if (isHidden) return null;
+  const isDisabled = disabled || rest.disabled || isLoading;
+  const isHidden = hidden || rest.hidden;
 
-    return (
-      <Button {...rest} ref={ref} disabled={isDisabled} asChild>
-        <LinkComponent
-          to={to}
-          replace={false}
-          onClick={(e: React.PointerEvent<HTMLButtonElement>) => {
-            if (isDisabled) {
-              e.preventDefault();
-              return;
-            }
-            if (onClick) {
-              e.preventDefault();
-              onClick(e);
-            }
-          }}
-        >
-          {children ?? (
-            <div className="flex items-center gap-2 font-semibold">
-              <Eye className="h-4 w-4" />
-              <span>{label}</span>
-            </div>
-          )}
-        </LinkComponent>
-      </Button>
-    );
-  }
-);
+  if (isHidden) return null;
+
+  return (
+    <Button {...rest} ref={ref} disabled={isDisabled} asChild>
+      <LinkComponent
+        to={to}
+        replace={false}
+        onClick={(e: React.PointerEvent<HTMLButtonElement>) => {
+          if (isDisabled) {
+            e.preventDefault();
+            return;
+          }
+          setIsLoading(true);
+          if (onClick) {
+            onClick(e);
+          }
+        }}
+      >
+        {isLoading ? (
+          <div className="flex items-center gap-2 font-semibold">
+            <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          </div>
+        ) : (
+          <div className="flex items-center gap-2 font-semibold">
+            <Eye className="h-4 w-4" />
+            <span>{label}</span>
+          </div>
+        )}
+      </LinkComponent>
+    </Button>
+  );
+});
 
 ShowButton.displayName = "ShowButton";

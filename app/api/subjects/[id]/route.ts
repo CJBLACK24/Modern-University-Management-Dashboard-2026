@@ -41,7 +41,7 @@ export async function GET(
 
     return NextResponse.json({
       data: {
-        subject,
+        ...subject,
         totals: {
           classes: classesCount[0]?.count ?? 0,
         },
@@ -51,6 +51,48 @@ export async function GET(
     console.error("GET /subjects/:id error:", error);
     return NextResponse.json(
       { error: "Failed to fetch subject details" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const subjectId = Number(id);
+    const body = await request.json();
+
+    if (!Number.isFinite(subjectId)) {
+      return NextResponse.json(
+        { error: "Invalid subject id" },
+        { status: 400 }
+      );
+    }
+
+    const [updatedSubject] = await db
+      .update(subjects)
+      .set({
+        name: body.name,
+        code: body.code,
+        description: body.description,
+        departmentId: body.departmentId,
+        updatedAt: sql`now()`,
+      })
+      .where(eq(subjects.id, subjectId))
+      .returning();
+
+    if (!updatedSubject) {
+      return NextResponse.json({ error: "Subject not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ data: updatedSubject });
+  } catch (error) {
+    console.error("PATCH /subjects/:id error:", error);
+    return NextResponse.json(
+      { error: "Failed to update subject" },
       { status: 500 }
     );
   }

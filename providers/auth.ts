@@ -1,26 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { AuthProvider } from "@refinedev/core";
-import { User, SignUpPayload } from "@/types";
+import { SignUpPayload } from "@/types";
 import { authClient } from "@/lib/auth-client";
 
 export const authProvider: AuthProvider = {
   register: async ({
     email,
-    password,
     name,
     role,
     image,
     imageCldPubId,
   }: SignUpPayload) => {
     try {
-      const { data, error } = await authClient.signUp.email({
-        name,
+      // For passwordless auth, send magic link to complete registration
+      const { error } = await authClient.signIn.magicLink({
         email,
-        password,
-        image,
-        role,
-        imageCldPubId,
-      } as SignUpPayload);
+        callbackURL: "/",
+      });
 
       if (error) {
         return {
@@ -33,12 +29,13 @@ export const authProvider: AuthProvider = {
         };
       }
 
-      // Store user data
-      localStorage.setItem("user", JSON.stringify(data.user));
-
+      // Magic link sent - user will complete registration via email
       return {
         success: true,
-        redirectTo: "/",
+        successNotification: {
+          message: "Check your email to complete registration",
+          type: "success",
+        },
       };
     } catch (error) {
       console.error("Register error:", error);
@@ -51,11 +48,12 @@ export const authProvider: AuthProvider = {
       };
     }
   },
-  login: async ({ email, password }) => {
+  login: async ({ email }) => {
     try {
-      const { data, error } = await authClient.signIn.email({
+      // Use magic link for passwordless auth
+      const { error } = await authClient.signIn.magicLink({
         email: email,
-        password: password,
+        callbackURL: "/",
       });
 
       if (error) {
@@ -69,12 +67,14 @@ export const authProvider: AuthProvider = {
         };
       }
 
-      // Store user data
-      localStorage.setItem("user", JSON.stringify(data.user));
-
+      // Magic link sends email - no immediate user data
+      // Magic link sent successfully
       return {
         success: true,
-        redirectTo: "/",
+        successNotification: {
+          message: "Check your email for magic link to login",
+          type: "success",
+        },
       };
     } catch (error) {
       console.error("Login exception:", error);

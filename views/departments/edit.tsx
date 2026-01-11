@@ -1,10 +1,12 @@
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "@refinedev/react-hook-form";
-import { useBack, type BaseRecord, type HttpError } from "@refinedev/core";
+import { type BaseRecord, type HttpError } from "@refinedev/core";
 import * as z from "zod";
 
 import { EditView } from "@/components/refine-ui/views/edit-view";
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
+import { BackButton } from "@/components/refine-ui/buttons/back";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -30,10 +32,13 @@ const departmentSchema = z.object({
 type DepartmentFormValues = z.infer<typeof departmentSchema>;
 
 const DepartmentsEdit = () => {
-  const back = useBack();
-
   const form = useForm<BaseRecord, HttpError, DepartmentFormValues>({
     resolver: zodResolver(departmentSchema),
+    defaultValues: {
+      name: "",
+      code: "",
+      description: "",
+    },
     refineCoreProps: {
       resource: "departments",
       action: "edit",
@@ -45,7 +50,14 @@ const DepartmentsEdit = () => {
     handleSubmit,
     formState: { isSubmitting },
     control,
+    reset,
   } = form;
+
+  useEffect(() => {
+    if (queryResult?.data?.data) {
+      reset(queryResult.data.data as DepartmentFormValues);
+    }
+  }, [queryResult?.data?.data, reset]);
 
   const onSubmit = async (values: DepartmentFormValues) => {
     try {
@@ -62,7 +74,7 @@ const DepartmentsEdit = () => {
       <h1 className="page-title">Edit Department</h1>
       <div className="intro-row">
         <p>Update the department information below.</p>
-        <Button onClick={() => back()}>Go Back</Button>
+        <BackButton>Go Back</BackButton>
       </div>
 
       <Separator />

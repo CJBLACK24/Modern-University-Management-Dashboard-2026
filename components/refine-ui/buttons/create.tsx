@@ -28,14 +28,16 @@ type CreateButtonProps = {
 export const CreateButton = React.forwardRef<
   React.ComponentRef<typeof Button>,
   CreateButtonProps
->(({ resource, accessControl, meta, children, onClick, ...rest }, ref) => {
+>(({ resource, accessControl, meta, onClick, ...rest }, ref) => {
   const { hidden, disabled, LinkComponent, to, label } = useCreateButton({
     resource,
     accessControl,
     meta,
   });
 
-  const isDisabled = disabled || rest.disabled;
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const isDisabled = disabled || rest.disabled || isLoading;
   const isHidden = hidden || rest.hidden;
 
   if (isHidden) return null;
@@ -50,13 +52,17 @@ export const CreateButton = React.forwardRef<
             e.preventDefault();
             return;
           }
+          setIsLoading(true);
           if (onClick) {
-            e.preventDefault();
             onClick(e);
           }
         }}
       >
-        {children ?? (
+        {isLoading ? (
+          <div className="flex items-center gap-2 font-semibold">
+            <div className="w-4 h-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          </div>
+        ) : (
           <div className="flex items-center gap-2 font-semibold">
             <Plus className="w-4 h-4" />
             <span>{label ?? "Create"}</span>

@@ -59,6 +59,7 @@ export const SignUpForm = () => {
     },
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const imagePublicId = form.watch("imageCldPubId");
 
   const handleSocialSignIn = async (provider: "google" | "github") => {
