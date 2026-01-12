@@ -3,6 +3,7 @@
 Here's a comprehensive breakdown of your project's folder structure with descriptions:
 
 ## 🗂️ Root Level
+
 - **/** - Root directory of the Academic Infrastructure Suite
 - **.dockerignore** - Docker ignore configuration for containerization
 - **.env.example** - Example environment variables template
@@ -24,6 +25,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
 - **COMMIT_MESSAGE.md** - Commit message guidelines
 
 ## 📁 /app - Next.js App Router
+
 - **/app** - Next.js 14+ App Router directory (routes & layouts)
 - **favicon.ico** - Application favicon
 - **layout.tsx** - Root layout with providers and global structure
@@ -32,8 +34,11 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
 - **global-error.tsx** - Global error boundary handler
 - **not-found.tsx** - 404 error page
 - **globals.css** - App-level global styles
+- **/app/academic-calendar** - Academic calendar view and management
+  - **page.tsx** - Academic calendar list page
 
 ### /app/api - API Routes
+
 - **/app/api** - Next.js API routes for backend logic
 - **/app/api/auth/[...all]** - NextAuth.js authentication endpoints
   - **route.ts** - Catch-all auth route handler (login, register, etc.)
@@ -68,6 +73,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **overview/route.ts** - Dashboard overview metrics
 
 ### /app/classes - Class Routes
+
 - **/app/classes** - Class management pages
   - **page.tsx** - Classes list page
   - **loading.tsx** - Loading skeleton for classes
@@ -82,6 +88,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **loading.tsx** - Detail page loading state
 
 ### /app/departments - Department Routes
+
 - **/app/departments** - Department management pages
   - **page.tsx** - Departments list page
   - **loading.tsx** - Loading skeleton
@@ -96,6 +103,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **loading.tsx** - Loading state
 
 ### /app/subjects - Subject Routes
+
 - **/app/subjects** - Subject/course management pages
   - **page.tsx** - Subjects list page
   - **loading.tsx** - Loading skeleton
@@ -110,6 +118,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **loading.tsx** - Loading state
 
 ### /app/faculty - Faculty Routes
+
 - **/app/faculty** - Faculty/staff management pages
   - **page.tsx** - Faculty list page
   - **loading.tsx** - Loading skeleton
@@ -124,6 +133,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **loading.tsx** - Loading state
 
 ### /app/enrollments - Enrollment Routes
+
 - **/app/enrollments** - Student enrollment management
 - **/app/enrollments/create** - Create enrollment
   - **page.tsx** - Enrollment form
@@ -133,12 +143,14 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **page.tsx** - Enrollment confirmation page
 
 ### /app/login & /app/register - Auth Routes
+
 - **/app/login** - Login page route
   - **page.tsx** - Login form page
 - **/app/register** - Registration page route
   - **page.tsx** - User registration form
 
 ## 📁 /views - Refine.js View Components
+
 - **/views** - Refine.js resource views (separate from routes)
   - **dashboard.tsx** - Main dashboard view with stats and charts
 - **/views/classes** - Class resource views
@@ -171,14 +183,22 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **index.tsx** - Registration form component
 
 ## 📁 /components - Reusable Components
+
 - **/components** - Reusable UI components
   - **refine-context.tsx** - Refine.js context provider wrapper
-  - **skeletons.tsx** - Loading skeleton components
-  - **auth-skeleton.tsx** - Authentication page skeleton
   - **upload-widget.tsx** - Cloudinary upload widget component
 
-### /components/ui - Shadcn UI Components
-- **/components/ui** - Shadcn UI component library (47 components)
+### /components/ui - Shadcn UI Core
+
+- **/components/ui** - Base UI components from Shadcn UI
+- **skeleton/** - Organized skeleton loaders
+  - **BaseSkeleton.tsx** - Base pulse primitive
+  - **CardSkeleton.tsx** - Card loading state
+  - **TableSkeleton.tsx** - Data table loading state
+  - **FormSkeleton.tsx** - Form loading state
+  - **DashboardSkeleton.tsx** - Metric grid loading state
+  - **AuthSkeleton.tsx** - Authentication flow loading state
+  - **index.tsx** - Central export point
   - **accordion.tsx** - Collapsible accordion component
   - **alert-dialog.tsx** - Modal alert dialog
   - **alert.tsx** - Alert notification component
@@ -228,6 +248,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **tooltip.tsx** - Tooltip component
 
 ### /components/refine-ui - Refine.js UI Components
+
 - **/components/refine-ui** - Custom Refine.js UI components
 - **/components/refine-ui/buttons** - Action button components
   - **back.tsx** - Navigate back button
@@ -269,6 +290,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **list.tsx** - List view wrapper
 
 ## 📁 /lib - Library & Utilities
+
 - **/lib** - Core library utilities and configurations
   - **auth.ts** - NextAuth.js authentication configuration
   - **auth-client.ts** - Client-side auth utilities
@@ -279,6 +301,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **utils.ts** - General utility functions (cn, formatters)
 
 ## 📁 /db - Database Layer
+
 - **/db** - Database schema and connection
   - **index.ts** - Drizzle database instance
 - **/db/schema** - Database schema definitions
@@ -287,29 +310,35 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **index.ts** - Schema exports
 
 ## 📁 /providers - Context Providers
+
 - **/providers** - Refine.js provider configurations
   - **auth.ts** - Refine.js auth provider implementation
   - **data.ts** - Refine.js data provider (REST API)
   - **live.ts** - Refine.js live/realtime provider (Pusher)
 
 ## 📁 /hooks - Custom React Hooks
+
 - **/hooks** - Custom React hooks
   - **use-mobile.ts** - Mobile viewport detection hook
 
 ## 📁 /types - TypeScript Types
+
 - **/types** - Global TypeScript type definitions
   - **index.ts** - Application-wide type definitions
 
 ## 📁 /constants - Constants
+
 - **/constants** - Application constants
   - **index.ts** - App-wide constants and enums
 
 ## 📁 /seed - Database Seeding
+
 - **/seed** - Database seeding scripts
   - **seed.ts** - Main seeding script
   - **data.json** - Seed data payload
 
 ## 📁 /public - Static Assets
+
 - **/public** - Public static assets
   - **favicon.ico** - Browser favicon
   - **logo.png** - Application logo
@@ -317,6 +346,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
   - **calendar-2026-with-holidays-PH.pdf** - 2026 Philippine holidays calendar
 
 ## 📊 Summary Statistics
+
 - **Total Directories**: ~25+ main directories
 - **Total TypeScript/TSX Files**: ~88 (excluding node_modules)
 - **API Routes**: 24 route handlers
@@ -325,6 +355,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
 - **App Routes**: 30+ Next.js pages
 
 ## 🔑 Key Architecture Highlights
+
 - **Next.js 14 App Router** - Modern file-based routing with server components
 - **Refine.js Integration** - Admin panel framework with data providers
 - **Shadcn UI** - Beautiful, accessible component library
@@ -335,6 +366,7 @@ Here's a comprehensive breakdown of your project's folder structure with descrip
 - **Cloudinary** - Cloud-based file uploads
 
 This structure follows a clean architecture pattern with clear separation between:
+
 - **Routes (/app)** - Next.js pages and API endpoints
 - **Views (/views)** - Refine.js view logic
 - **Components (/components)** - Reusable UI

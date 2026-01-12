@@ -3,6 +3,7 @@ import { useShow } from "@refinedev/core";
 import { useTable } from "@refinedev/react-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
@@ -235,9 +236,14 @@ const ClassesShow = () => {
           </ol>
         </div>
 
-        <Button size="lg" className="w-full">
-          Join Class
-        </Button>
+        <Link href="/enrollments/join" className="w-full">
+          <Button
+            size="lg"
+            className="w-full bg-gradient-orange text-white hover:opacity-90"
+          >
+            Join Class
+          </Button>
+        </Link>
       </Card>
 
       <Card className="hover:shadow-md transition-shadow">

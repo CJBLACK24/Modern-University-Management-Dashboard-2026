@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/refine-ui/theme/theme-provider";
 import {
   BookOpen,
   Building2,
+  Calendar,
   ClipboardCheck,
   GraduationCap,
   Home,
@@ -122,6 +123,14 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   meta: {
                     label: "Classes",
                     icon: <GraduationCap />,
+                  },
+                },
+                {
+                  name: "academic-calendar",
+                  list: "/academic-calendar",
+                  meta: {
+                    label: "Academic Calendar",
+                    icon: <Calendar />,
                   },
                 },
               ]}

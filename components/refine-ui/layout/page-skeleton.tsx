@@ -1,8 +1,8 @@
 import {
-  MetricGridSkeleton,
+  DashboardSkeleton as MetricGridSkeleton,
   DataTableSkeleton,
-  EnrollmentFormSkeleton,
-} from "@/components/skeletons";
+  FormSkeleton as EnrollmentFormSkeleton,
+} from "@/components/ui/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 

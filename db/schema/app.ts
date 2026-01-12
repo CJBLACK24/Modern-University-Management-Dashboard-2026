@@ -78,6 +78,15 @@ export const classes = pgTable(
   })
 );
 
+export const academicCalendar = pgTable("academic_calendar", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  url: text("url").notNull(),
+  publicId: text("public_id").notNull(),
+  year: integer("year").notNull().default(2026),
+
+  ...timestamps,
+});
+
 export const enrollments = pgTable(
   "enrollments",
   {
@@ -148,3 +157,6 @@ export type NewClass = typeof classes.$inferInsert;
 
 export type Enrollment = typeof enrollments.$inferSelect;
 export type NewEnrollment = typeof enrollments.$inferInsert;
+
+export type AcademicCalendar = typeof academicCalendar.$inferSelect;
+export type NewAcademicCalendar = typeof academicCalendar.$inferInsert;

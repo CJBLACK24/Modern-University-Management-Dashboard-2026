@@ -121,3 +121,11 @@ export type SignUpPayload = {
   imageCldPubId?: string;
   role: UserRole;
 };
+
+export type AcademicCalendar = {
+  id: number;
+  url: string;
+  publicId: string;
+  year: number;
+  createdAt: string;
+};
