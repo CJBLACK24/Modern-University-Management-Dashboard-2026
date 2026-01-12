@@ -20,6 +20,22 @@ export const ROLE_OPTIONS = [
 ];
 
 export const DEPARTMENTS = [
+  "Information Technology",
+  "Civil Engineering",
+  "Marine Transportation",
+  "Maritime Engineering",
+  "Electrical Engineering",
+  "Mechanical Engineering",
+  "Agricultural Engineering",
+  "Biomedical Engineering",
+  "Chemical Engineering",
+  "Environmental Engineering",
+  "Geotechnical Engineering",
+  "Mining Engineering",
+  "Nuclear Engineering",
+  "Petroleum Engineering",
+  "Structural Engineering",
+  "Water Resources Engineering",
   "Computer Science",
   "Mathematics",
   "Physics",
