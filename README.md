@@ -215,6 +215,10 @@ The codebase follows a standardized enterprise structure for scalability:
 - `/views`: Implementation of specific page layouts.
 - `/lib`: External library configurations (Cloudinary, Auth).
 
+## 📜 Development Protocol
+
+This project follows the **[Vibe Coder Mindset](./VibeCoderMindset.md)**. All developers must adhere to the **[Verified Development Rules](./rules.md)** to ensure systemic alignment and engineering excellence.
+
 ---
 
 > **Status**: Production Ready  

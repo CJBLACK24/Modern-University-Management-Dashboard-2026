@@ -1,82 +1,316 @@
-# RULES.md
+# RULES.md — VERIFIED DEVELOPMENT PROTOCOL
 
-## 🎯 VIBE CODER DEVELOPMENT PRINCIPLES
-
-### 1. **Systemic Thinking End-to-End**
-
-- Always consider the complete user journey from UI → API → Database → Backend → UI
-- Think about edge cases, error states, and failure modes from day one
-- Design for scalability, maintenance, and observability from inception
-
-### 2. **Fundamental Engineering Excellence**
-
-- Prioritize clean architecture over quick hacks
-- Apply SOLID/DRY principles unless pragmatically justified
-- Choose data structures and algorithms based on actual use cases
-- Implement proper testing, security, and error handling as non-negotiable
-
-### 3. **Entrepreneur Spirit & Value Creation**
-
-- Build what matters, not just what's interesting
-- Align every feature with real user problems and business outcomes
-- Propose solutions, not just identify problems
-- Balance perfectionism with pragmatic shipping ("Done > Perfect")
-
-## 🎨 UI/UX CONSISTENCY RULES
-
-### Color Palette (Strictly Follow)
-
-- **Primary Background**: Use `bg-card` (or custom `#f8fafc` light / `#0f172a` dark)
-- **Borders**: Use `border-border` (or custom `#e2e8f0` light / `#1e293b` dark)
-- **Text**: Use `text-foreground` for primary, `text-muted-foreground` for secondary
-- **Buttons**: Use primary variants for main actions, secondary for less important
-- **Never** introduce new colors outside the established palette
-
-### Component Consistency
-
-- All headers must follow the same structure as "Classes" page (2nd-3rd image)
-- All forms must follow the same validation and feedback patterns
-- All loading states must use skeleton loaders (not loading spinners)
-- All modals/dialogs must follow the same animation and styling
-
-### Interaction Rules
-
-- Buttons must have clear hover/focus/active states
-- Forms must show validation errors inline
-- Loading states must prevent double submissions
-- All clickable elements must have proper cursor feedback
-- **Join Class Button**: Must be functional and linked to the enrollment flow. If the button is unclickable, it must clearly indicate why (e.g., disabled state).
-- **Skeleton Terminology**: Always use "skeleton loader" instead of "skeleton loading" for consistent naming (e.g., `DataTableSkeleton`).
-
-## 📁 FOLDER STRUCTURE PROTOCOL
-
-### Naming Conventions
-
-- **Files**: `kebab-case.tsx` for components, `PascalCase.tsx` for pages
-- **Folders**: `kebab-case` for all directories
-- **Types**: `PascalCase` for interfaces/types, `SCREAMING_SNAKE_CASE` for constants
-
-### Organization Rules
-
-- One component per file (except barrel exports)
-- Related components stay together in feature folders
-- Shared utilities go in `/lib`
-- Hooks go in `/hooks`
-- Types go in `/types`
-- Tests co-located with components
-
-## 🔧 IMPLEMENTATION CHECKLIST (Pre-Coding)
-
-Before writing any code, ensure:
-
-- [ ] You understand the complete user flow
-- [ ] You've considered edge cases and failure modes
-- [ ] The solution follows engineering fundamentals
-- [ ] It solves a real user problem
-- [ ] It follows the established color palette
-- [ ] It maintains component consistency
-- [ ] You can ship it, learn, and iterate
+_Status: Production-Ready_  
+_Last Verified: 2026-01-12_
 
 ---
 
-**Vibe Coder Mantra:** "Think end-to-end, build fundamentally, create value—always."
+## 🎯 CORE MINDSET — **VIBE CODER**
+
+1. **Systemic Thinking**  
+   Always understand the full flow: **User → UI → API → Database**.
+
+2. **Fundamental Excellence**  
+   Prioritize:
+
+   - OKLCH-based color systems
+   - Semantic HTML
+   - Zod-driven validation
+
+3. **Entrepreneur Spirit**  
+   Build solutions that:
+   - Solve real problems
+   - Use memorable, founder-led design decisions
+   - Ship clean, usable features
+
+---
+
+## 🏗️ VERIFIED CORE ARCHITECTURE
+
+### 1. Layout & Container Patterns
+
+**Mandatory Page Wrapper (Never Bypass):**
+
+```
+<Authenticated>
+  <Layout>
+    {children}
+  </Layout>
+</Authenticated>
+```
+
+**Verified Main Container Classes:**
+
+- Mobile: `px-2 pt-4`
+- Tablet: `md:p-4`
+- Desktop: `lg:px-6 lg:pt-6`
+
+**Canonical Implementation:**
+`components/refine-ui/layout/layout.tsx`
+
+---
+
+### 2. Component Hierarchy (Verified)
+
+```
+<RefineContext>
+└── <RootLayout>
+    └── <Authenticated>
+        └── <Layout>
+            ├── <Sidebar>
+            ├── <Header>
+            ├── <Breadcrumb>
+            └── <Main>
+                └── {page content}
+```
+
+**Rule:** Every page must follow this hierarchy exactly.
+
+---
+
+## 🎨 DESIGN SYSTEM — Tailwind v4 + OKLCH
+
+### Color Tokens (globals.css)
+
+**Light Mode**
+
+```
+--primary: oklch(0.8348 0.1302 160.908);
+--background: oklch(0.9911 0 0);
+```
+
+**Dark Mode**
+
+```
+--primary: oklch(0.4365 0.1044 156.7556);
+--background: oklch(0.1822 0 0);
+```
+
+### Usage Rules
+
+- **Text:** `text-foreground`
+- **Backgrounds:** `bg-background`, `bg-card`
+- **Borders:** `border-border`
+- **Never hardcode colors**
+
+### Gradients
+
+```
+.text-gradient-orange {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+```
+
+Use **only** for major titles and key headers.
+
+---
+
+## 🔘 COMPONENT STANDARDS (VERIFIED)
+
+### Buttons
+
+Source: `components/ui/button.tsx`
+
+Available variants:
+
+- `default`
+- `secondary`
+- `outline`
+- `destructive`
+- `ghost`
+- `link`
+
+```
+<Button variant="default">Primary</Button>
+<Button variant="secondary" size="sm">Secondary</Button>
+```
+
+**Rule:** No custom button styles outside these variants.
+
+---
+
+### Forms
+
+Stack:
+
+- React Hook Form
+- Zod
+- shadcn/ui
+
+**Rule:**
+
+- Always wrap with `Form`
+- Every form must have a Zod schema
+
+---
+
+### Skeleton Loaders
+
+Location: `components/ui/skeleton/`
+
+Centralized skeletons:
+
+- `CardSkeleton`
+- `TableSkeleton`
+- `FormSkeleton`
+- `DashboardSkeleton`
+- `AuthSkeleton`
+
+**Rule:**
+
+- Never create inline loaders
+- Always use centralized skeleton components
+
+---
+
+## 🧠 DATABASE & API RULES
+
+- **Database:** PostgreSQL (Neon)
+- **ORM:** Drizzle ORM
+- **Validation:** Zod is mandatory for all API inputs
+
+No Zod = not production-ready.
+
+---
+
+## 📁 FOLDER STRUCTURE (STRICT)
+
+```
+/app                 → Routes & layouts
+/views               → Pure UI / page content
+/components/ui       → Atomic shadcn-style components
+/components/refine-ui→ Layout, sidebar, header, navigation
+```
+
+---
+
+## 🔧 REFINE CONFIGURATION (VERIFIED)
+
+- **Auth Provider:** NextAuth
+- **Data Provider:** Custom REST / NestJS-style
+- **Resources:** Defined in `components/refine-context.tsx`
+
+Example:
+
+```
+resources: [
+  { name: "subjects", list: "/subjects" },
+  { name: "departments", list: "/departments" },
+  { name: "users", list: "/faculty" },
+  { name: "enrollments", list: "/enrollments/create" },
+  { name: "classes", list: "/classes" },
+  { name: "academic-calendar", list: "/academic-calendar" }
+]
+```
+
+---
+
+## 🧾 TYPOGRAPHY STANDARDS
+
+- **Font:** Outfit (Google Fonts Variable)
+- **Spacing:** Tailwind default 4px scale
+
+```
+.page-title {
+  @apply text-3xl font-bold text-foreground tracking-tight;
+}
+```
+
+Use `.text-gradient-orange` for high-importance headers only.
+
+---
+
+## 🚀 NEW PAGE IMPLEMENTATION RULES
+
+### Example: Academic Calendar Page
+
+```
+app/academic-calendar/page.tsx
+```
+
+```
+export default function AcademicCalendarPage() {
+  return (
+    <ListView>
+      <Breadcrumb />
+      <h1 className="page-title">Academic Calendar 2026</h1>
+      <div className="intro-row">
+        <p>View and manage the official university academic calendar.</p>
+      </div>
+      {/* ... Content ... */}
+    </ListView>
+  );
+}
+```
+
+### Loading State
+
+```
+app/academic-calendar/loading.tsx
+```
+
+```
+export default function Loading() {
+  return <DashboardSkeleton />
+}
+```
+
+---
+
+## ✅ VIBE CODER VERIFICATION CHECKLIST
+
+Before shipping:
+
+- Container spacing matches verified pattern
+- Layout hierarchy is preserved
+- Colors use CSS variables only
+- Buttons use approved variants
+- Forms use Zod + Form wrapper
+- Skeletons are centralized
+- Typography uses Outfit
+- Resource is registered in Refine context
+
+---
+
+## 🧠 VIBE CODER PRINCIPLES (ENFORCED)
+
+**Systemic Thinking**
+
+- End-to-end flow is understood
+- Layout and data flow respected
+
+**Fundamental Engineering**
+
+- Real Tailwind v4 + OKLCH usage
+- Verified component references
+
+**Entrepreneur Execution**
+
+- Builds on working systems
+- Ships consistent, scalable features
+
+---
+
+## 🛠️ QUICK VERIFICATION COMMANDS
+
+```
+# Verify container usage
+grep -r "container mx-auto" components/ app/
+
+# Verify color variables
+grep -r "var(--primary)" components/ app/
+
+# List skeleton components
+find components/ui/skeleton -name "*.tsx"
+
+# Inspect layout source
+cat components/refine-ui/layout/layout.tsx | head -50
+```
+
+---
+
+### 🧠 Vibe Coder Mantra
+
+> **"Verify reality. Document truth. Build consistently."**

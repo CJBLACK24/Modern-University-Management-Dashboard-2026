@@ -12,13 +12,24 @@ const calendarSchema = z.object({
 
 export async function GET() {
   try {
-    const [calendar] = await db
+    const calendars = await db
       .select()
       .from(academicCalendar)
-      .orderBy(desc(academicCalendar.createdAt))
-      .limit(1);
+      .orderBy(desc(academicCalendar.createdAt));
 
-    return NextResponse.json({ data: calendar || null });
+    console.log(
+      `GET /api/academic-calendar: found ${calendars.length} records`
+    );
+
+    return NextResponse.json({
+      data: calendars,
+      pagination: {
+        page: 1,
+        limit: calendars.length,
+        total: calendars.length,
+        totalPages: 1,
+      },
+    });
   } catch (error) {
     console.error("GET /api/academic-calendar error:", error);
     return NextResponse.json(
@@ -31,6 +42,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    console.log("POST /api/academic-calendar body:", body);
     const data = calendarSchema.parse(body);
 
     const [newCalendar] = await db
@@ -42,6 +54,7 @@ export async function POST(request: NextRequest) {
       })
       .returning();
 
+    console.log("POST /api/academic-calendar success:", newCalendar.id);
     return NextResponse.json({ data: newCalendar });
   } catch (error) {
     console.error("POST /api/academic-calendar error:", error);

@@ -239,7 +239,7 @@ const ClassesShow = () => {
         <Link href="/enrollments/join" className="w-full">
           <Button
             size="lg"
-            className="w-full bg-gradient-orange text-white hover:opacity-90"
+            className="w-full bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary/90 shadow-sm"
           >
             Join Class
           </Button>

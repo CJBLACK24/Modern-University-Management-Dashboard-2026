@@ -40,7 +40,14 @@ const ClassesCreate = () => {
       action: "create",
     },
     defaultValues: {
+      name: "",
+      description: "",
       status: "active",
+      bannerUrl: "",
+      bannerCldPubId: "",
+      subjectId: undefined,
+      teacherId: "",
+      capacity: undefined,
     },
   });
 

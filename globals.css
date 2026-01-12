@@ -196,6 +196,13 @@ body {
 }
 
 @layer components {
+  .text-gradient-orange {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
   .page-title {
     @apply text-3xl font-bold text-foreground tracking-tight;
   }

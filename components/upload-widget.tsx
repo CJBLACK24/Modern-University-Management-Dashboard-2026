@@ -126,7 +126,7 @@ function UploadWidget({
         </div>
       ) : (
         <div
-          className="upload-dropzone"
+          className="upload-dropzone group transition-all hover:bg-primary/10"
           role="button"
           tabIndex={0}
           onClick={openWidget}
@@ -138,10 +138,16 @@ function UploadWidget({
           }}
         >
           <div className="upload-prompt">
-            <UploadCloud className="icon" />
-            <div>
-              <p>Click to upload photo</p>
-              <p>PNG, JPG up to 5MB</p>
+            <UploadCloud className="icon mb-2 group-hover:scale-110 transition-transform" />
+            <div className="flex flex-col items-center">
+              <Button
+                variant="outline"
+                size="sm"
+                className="mb-2 pointer-events-none"
+              >
+                Select Calendar Image
+              </Button>
+              <p className="text-xs text-foreground/60">PNG, JPG up to 5MB</p>
             </div>
           </div>
         </div>
