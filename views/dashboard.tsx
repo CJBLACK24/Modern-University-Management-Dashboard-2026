@@ -159,6 +159,8 @@ const Dashboard = () => {
       .slice(0, 5);
   }, [users]);
 
+  const teacherResource = "users"; // Base resource is users but labeled as faculty in refine
+
   const topDepartments = useMemo(() => {
     return [...subjectsByDepartment]
       .sort((a, b) => b.totalSubjects - a.totalSubjects)
@@ -357,25 +359,27 @@ const Dashboard = () => {
         <CardHeader>
           <CardTitle>Insights</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-6 lg:grid-cols-2">
-          <div className="space-y-3">
+        <CardContent className="grid gap-6 lg:grid-cols-[1fr_auto_1fr] items-stretch">
+          <div className="space-y-3 min-h-[350px] flex flex-col">
             <h3 className="text-sm font-semibold text-muted-foreground">
               Subjects per Department
             </h3>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
+                  layout="vertical"
                   data={subjectsByDepartment}
-                  margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                  margin={{ top: 10, right: 30, left: 100, bottom: 5 }}
                 >
                   <CartesianGrid
-                    vertical={false}
+                    horizontal={false}
                     strokeDasharray="3 3"
                     stroke="hsl(var(--muted-foreground))"
                     opacity={0.1}
                   />
                   <XAxis
-                    dataKey="departmentName"
+                    type="number"
+                    allowDecimals={false}
                     tick={{
                       fontSize: 11,
                       fill: "#888888",
@@ -384,13 +388,15 @@ const Dashboard = () => {
                     tickLine={false}
                   />
                   <YAxis
-                    allowDecimals={false}
+                    type="category"
+                    dataKey="departmentName"
                     tick={{
                       fontSize: 11,
                       fill: "#888888",
                     }}
                     axisLine={false}
                     tickLine={false}
+                    width={90}
                   />
                   <Tooltip
                     content={<ChartTooltip />}
@@ -400,32 +406,39 @@ const Dashboard = () => {
                     dataKey="totalSubjects"
                     name="Subjects"
                     fill="#f97316"
-                    radius={[4, 4, 0, 0]}
-                    barSize={40}
+                    radius={[0, 4, 4, 0]}
+                    barSize={20}
                   />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
 
-          <div className="space-y-3">
+          <Separator
+            orientation="vertical"
+            className="hidden lg:block h-full mx-2"
+          />
+
+          <div className="space-y-3 min-h-[350px] flex flex-col">
             <h3 className="text-sm font-semibold text-muted-foreground">
               Classes per Subject
             </h3>
-            <div className="h-80">
+            <div className="flex-1 min-h-[320px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
+                  layout="vertical"
                   data={classesBySubject}
-                  margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                  margin={{ top: 10, right: 30, left: 120, bottom: 5 }}
                 >
                   <CartesianGrid
-                    vertical={false}
+                    horizontal={false}
                     strokeDasharray="3 3"
                     stroke="hsl(var(--muted-foreground))"
                     opacity={0.1}
                   />
                   <XAxis
-                    dataKey="subjectName"
+                    type="number"
+                    allowDecimals={false}
                     tick={{
                       fontSize: 11,
                       fill: "#888888",
@@ -434,13 +447,15 @@ const Dashboard = () => {
                     tickLine={false}
                   />
                   <YAxis
-                    allowDecimals={false}
+                    type="category"
+                    dataKey="subjectName"
                     tick={{
-                      fontSize: 11,
+                      fontSize: 10,
                       fill: "#888888",
                     }}
                     axisLine={false}
                     tickLine={false}
+                    width={110}
                   />
                   <Tooltip
                     content={<ChartTooltip />}
@@ -450,8 +465,8 @@ const Dashboard = () => {
                     dataKey="totalClasses"
                     name="Classes"
                     fill="#0ea5e9"
-                    radius={[4, 4, 0, 0]}
-                    barSize={40}
+                    radius={[0, 4, 4, 0]}
+                    barSize={20}
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -508,7 +523,7 @@ const Dashboard = () => {
             {newestTeachers.map((teacher, index) => (
               <Link
                 key={teacher.id}
-                to={`/users/show/${teacher.id}`}
+                to={`/faculty/show/${teacher.id}`}
                 className="flex items-center justify-between rounded-md border border-transparent px-3 py-2 transition-colors hover:border-primary/30 hover:bg-muted/40"
               >
                 <div className="flex items-center gap-3">
