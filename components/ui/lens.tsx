@@ -19,7 +19,6 @@ export const Lens = ({
   children,
   zoomFactor = 1.5,
   lensSize = 170,
-  isStatic = false,
   position: customPosition,
   hovering: customHovering,
   setHovering: customSetHovering,
@@ -97,7 +96,7 @@ export function LensDemoThird() {
   return (
     <div>
       <Lens hovering={hovering} setHovering={setHovering}>
-        <div className="w-full relative rounded-3xl overflow-hidden max-w-md mx-auto bg-gradient-to-r from-[#1D2235] to-[#121318] p-8 my-10">
+        <div className="w-full relative rounded-3xl overflow-hidden max-w-md mx-auto bg-linear-to-r from-[#1D2235] to-[#121318] p-8 my-10">
           <Rays />
           <Beams />
           <div className="relative z-10">
@@ -223,7 +222,7 @@ const Rays = ({ className }: { className?: string }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
-        "absolute left-0 top-0  pointer-events-none z-[1]",
+        "absolute left-0 top-0  pointer-events-none z-1",
         className
       )}
     >
