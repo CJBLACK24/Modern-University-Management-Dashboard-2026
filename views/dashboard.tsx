@@ -450,12 +450,12 @@ const Dashboard = () => {
                     type="category"
                     dataKey="subjectName"
                     tick={{
-                      fontSize: 10,
+                      fontSize: 11,
                       fill: "#888888",
                     }}
                     axisLine={false}
                     tickLine={false}
-                    width={110}
+                    width={70}
                   />
                   <Tooltip
                     content={<ChartTooltip />}
