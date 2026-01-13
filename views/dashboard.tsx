@@ -159,27 +159,25 @@ const Dashboard = () => {
       .slice(0, 5);
   }, [users]);
 
-  const teacherResource = "users"; // Base resource is users but labeled as faculty in refine
-
   const topDepartments = useMemo(() => {
     return [...subjectsByDepartment]
       .sort((a, b) => b.totalSubjects - a.totalSubjects)
       .slice(0, 5)
-      .map((item, index) => ({
-        ...item,
-        departmentId: index,
+      .map((dept) => ({
+        ...dept,
+        id: departments.find((d) => d.name === dept.departmentName)?.id,
       }));
-  }, [subjectsByDepartment]);
+  }, [subjectsByDepartment, departments]);
 
-  const topSubjects = useMemo(() => {
+  const topSubjectsWithClasses = useMemo(() => {
     return [...classesBySubject]
       .sort((a, b) => b.totalClasses - a.totalClasses)
-      .slice(0, 5)
-      .map((item, index) => ({
-        ...item,
-        subjectId: index,
+      .slice(0, 6)
+      .map((sub) => ({
+        ...sub,
+        id: subjects.find((s) => s.name === sub.subjectName)?.id,
       }));
-  }, [classesBySubject]);
+  }, [classesBySubject, subjects]);
 
   const kpis = [
     {
@@ -361,7 +359,7 @@ const Dashboard = () => {
         </CardHeader>
         <CardContent className="grid gap-6 lg:grid-cols-[1fr_auto_1fr] items-stretch">
           <div className="space-y-3 min-h-[350px] flex flex-col">
-            <h3 className="text-sm font-semibold text-muted-foreground">
+            <h3 className="text-sm font-semibold text-muted-foreground ml-[85px]">
               Subjects per Department
             </h3>
             <div className="h-80">
@@ -369,7 +367,7 @@ const Dashboard = () => {
                 <BarChart
                   layout="vertical"
                   data={subjectsByDepartment}
-                  margin={{ top: 10, right: 30, left: 100, bottom: 5 }}
+                  margin={{ top: 5, right: 30, left: 15, bottom: 5 }}
                 >
                   <CartesianGrid
                     horizontal={false}
@@ -380,6 +378,7 @@ const Dashboard = () => {
                   <XAxis
                     type="number"
                     allowDecimals={false}
+                    hide={false}
                     tick={{
                       fontSize: 11,
                       fill: "#888888",
@@ -390,13 +389,13 @@ const Dashboard = () => {
                   <YAxis
                     type="category"
                     dataKey="departmentName"
+                    width={70}
                     tick={{
                       fontSize: 11,
                       fill: "#888888",
                     }}
                     axisLine={false}
                     tickLine={false}
-                    width={90}
                   />
                   <Tooltip
                     content={<ChartTooltip />}
@@ -420,7 +419,7 @@ const Dashboard = () => {
           />
 
           <div className="space-y-3 min-h-[350px] flex flex-col">
-            <h3 className="text-sm font-semibold text-muted-foreground">
+            <h3 className="text-sm font-semibold text-muted-foreground ml-[85px]">
               Classes per Subject
             </h3>
             <div className="flex-1 min-h-[320px]">
@@ -428,7 +427,7 @@ const Dashboard = () => {
                 <BarChart
                   layout="vertical"
                   data={classesBySubject}
-                  margin={{ top: 10, right: 30, left: 120, bottom: 5 }}
+                  margin={{ top: 5, right: 30, left: 15, bottom: 5 }}
                 >
                   <CartesianGrid
                     horizontal={false}
@@ -439,6 +438,7 @@ const Dashboard = () => {
                   <XAxis
                     type="number"
                     allowDecimals={false}
+                    hide={false}
                     tick={{
                       fontSize: 11,
                       fill: "#888888",
@@ -551,8 +551,9 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent className="space-y-3">
             {topDepartments.map((dept, index) => (
-              <div
-                key={dept.departmentId}
+              <Link
+                key={index}
+                to={dept.id ? `/departments/show/${dept.id}` : "#"}
                 className="flex items-center justify-between rounded-md border border-transparent px-3 py-2 transition-colors hover:border-primary/30 hover:bg-muted/40"
               >
                 <div className="flex items-center gap-3">
@@ -566,8 +567,13 @@ const Dashboard = () => {
                     </p>
                   </div>
                 </div>
-                <Badge>{dept.totalSubjects}</Badge>
-              </div>
+                <Badge
+                  variant="secondary"
+                  className="bg-primary/5 text-primary"
+                >
+                  {dept.totalSubjects}
+                </Badge>
+              </Link>
             ))}
           </CardContent>
         </Card>
@@ -577,9 +583,10 @@ const Dashboard = () => {
             <CardTitle>Subjects with Most Classes</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {topSubjects.map((subject, index) => (
-              <div
-                key={subject.subjectId}
+            {topSubjectsWithClasses.map((subject, index) => (
+              <Link
+                key={index}
+                to={subject.id ? `/subjects/show/${subject.id}` : "#"}
                 className="flex items-center justify-between rounded-md border border-transparent px-3 py-2 transition-colors hover:border-primary/30 hover:bg-muted/40"
               >
                 <div className="flex items-center gap-3">
@@ -593,8 +600,13 @@ const Dashboard = () => {
                     </p>
                   </div>
                 </div>
-                <Badge>{subject.totalClasses}</Badge>
-              </div>
+                <Badge
+                  variant="secondary"
+                  className="bg-primary/5 text-primary"
+                >
+                  {subject.totalClasses}
+                </Badge>
+              </Link>
             ))}
           </CardContent>
         </Card>

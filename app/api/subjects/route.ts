@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import { eq, ilike, or, and, desc, sql, getTableColumns } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
@@ -103,7 +104,7 @@ export async function POST(request: NextRequest) {
 
     // Invalidate subjects cache
     const { revalidateTag } = await import("next/cache");
-    revalidateTag("subjects");
+    revalidateTag("subjects", "default");
 
     return NextResponse.json({ data: createdSubject }, { status: 201 });
   } catch (error) {
