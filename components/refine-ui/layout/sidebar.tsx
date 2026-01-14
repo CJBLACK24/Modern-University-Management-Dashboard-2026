@@ -131,6 +131,11 @@ function SidebarItemGroup({ item, selectedKey }: MenuItemProps) {
 function SidebarItemCollapsible({ item, selectedKey }: MenuItemProps) {
   const { name, children } = item;
 
+  // Check if any child is selected to auto-expand
+  const hasSelectedChild = React.useMemo(() => {
+    return children?.some((child) => child.key === selectedKey);
+  }, [children, selectedKey]);
+
   const chevronIcon = (
     <ChevronRight
       className={cn(
@@ -146,7 +151,11 @@ function SidebarItemCollapsible({ item, selectedKey }: MenuItemProps) {
   );
 
   return (
-    <Collapsible key={`collapsible-${name}`} className={cn("w-full", "group")}>
+    <Collapsible
+      key={`collapsible-${name}`}
+      className={cn("w-full", "group")}
+      defaultOpen={hasSelectedChild}
+    >
       <CollapsibleTrigger asChild>
         <SidebarButton item={item} rightIcon={chevronIcon} />
       </CollapsibleTrigger>
@@ -333,10 +342,10 @@ function SidebarButton({
       variant="ghost"
       size="lg"
       className={cn(
-        "flex w-full items-center justify-start gap-2 py-2 !px-3 text-sm",
+        "flex w-full items-center justify-start gap-2 py-2 px-3! text-sm",
         {
           "bg-sidebar-primary": isSelected,
-          "hover:!bg-sidebar-primary/90": isSelected,
+          "hover:bg-sidebar-primary/90!": isSelected,
           "text-sidebar-primary-foreground": isSelected,
           "hover:text-sidebar-primary-foreground": isSelected,
         },

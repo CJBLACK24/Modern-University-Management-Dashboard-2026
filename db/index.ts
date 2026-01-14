@@ -27,5 +27,7 @@ if (!databaseUrl) {
 // Some environments might have issues with channel_binding
 const cleanUrl = databaseUrl.replace(/&channel_binding=require/g, "");
 
+import * as schema from "./schema";
+
 const sql = neon(cleanUrl);
-export const db = drizzle(sql);
+export const db = drizzle(sql, { schema });

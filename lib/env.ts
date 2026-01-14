@@ -15,6 +15,10 @@ const envSchema = z.object({
   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1),
   NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: z.string().min(1),
   NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL: z.string().url(),
+
+  // Redis
+  REDIS_URL: z.string().url(),
+  REDIS_CACHE_TTL: z.coerce.number().default(3600),
 });
 
 export const env = envSchema.parse({
@@ -28,4 +32,7 @@ export const env = envSchema.parse({
     process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
   NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL:
     process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL,
+
+  REDIS_URL: process.env.REDIS_URL,
+  REDIS_CACHE_TTL: process.env.REDIS_CACHE_TTL,
 });

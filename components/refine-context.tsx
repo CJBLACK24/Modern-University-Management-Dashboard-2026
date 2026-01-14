@@ -12,7 +12,6 @@ import {
   Building2,
   Calendar,
   ClipboardCheck,
-  GraduationCap,
   Home,
   Users,
 } from "lucide-react";
@@ -74,14 +73,10 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   },
                 },
                 {
-                  name: "subjects",
-                  list: "/subjects",
-                  create: "/subjects/create",
-                  edit: "/subjects/edit/:id",
-                  show: "/subjects/show/:id",
+                  name: "academic-management",
                   meta: {
-                    label: "Subjects",
-                    icon: <BookOpen />,
+                    label: "Academic Management",
+                    icon: <Building2 />,
                   },
                 },
                 {
@@ -92,7 +87,18 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   create: "/departments/create",
                   meta: {
                     label: "Departments",
-                    icon: <Building2 />,
+                    parent: "academic-management",
+                  },
+                },
+                {
+                  name: "subjects",
+                  list: "/subjects",
+                  create: "/subjects/create",
+                  edit: "/subjects/edit/:id",
+                  show: "/subjects/show/:id",
+                  meta: {
+                    label: "Subjects",
+                    parent: "academic-management",
                   },
                 },
                 {
@@ -103,6 +109,14 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   meta: {
                     label: "Faculty",
                     icon: <Users />,
+                    parent: "academic-management",
+                  },
+                },
+                {
+                  name: "academic-operations",
+                  meta: {
+                    label: "Academic Operations",
+                    icon: <ClipboardCheck />,
                   },
                 },
                 {
@@ -111,7 +125,7 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   create: "/enrollments/create",
                   meta: {
                     label: "Enrollments",
-                    icon: <ClipboardCheck />,
+                    parent: "academic-operations",
                   },
                 },
                 {
@@ -122,7 +136,7 @@ export function RefineContext({ children }: { children: React.ReactNode }) {
                   show: "/classes/show/:id",
                   meta: {
                     label: "Classes",
-                    icon: <GraduationCap />,
+                    parent: "academic-operations",
                   },
                 },
                 {

@@ -186,7 +186,7 @@ const ClassesShow = () => {
               <div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={classDetails.teacher?.image ?? placeholderUrl}
+                  src={classDetails.teacher?.image || placeholderUrl}
                   alt={teacherName}
                 />
 

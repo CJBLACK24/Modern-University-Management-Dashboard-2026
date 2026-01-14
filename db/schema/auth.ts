@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm";
 import {
   boolean,
   index,
+  integer,
   pgEnum,
   pgTable,
   text,
@@ -27,6 +28,10 @@ export const user = pgTable("user", {
   image: text("image"),
   role: roleEnum("role").notNull().default("student"),
   imageCldPubId: text("image_cld_pub_id"),
+
+  // Student details
+  yearLevel: integer("year_level"),
+  section: text("section"),
 
   ...timestamps,
 });
@@ -66,7 +71,6 @@ export const account = pgTable(
     refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
     scope: text("scope"),
     idToken: text("id_token"),
-
 
     ...timestamps,
   },

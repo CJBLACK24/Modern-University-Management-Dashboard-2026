@@ -34,6 +34,8 @@ type SeedUser = {
   role: "student" | "teacher" | "admin";
   password: string;
   image: string;
+  yearLevel?: number;
+  section?: string;
 };
 
 type SeedDepartment = {
@@ -102,32 +104,41 @@ const seed = async () => {
   await db.delete(user);
 
   if (data.users.length) {
-    await db
-      .insert(user)
-      .values(
-        data.users.map((seedUser) => ({
-          id: seedUser.id,
-          name: seedUser.name,
-          email: seedUser.email,
-          emailVerified: true,
-          image: seedUser.image,
-          role: seedUser.role,
-        }))
-      )
-      .onConflictDoNothing({ target: user.id });
+    // Batch users and accounts
+    const BATCH_SIZE = 500;
+    for (let i = 0; i < data.users.length; i += BATCH_SIZE) {
+      const batch = data.users.slice(i, i + BATCH_SIZE);
+      await db
+        .insert(user)
+        .values(
+          batch.map((seedUser) => ({
+            id: seedUser.id,
+            name: seedUser.name,
+            email: seedUser.email,
+            emailVerified: true,
+            image: seedUser.image,
+            role: seedUser.role,
+            yearLevel: seedUser.yearLevel,
+            section: seedUser.section,
+          }))
+        )
+        .onConflictDoNothing({ target: user.id });
 
-    await db
-      .insert(account)
-      .values(
-        data.users.map((seedUser) => ({
-          id: `acc_${seedUser.id}`,
-          userId: seedUser.id,
-          accountId: seedUser.email,
-          providerId: "credentials",
-          password: seedUser.password,
-        }))
-      )
-      .onConflictDoNothing({ target: [account.providerId, account.accountId] });
+      await db
+        .insert(account)
+        .values(
+          batch.map((seedUser) => ({
+            id: `acc_${seedUser.id}`,
+            userId: seedUser.id,
+            accountId: seedUser.email,
+            providerId: "credentials",
+            password: seedUser.password,
+          }))
+        )
+        .onConflictDoNothing({
+          target: [account.providerId, account.accountId],
+        });
+    }
   }
 
   if (data.departments.length) {
@@ -156,21 +167,25 @@ const seed = async () => {
   );
 
   if (data.subjects.length) {
-    const subjectsToInsert = data.subjects.map((subject) => ({
-      code: subject.code,
-      name: subject.name,
-      description: subject.description,
-      departmentId: ensureMapValue(
-        departmentMap,
-        subject.departmentCode,
-        "department"
-      ),
-    }));
-
-    await db
-      .insert(subjects)
-      .values(subjectsToInsert)
-      .onConflictDoNothing({ target: subjects.code });
+    const BATCH_SIZE = 500;
+    for (let i = 0; i < data.subjects.length; i += BATCH_SIZE) {
+      const batch = data.subjects.slice(i, i + BATCH_SIZE);
+      await db
+        .insert(subjects)
+        .values(
+          batch.map((subject) => ({
+            code: subject.code,
+            name: subject.name,
+            description: subject.description,
+            departmentId: ensureMapValue(
+              departmentMap,
+              subject.departmentCode,
+              "department"
+            ),
+          }))
+        )
+        .onConflictDoNothing({ target: subjects.code });
+    }
   }
 
   const subjectCodes = data.subjects.map((subject) => subject.code);
@@ -184,32 +199,61 @@ const seed = async () => {
   const subjectMap = new Map(subjectRows.map((row) => [row.code, row.id]));
 
   if (data.classes.length) {
-    const classesToInsert = data.classes.map((classItem) => ({
-      name: classItem.name,
-      description: classItem.description,
-      capacity: classItem.capacity,
-      status: classItem.status,
-      inviteCode: classItem.inviteCode,
-      subjectId: ensureMapValue(subjectMap, classItem.subjectCode, "subject"),
-      teacherId: classItem.teacherId,
-      bannerUrl: classItem.bannerUrl,
-      bannerCldPubId: null,
-      schedules: [],
-    }));
-
-    await db
-      .insert(classes)
-      .values(classesToInsert)
-      .onConflictDoNothing({ target: classes.inviteCode });
+    const BATCH_SIZE = 500;
+    for (let i = 0; i < data.classes.length; i += BATCH_SIZE) {
+      const batch = data.classes.slice(i, i + BATCH_SIZE);
+      await db
+        .insert(classes)
+        .values(
+          batch.map((classItem) => ({
+            name: classItem.name,
+            description: classItem.description,
+            capacity: classItem.capacity,
+            status: classItem.status,
+            inviteCode: classItem.inviteCode,
+            subjectId: ensureMapValue(
+              subjectMap,
+              classItem.subjectCode,
+              "subject"
+            ),
+            teacherId: classItem.teacherId,
+            bannerUrl: classItem.bannerUrl,
+            bannerCldPubId: null,
+            schedules: [],
+          }))
+        )
+        .onConflictDoNothing({ target: classes.inviteCode });
+    }
   }
 
   const classInviteCodes = data.classes.map(
     (classItem) => classItem.inviteCode
   );
-  await db
+  const classRows = await db
     .select({ id: classes.id, inviteCode: classes.inviteCode })
     .from(classes)
     .where(inArray(classes.inviteCode, classInviteCodes));
+  const classMap = new Map(classRows.map((row) => [row.inviteCode, row.id]));
+
+  if (data.enrollments.length) {
+    const BATCH_SIZE = 1000;
+    for (let i = 0; i < data.enrollments.length; i += BATCH_SIZE) {
+      const batch = data.enrollments.slice(i, i + BATCH_SIZE);
+      await db
+        .insert(enrollments)
+        .values(
+          batch.map((enrollment) => ({
+            studentId: enrollment.studentId,
+            classId: ensureMapValue(
+              classMap,
+              enrollment.classInviteCode,
+              "class"
+            ),
+          }))
+        )
+        .onConflictDoNothing();
+    }
+  }
 };
 
 const main = async () => {

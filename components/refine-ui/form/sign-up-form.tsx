@@ -113,19 +113,25 @@ export const SignUpForm = () => {
   };
 
   return (
-    <div className="sign-up">
-      <div className="logo">
-        <AnimatedLogo
-          src="/logo.png"
-          alt="Academic Suite Logo"
-          width={48}
-          height={48}
-        />
-      </div>
+    <div className="sign-up relative flex items-center justify-center min-h-screen bg-muted/50 p-4">
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-10 pointer-events-none"
+        style={{ backgroundImage: "url('/National-University-Iloilo.png')" }}
+      />
 
-      <Card className="card p-2 sm:p-12">
-        <CardHeader className="header">
-          <CardTitle className="title">Create a new account</CardTitle>
+      <Card className="card w-full max-w-lg relative z-10">
+        <CardHeader className="header flex flex-col items-center space-y-4">
+          <div className="logo flex justify-center">
+            <AnimatedLogo
+              src="/logo.png"
+              alt="Academic Suite Logo"
+              width={64}
+              height={64}
+            />
+          </div>
+          <CardTitle className="title text-center">
+            Create a new account
+          </CardTitle>
         </CardHeader>
 
         <CardContent className="content">

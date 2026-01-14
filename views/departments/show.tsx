@@ -2,7 +2,7 @@ import { useShow } from "@refinedev/core";
 import { useTable } from "@refinedev/react-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { BookOpen, Layers, Users } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ShowView,
   ShowViewHeader,
@@ -55,12 +56,15 @@ type DepartmentUser = {
   name: string;
   email: string;
   role: string;
+  yearLevel?: number | null;
+  section?: string | null;
   image?: string | null;
 };
 
 const DepartmentShow = () => {
   const { id } = useParams();
   const departmentId = id ?? "";
+  const [activeYear, setActiveYear] = useState<string>("1");
 
   const { query } = useShow<DepartmentDetails>({
     resource: "departments",
@@ -248,8 +252,26 @@ const DepartmentShow = () => {
         size: 140,
         header: () => <p className="column-title">Role</p>,
         cell: ({ getValue }) => (
-          <Badge variant="secondary">{getValue<string>()}</Badge>
+          <Badge variant="secondary" className="capitalize">
+            {getValue<string>()}
+          </Badge>
         ),
+      },
+      {
+        id: "section",
+        accessorKey: "section",
+        size: 100,
+        header: () => <p className="column-title">Section</p>,
+        cell: ({ getValue }) => {
+          const section = getValue<string>();
+          return section ? (
+            <Badge variant="outline" className="font-bold">
+              Section {section}
+            </Badge>
+          ) : (
+            "-"
+          );
+        },
       },
       {
         id: "details",
@@ -316,11 +338,14 @@ const DepartmentShow = () => {
     columns: userColumns,
     refineCoreProps: {
       resource: `departments/${departmentId}/users`,
-      pagination: {
-        pageSize: 10,
-        mode: "server",
-      },
       filters: {
+        initial: [
+          {
+            field: "yearLevel",
+            operator: "eq",
+            value: activeYear,
+          },
+        ],
         permanent: [
           {
             field: "role",
@@ -329,8 +354,23 @@ const DepartmentShow = () => {
           },
         ],
       },
+      pagination: {
+        pageSize: 10,
+        mode: "server",
+      },
     },
   });
+
+  const onYearChange = (year: string) => {
+    setActiveYear(year);
+    studentsTable.refineCore.setFilters([
+      {
+        field: "yearLevel",
+        operator: "eq",
+        value: year,
+      },
+    ]);
+  };
 
   if (query.isLoading || query.isError || !details) {
     return (
@@ -412,25 +452,40 @@ const DepartmentShow = () => {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="hover:shadow-md transition-shadow">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Teachers</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <DataTable table={teachersTable} paginationVariant="simple" />
-          </CardContent>
-        </Card>
+      <Card className="hover:shadow-md transition-shadow">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle>Teachers</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <DataTable table={teachersTable} paginationVariant="simple" />
+        </CardContent>
+      </Card>
 
-        <Card className="hover:shadow-md transition-shadow">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Students</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <DataTable table={studentsTable} paginationVariant="simple" />
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="hover:shadow-md transition-shadow">
+        <CardHeader className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <CardTitle>Student Directory</CardTitle>
+            <Badge variant="secondary">
+              Total: {details.totals.enrolledStudents}
+            </Badge>
+          </div>
+          <Tabs
+            defaultValue="1"
+            className="w-full"
+            onValueChange={onYearChange}
+          >
+            <TabsList className="grid w-full grid-cols-4 lg:w-[400px]">
+              <TabsTrigger value="1">1st Year</TabsTrigger>
+              <TabsTrigger value="2">2nd Year</TabsTrigger>
+              <TabsTrigger value="3">3rd Year</TabsTrigger>
+              <TabsTrigger value="4">4th Year</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </CardHeader>
+        <CardContent>
+          <DataTable table={studentsTable} paginationVariant="simple" />
+        </CardContent>
+      </Card>
     </ShowView>
   );
 };

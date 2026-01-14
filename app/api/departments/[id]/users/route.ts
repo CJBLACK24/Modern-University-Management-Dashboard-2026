@@ -13,6 +13,8 @@ export async function GET(
     const departmentId = Number(id);
     const searchParams = request.nextUrl.searchParams;
     const role = searchParams.get("role");
+    const yearLevel = searchParams.get("yearLevel");
+    const section = searchParams.get("section");
     const page = searchParams.get("page") ?? "1";
     const limit = searchParams.get("limit") ?? "10";
 
@@ -38,6 +40,8 @@ export async function GET(
       emailVerified: user.emailVerified,
       image: user.image,
       role: user.role,
+      yearLevel: user.yearLevel,
+      section: user.section,
       imageCldPubId: user.imageCldPubId,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
@@ -50,10 +54,27 @@ export async function GET(
       user.emailVerified,
       user.image,
       user.role,
+      user.yearLevel,
+      user.section,
       user.imageCldPubId,
       user.createdAt,
       user.updatedAt,
     ];
+
+    const filters = [
+      eq(user.role, role as "student" | "teacher" | "admin"),
+      eq(subjects.departmentId, departmentId),
+    ];
+
+    if (yearLevel) {
+      filters.push(eq(user.yearLevel, Number(yearLevel)));
+    }
+
+    if (section) {
+      filters.push(eq(user.section, section));
+    }
+
+    const whereClause = and(...filters);
 
     const countResult =
       role === "teacher"
@@ -62,18 +83,14 @@ export async function GET(
             .from(user)
             .leftJoin(classes, eq(user.id, classes.teacherId))
             .leftJoin(subjects, eq(classes.subjectId, subjects.id))
-            .where(
-              and(eq(user.role, role), eq(subjects.departmentId, departmentId))
-            )
+            .where(whereClause)
         : await db
             .select({ count: sql<number>`count(distinct ${user.id})` })
             .from(user)
             .leftJoin(enrollments, eq(user.id, enrollments.studentId))
             .leftJoin(classes, eq(enrollments.classId, classes.id))
             .leftJoin(subjects, eq(classes.subjectId, subjects.id))
-            .where(
-              and(eq(user.role, role), eq(subjects.departmentId, departmentId))
-            );
+            .where(whereClause);
 
     const totalCount = countResult[0]?.count ?? 0;
 
@@ -84,9 +101,7 @@ export async function GET(
             .from(user)
             .leftJoin(classes, eq(user.id, classes.teacherId))
             .leftJoin(subjects, eq(classes.subjectId, subjects.id))
-            .where(
-              and(eq(user.role, role), eq(subjects.departmentId, departmentId))
-            )
+            .where(whereClause)
             .groupBy(...groupByFields)
             .orderBy(desc(user.createdAt))
             .limit(limitPerPage)
@@ -97,9 +112,7 @@ export async function GET(
             .leftJoin(enrollments, eq(user.id, enrollments.studentId))
             .leftJoin(classes, eq(enrollments.classId, classes.id))
             .leftJoin(subjects, eq(classes.subjectId, subjects.id))
-            .where(
-              and(eq(user.role, role), eq(subjects.departmentId, departmentId))
-            )
+            .where(whereClause)
             .groupBy(...groupByFields)
             .orderBy(desc(user.createdAt))
             .limit(limitPerPage)
