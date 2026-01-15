@@ -1,17 +1,42 @@
 import { db } from "@/db";
-import { enrollments } from "@/db/schema";
-import { isNotNull } from "drizzle-orm";
+import { enrollments, classes, subjects } from "@/db/schema";
+import { isNotNull, and, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const departmentId = searchParams.get("departmentId");
+    const yearLevel = searchParams.get("yearLevel");
+    const semester = searchParams.get("semester");
+
+    let conditions = isNotNull(enrollments.grade);
+
+    if (departmentId && departmentId !== "all") {
+      conditions = and(
+        conditions,
+        eq(subjects.departmentId, parseInt(departmentId))
+      )!;
+    }
+    if (yearLevel && yearLevel !== "all") {
+      conditions = and(
+        conditions,
+        eq(subjects.yearLevel, parseInt(yearLevel))
+      )!;
+    }
+    if (semester && semester !== "all") {
+      conditions = and(conditions, eq(subjects.semester, parseInt(semester)))!;
+    }
+
     // Fetch all grades
     const grades = await db
       .select({
         grade: enrollments.grade,
       })
       .from(enrollments)
-      .where(isNotNull(enrollments.grade));
+      .leftJoin(classes, eq(enrollments.classId, classes.id))
+      .leftJoin(subjects, eq(classes.subjectId, subjects.id))
+      .where(conditions);
 
     // Bucketize in TS based on requested college grading scale
     const distribution = [

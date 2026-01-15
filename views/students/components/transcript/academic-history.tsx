@@ -12,8 +12,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { History } from "lucide-react";
 
+interface Enrollment {
+  id: string;
+  grade?: number | null;
+  classInviteCode?: string;
+}
+
 interface AcademicHistoryProps {
-  enrollments: any[];
+  enrollments: Enrollment[];
 }
 
 export const AcademicHistory = ({ enrollments }: AcademicHistoryProps) => (
@@ -40,7 +46,7 @@ export const AcademicHistory = ({ enrollments }: AcademicHistoryProps) => (
           </TableRow>
         </TableHeader>
         <TableBody>
-          {enrollments.map((enrollment: any) => {
+          {enrollments.map((enrollment) => {
             const grade = enrollment.grade as number;
             const passed = grade && grade <= 3.0;
             return (

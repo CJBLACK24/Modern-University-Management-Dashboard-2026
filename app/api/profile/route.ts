@@ -23,10 +23,10 @@ const profileSchema = z.object({
   lastName: z.string().optional(),
   birthday: z.string().optional(),
   universityId: z.string().optional(),
-  semester: z.string().optional(),
+  semester: z.coerce.number().optional(),
   signatureUrl: z.string().optional(),
-  departmentId: z.number().optional(),
-  yearLevel: z.number().optional(),
+  departmentId: z.coerce.number().optional(),
+  yearLevel: z.coerce.number().optional(),
   section: z.string().optional(),
 });
 

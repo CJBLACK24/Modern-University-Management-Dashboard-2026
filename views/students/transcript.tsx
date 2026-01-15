@@ -67,7 +67,13 @@ export const StudentTranscriptView = () => {
     <div className="container mx-auto p-4 space-y-8 max-w-6xl py-12">
       <TranscriptHeader />
       <StudentInfo student={student} gwa={calculateGWA()} />
-      <AcademicHistory enrollments={enrollments} />
+      <AcademicHistory
+        enrollments={enrollments.map((e) => ({
+          id: e.id?.toString() || "",
+          grade: e.grade as number,
+          classInviteCode: e.classInviteCode as string,
+        }))}
+      />
 
       <div className="pt-12 text-center">
         <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em] opacity-40">

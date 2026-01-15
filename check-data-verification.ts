@@ -1,6 +1,5 @@
 import { db } from "./db";
 import { user, subjects } from "./db/schema";
-import { sql } from "drizzle-orm";
 
 async function check() {
   const users = await db.select().from(user).limit(5);

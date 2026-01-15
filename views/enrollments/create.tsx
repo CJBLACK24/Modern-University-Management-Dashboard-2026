@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { ClassDetails, User } from "@/types";
+import type { Class, User } from "@/types";
 
 const enrollSchema = z.object({
   classId: z.coerce.number().min(1, "Class is required"),
@@ -46,7 +46,7 @@ const EnrollmentsCreate = () => {
   } = useCreate();
   const { data: currentUser } = useGetIdentity<User>();
 
-  const { query: classesQuery } = useList<ClassDetails>({
+  const { query: classesQuery } = useList<Class>({
     resource: "classes",
     pagination: {
       pageSize: 100,

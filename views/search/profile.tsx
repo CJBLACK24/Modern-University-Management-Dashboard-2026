@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useList, useOne } from "@refinedev/core";
 import { useParams } from "next/navigation";
-import { useMemo } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -180,7 +178,7 @@ export const StudentProfileView = () => {
               </TableHeader>
               <TableBody>
                 {enrollments.length > 0 ? (
-                  enrollments.map((enrollment: any) => {
+                  enrollments.map((enrollment) => {
                     // Extract class data if available, otherwise parse ID
                     // In the seed, classInviteCode looks like "BSIT-11-1-A"
                     // We can try to parse subject code from it if we don't have full class relation
@@ -193,7 +191,8 @@ export const StudentProfileView = () => {
                         .join("-");
                     const desc =
                       enrollment.class?.name || "Official Course Subject";
-                    const extra = getRandomDetails(enrollment.id);
+                    const enrollmentId = enrollment.id?.toString() || "0";
+                    const extra = getRandomDetails(enrollmentId);
 
                     return (
                       <TableRow key={enrollment.id}>
@@ -207,7 +206,7 @@ export const StudentProfileView = () => {
                         </TableCell>
                         <TableCell className="text-right">
                           {/* Deterministic fee based on char code of ID */}
-                          {(enrollment.id.charCodeAt(0) % 2 === 0
+                          {(enrollmentId.charCodeAt(0) % 2 === 0
                             ? 610.5
                             : 0
                           ).toFixed(2)}

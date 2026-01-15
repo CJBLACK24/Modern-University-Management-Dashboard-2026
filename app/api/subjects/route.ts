@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import { eq, ilike, or, and, desc, sql, getTableColumns } from "drizzle-orm";
-import { unstable_cache } from "next/cache";
 
 import { db } from "@/db";
 import { departments, subjects } from "@/db/schema";

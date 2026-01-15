@@ -51,7 +51,7 @@ export const StatCards = ({
   ];
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
         <Card
           key={stat.label}
@@ -64,25 +64,25 @@ export const StatCards = ({
               .replace("text-", "bg-")}`}
           />
 
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div className="space-y-2">
+          <CardContent className="p-8">
+            <div className="flex items-center justify-between mb-8">
+              <div className="space-y-3">
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/80">
                   {stat.label}
                 </p>
-                <div className="text-4xl font-black tracking-tighter text-foreground font-outfit">
+                <div className="text-5xl font-black tracking-tighter text-foreground font-outfit">
                   {stat.value}
                 </div>
               </div>
               <div
-                className={`p-4 rounded-xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ${stat.color} bg-opacity-20`}
+                className={`p-5 rounded-2xl shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ${stat.color} bg-opacity-20`}
               >
-                <stat.icon className="h-6 w-6" />
+                <stat.icon className="h-7 w-7" />
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="relative h-2 w-full bg-muted rounded-full overflow-hidden">
+            <div className="space-y-6">
+              <div className="relative h-2.5 w-full bg-muted rounded-full overflow-hidden">
                 <div
                   className={`absolute left-0 top-0 h-full transition-all duration-1000 ease-out rounded-full ${stat.color
                     .split(" ")[0]
@@ -91,7 +91,7 @@ export const StatCards = ({
                 />
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <span className="flex h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
                   <span className="text-[11px] font-bold text-muted-foreground/80 tracking-tight">
                     {stat.trend}

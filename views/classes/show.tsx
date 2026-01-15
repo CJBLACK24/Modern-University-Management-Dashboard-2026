@@ -19,7 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { bannerPhoto } from "@/lib/cloudinary";
 import { QrAttendanceScanner } from "@/components/qr-attendance-scanner";
-import { ClassDetails } from "@/types";
+import { Class } from "@/types";
 
 type ClassUser = {
   id: string;
@@ -34,7 +34,7 @@ const ClassesShow = () => {
   const classId =
     typeof params.id === "string" ? params.id : params.id?.[0] ?? "";
 
-  const { query } = useShow<ClassDetails>({
+  const { query } = useShow<Class>({
     resource: "classes",
   });
 

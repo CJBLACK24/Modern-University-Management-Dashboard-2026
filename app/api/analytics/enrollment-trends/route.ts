@@ -1,10 +1,22 @@
 import { db } from "@/db";
 import { user } from "@/db/schema";
-import { count, eq } from "drizzle-orm";
+import { count, eq, and } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const departmentId = searchParams.get("departmentId");
+
+    let conditions = eq(user.role, "student");
+
+    if (departmentId && departmentId !== "all") {
+      conditions = and(
+        conditions,
+        eq(user.departmentId, parseInt(departmentId))
+      )!;
+    }
+
     // Aggregate students by year level
     const studentsByYear = await db
       .select({
@@ -12,7 +24,7 @@ export async function GET() {
         count: count(),
       })
       .from(user)
-      .where(eq(user.role, "student"))
+      .where(conditions)
       .groupBy(user.yearLevel);
 
     // Format for identifying trends (e.g., Freshman vs Seniors)

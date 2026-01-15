@@ -59,7 +59,7 @@ const Dashboard = () => {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-6 mt-6">
+        <TabsContent value="overview" className="space-y-8 mt-6">
           {/* Stat Cards */}
           <StatCards
             users={users}

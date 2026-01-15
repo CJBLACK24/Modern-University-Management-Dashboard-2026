@@ -12,19 +12,19 @@ interface TopDepartmentsProps {
 
 export const TopDepartments = ({ data }: TopDepartmentsProps) => (
   <Card className="hover:shadow-lg transition-all duration-300 border border-border bg-card shadow-sm">
-    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-black uppercase tracking-widest text-muted-foreground">
+    <CardHeader className="flex flex-row items-center justify-between space-y-0 p-8 pb-4">
+      <CardTitle className="text-sm font-black uppercase tracking-widest text-muted-foreground/70">
         Top Departments
       </CardTitle>
       <Building2 className="h-4 w-4 text-primary/60" />
     </CardHeader>
-    <CardContent>
-      <div className="space-y-1 pt-2">
+    <CardContent className="px-8 pb-8 pt-0">
+      <div className="space-y-2">
         {data.map((dept, i) => (
           <Link
             key={i}
             href={dept.id ? `/departments/show/${dept.id}` : "#"}
-            className="flex items-center justify-between p-2 rounded-xl hover:bg-muted/50 transition-colors group"
+            className="flex items-center justify-between p-3 rounded-2xl hover:bg-muted/50 transition-colors group"
           >
             <div className="flex items-center space-x-3">
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
@@ -59,19 +59,19 @@ interface RecentActivityProps {
 
 export const RecentActivity = ({ data }: RecentActivityProps) => (
   <Card className="hover:shadow-lg transition-all duration-300 border border-border bg-card shadow-sm">
-    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-black uppercase tracking-widest text-muted-foreground">
+    <CardHeader className="flex flex-row items-center justify-between space-y-0 p-8 pb-4">
+      <CardTitle className="text-sm font-black uppercase tracking-widest text-muted-foreground/70">
         Recent Activity
       </CardTitle>
       <Calendar className="h-4 w-4 text-primary/60" />
     </CardHeader>
-    <CardContent>
-      <div className="space-y-1 pt-2">
+    <CardContent className="px-8 pb-8 pt-0">
+      <div className="space-y-2">
         {data.map((cls, i) => (
           <Link
             key={i}
             href={`/classes/show/${cls.id}`}
-            className="flex items-center justify-between p-2 rounded-xl hover:bg-muted/50 transition-colors group"
+            className="flex items-center justify-between p-3 rounded-2xl hover:bg-muted/50 transition-colors group"
           >
             <div className="space-y-1">
               <p className="text-sm font-bold text-foreground/90 leading-none group-hover:text-primary transition-colors">
@@ -100,19 +100,19 @@ interface NewFacultyProps {
 
 export const NewFaculty = ({ data }: NewFacultyProps) => (
   <Card className="hover:shadow-lg transition-all duration-300 border border-border bg-card shadow-sm">
-    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-black uppercase tracking-widest text-muted-foreground">
+    <CardHeader className="flex flex-row items-center justify-between space-y-0 p-8 pb-4">
+      <CardTitle className="text-sm font-black uppercase tracking-widest text-muted-foreground/70">
         New Faculty
       </CardTitle>
       <Users className="h-4 w-4 text-primary/60" />
     </CardHeader>
-    <CardContent>
-      <div className="space-y-1 pt-2">
+    <CardContent className="px-8 pb-8 pt-0">
+      <div className="space-y-2">
         {data.map((teacher, i) => (
           <Link
             key={i}
             href={`/faculty/show/${teacher.id}`}
-            className="flex items-center justify-between p-2 rounded-xl hover:bg-muted/50 transition-colors group"
+            className="flex items-center justify-between p-3 rounded-2xl hover:bg-muted/50 transition-colors group"
           >
             <div className="space-y-1">
               <p className="text-sm font-bold text-foreground/90 leading-none group-hover:text-primary transition-colors">

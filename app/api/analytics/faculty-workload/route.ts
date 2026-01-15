@@ -1,10 +1,22 @@
 import { db } from "@/db";
 import { classes, user } from "@/db/schema";
-import { count, eq } from "drizzle-orm";
+import { count, eq, and } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const departmentId = searchParams.get("departmentId");
+
+    let conditions = eq(classes.status, "active");
+
+    if (departmentId && departmentId !== "all") {
+      conditions = and(
+        conditions,
+        eq(user.departmentId, parseInt(departmentId))
+      )!;
+    }
+
     // Count active classes per teacher
     const workload = await db
       .select({
@@ -13,7 +25,7 @@ export async function GET() {
       })
       .from(classes)
       .leftJoin(user, eq(classes.teacherId, user.id))
-      .where(eq(classes.status, "active"))
+      .where(conditions)
       .groupBy(user.id, user.name);
 
     // Sort by heaviest workload and take top 10

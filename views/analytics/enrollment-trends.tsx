@@ -13,6 +13,14 @@ import {
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { chartGradients } from "@/components/ui/enhanced-chart";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useDashboardData } from "@/hooks/use-dashboard-data";
 
 interface TrendData {
   year: string;
@@ -20,13 +28,22 @@ interface TrendData {
 }
 
 export const EnrollmentTrends = () => {
+  const { departments } = useDashboardData();
   const [data, setData] = useState<TrendData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedDept, setSelectedDept] = useState<string>("all");
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       try {
-        const res = await fetch("/api/analytics/enrollment-trends");
+        const queryParams = new URLSearchParams();
+        if (selectedDept !== "all")
+          queryParams.append("departmentId", selectedDept);
+
+        const res = await fetch(
+          `/api/analytics/enrollment-trends?${queryParams.toString()}`
+        );
         if (res.ok) {
           const json = await res.json();
           setData(json);
@@ -38,7 +55,7 @@ export const EnrollmentTrends = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [selectedDept]);
 
   if (loading) return <Skeleton className="h-[300px] w-full rounded-xl" />;
 
@@ -47,6 +64,27 @@ export const EnrollmentTrends = () => {
       title="Enrollment by Year Level"
       description="Current distribution of students across year levels"
       isEmpty={data.length === 0}
+      actions={
+        <Select value={selectedDept} onValueChange={setSelectedDept}>
+          <SelectTrigger className="w-[180px] h-8 text-xs font-bold border-border bg-background hover:bg-muted/50 transition-colors">
+            <SelectValue placeholder="All Departments" />
+          </SelectTrigger>
+          <SelectContent className="border-border bg-popover">
+            <SelectItem value="all" className="text-xs font-bold">
+              All Departments
+            </SelectItem>
+            {departments.map((dept) => (
+              <SelectItem
+                key={dept.id}
+                value={dept.id.toString()}
+                className="text-xs font-bold"
+              >
+                {dept.code}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      }
     >
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
@@ -70,11 +108,12 @@ export const EnrollmentTrends = () => {
           <Tooltip
             contentStyle={{
               borderRadius: "12px",
-              border: "1px solid oklch(0.8978 0.0172 258.338)",
-              backgroundColor: "oklch(0.9911 0 0 / 0.95)",
-              boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-              backdropFilter: "blur(4px)",
+              border: "1px solid oklch(0.25 0.05 250 / 0.5)",
+              backgroundColor: "oklch(0.15 0.02 250 / 0.8)",
+              backdropFilter: "blur(12px)",
+              boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.5)",
             }}
+            cursor={{ stroke: "rgba(255, 255, 255, 0.1)", strokeWidth: 1 }}
           />
           <Line
             type="monotone"

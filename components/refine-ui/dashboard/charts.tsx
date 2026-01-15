@@ -54,7 +54,7 @@ const ChartTooltip = ({
     const name = data.departmentName || label;
 
     return (
-      <div className="rounded-xl border border-border bg-popover p-3 shadow-xl ring-1 ring-border">
+      <div className="rounded-xl border border-border bg-popover/90 backdrop-blur-md p-3 shadow-2xl ring-1 ring-white/10">
         <p className="mb-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
           {name}
         </p>
@@ -85,7 +85,7 @@ const GenderTooltip = ({
 }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="rounded-xl border border-border bg-popover p-3 shadow-xl ring-1 ring-border">
+      <div className="rounded-xl border border-border bg-popover/90 backdrop-blur-md p-3 shadow-2xl ring-1 ring-white/10">
         <p className="mb-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
           {label}
         </p>
@@ -228,7 +228,10 @@ export const DistributionChart = ({
               axisLine={false}
               tickFormatter={(value) => `${value}`}
             />
-            <Tooltip content={<ChartTooltip />} />
+            <Tooltip
+              content={<ChartTooltip />}
+              cursor={{ stroke: "rgba(255, 255, 255, 0.1)", strokeWidth: 2 }}
+            />
             <Area
               type="monotone"
               dataKey="totalSubjects"
@@ -470,7 +473,10 @@ export const DemographicsChart = ({
               tickLine={false}
               axisLine={false}
             />
-            <Tooltip content={<GenderTooltip />} />
+            <Tooltip
+              content={<GenderTooltip />}
+              cursor={{ fill: "rgba(255, 255, 255, 0.03)" }}
+            />
             <Bar
               dataKey="Male"
               fill="oklch(0.627 0.17 250)"

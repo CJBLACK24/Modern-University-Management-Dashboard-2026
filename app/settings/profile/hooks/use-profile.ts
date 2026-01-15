@@ -30,11 +30,52 @@ export const profileFormSchema = z.object({
 
 export type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
+interface Department {
+  id: number;
+  name: string;
+  code: string;
+}
+
+export interface ProfileData {
+  id: string;
+  name: string;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  birthday?: string;
+  universityId?: string;
+  semester?: string;
+  yearLevel?: string;
+  departmentId?: string | number;
+  bio?: string;
+  skills?: string;
+  signatureUrl?: string;
+  role?: string;
+  enrolledAt?: string;
+  enrollments?: {
+    class?: {
+      subject?: {
+        code?: string;
+        name?: string;
+        credits?: number;
+      };
+      schedules?: {
+        startTime: string;
+        endTime: string;
+        day: string;
+        room?: string;
+      }[];
+    };
+  }[];
+}
+
 export const useProfile = () => {
   const { data: session } = authClient.useSession();
   const [isSaving, setIsSaving] = useState(false);
-  const [departments, setDepartments] = useState<any[]>([]);
-  const [profileData, setProfileData] = useState<any>(null);
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [profileData, setProfileData] = useState<ProfileData | undefined>(
+    undefined
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   const form = useForm<ProfileFormValues>({
@@ -46,8 +87,8 @@ export const useProfile = () => {
       lastName: "",
       birthday: "",
       universityId: "",
-      semester: "1st Semester",
-      yearLevel: "1st Year",
+      semester: "1",
+      yearLevel: "1",
       departmentId: "",
       bio: "",
       skills: "",
@@ -83,8 +124,8 @@ export const useProfile = () => {
             ? new Date(data.birthday).toISOString().split("T")[0]
             : "",
           universityId: data.universityId || "",
-          semester: data.semester || "1st Semester",
-          yearLevel: data.yearLevel ? `${data.yearLevel}nd Year` : "1st Year",
+          semester: data.semester?.toString() || "1",
+          yearLevel: data.yearLevel?.toString() || "1",
           departmentId: data.departmentId?.toString() || "",
           bio: data.bio || "",
           skills: data.skills || "",
@@ -124,9 +165,10 @@ export const useProfile = () => {
         description: "Your settings have been saved successfully.",
       });
       fetchProfile();
-    } catch (error: any) {
+    } catch (error) {
       toast.error("Error", {
-        description: error.message,
+        description:
+          error instanceof Error ? error.message : "An unknown error occurred",
       });
     } finally {
       setIsSaving(false);

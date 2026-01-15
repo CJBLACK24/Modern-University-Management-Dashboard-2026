@@ -14,6 +14,14 @@ import {
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { chartGradients } from "@/components/ui/enhanced-chart";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useDashboardData } from "@/hooks/use-dashboard-data";
 
 interface GradeData {
   range: string;
@@ -21,13 +29,28 @@ interface GradeData {
 }
 
 export const GradeDistribution = () => {
+  const { departments } = useDashboardData();
   const [data, setData] = useState<GradeData[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [selectedDept, setSelectedDept] = useState<string>("all");
+  const [selectedYear, setSelectedYear] = useState<string>("all");
+  const [selectedSem, setSelectedSem] = useState<string>("all");
+
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       try {
-        const res = await fetch("/api/analytics/grade-distribution");
+        const queryParams = new URLSearchParams();
+        if (selectedDept !== "all")
+          queryParams.append("departmentId", selectedDept);
+        if (selectedYear !== "all")
+          queryParams.append("yearLevel", selectedYear);
+        if (selectedSem !== "all") queryParams.append("semester", selectedSem);
+
+        const res = await fetch(
+          `/api/analytics/grade-distribution?${queryParams.toString()}`
+        );
         if (res.ok) {
           const json = await res.json();
           setData(json);
@@ -39,7 +62,7 @@ export const GradeDistribution = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [selectedDept, selectedYear, selectedSem]);
 
   if (loading) return <Skeleton className="h-[300px] w-full rounded-xl" />;
 
@@ -48,6 +71,50 @@ export const GradeDistribution = () => {
       title="Grade Distribution"
       description="Overview of student performance grades"
       isEmpty={data.length === 0}
+      actions={
+        <div className="flex gap-2">
+          {/* Department Filter */}
+          <Select value={selectedDept} onValueChange={setSelectedDept}>
+            <SelectTrigger className="w-[140px] h-8 text-xs font-bold border-border bg-background hover:bg-muted/50">
+              <SelectValue placeholder="All Depts" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Depts</SelectItem>
+              {departments.map((d) => (
+                <SelectItem key={d.id} value={d.id.toString()}>
+                  {d.code}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {/* Year Filter */}
+          <Select value={selectedYear} onValueChange={setSelectedYear}>
+            <SelectTrigger className="w-[100px] h-8 text-xs font-bold border-border bg-background hover:bg-muted/50">
+              <SelectValue placeholder="All Years" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Years</SelectItem>
+              <SelectItem value="1">1st Year</SelectItem>
+              <SelectItem value="2">2nd Year</SelectItem>
+              <SelectItem value="3">3rd Year</SelectItem>
+              <SelectItem value="4">4th Year</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Semester Filter */}
+          <Select value={selectedSem} onValueChange={setSelectedSem}>
+            <SelectTrigger className="w-[100px] h-8 text-xs font-bold border-border bg-background hover:bg-muted/50">
+              <SelectValue placeholder="All Sems" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Sems</SelectItem>
+              <SelectItem value="1">1st Sem</SelectItem>
+              <SelectItem value="2">2nd Sem</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      }
     >
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
@@ -75,13 +142,13 @@ export const GradeDistribution = () => {
             stroke="oklch(0.5765 0.0147 258.338)"
           />
           <Tooltip
-            cursor={{ fill: "oklch(0.8348 0.1302 160.908 / 0.1)" }}
+            cursor={{ fill: "oklch(0.25 0.05 250 / 0.1)" }}
             contentStyle={{
               borderRadius: "12px",
-              border: "1px solid oklch(0.8978 0.0172 258.338)",
-              backgroundColor: "oklch(0.9911 0 0 / 0.95)",
-              boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-              backdropFilter: "blur(4px)",
+              border: "1px solid oklch(0.25 0.05 250 / 0.5)",
+              backgroundColor: "oklch(0.15 0.02 250 / 0.8)",
+              backdropFilter: "blur(12px)",
+              boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.5)",
             }}
           />
           <Bar dataKey="count" radius={[6, 6, 0, 0]} barSize={40}>

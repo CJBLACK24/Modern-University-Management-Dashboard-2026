@@ -31,18 +31,27 @@ async function updateSeedData() {
   const data = JSON.parse(rawData);
 
   console.log("Updating users with gender...");
-  data.users = data.users.map((user: any) => ({
-    ...user,
-    gender: user.gender || getRandomGender(),
-  }));
+  data.users = data.users.map(
+    (user: { gender?: string; [key: string]: unknown }) => ({
+      ...user,
+      gender: user.gender || getRandomGender(),
+    })
+  );
 
   console.log("Updating subjects with yearLevel...");
   // Check if subject exists before mapping
   if (data.subjects) {
-    data.subjects = data.subjects.map((subject: any) => ({
-      ...subject,
-      yearLevel: subject.yearLevel || getYearLevelFromSubjectCode(subject.code),
-    }));
+    data.subjects = data.subjects.map(
+      (subject: {
+        code: string;
+        yearLevel?: number;
+        [key: string]: unknown;
+      }) => ({
+        ...subject,
+        yearLevel:
+          subject.yearLevel || getYearLevelFromSubjectCode(subject.code),
+      })
+    );
   }
 
   console.log("Writing updated data.json...");

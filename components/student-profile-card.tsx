@@ -5,6 +5,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { QrCodeDisplay } from "@/components/qr-code-display";
+import Image from "next/image";
 import { Building2, User, RefreshCw, Shell, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -92,10 +93,12 @@ export function StudentProfileCard({ user }: StudentProfileCardProps) {
                 <div className="relative mb-6">
                   <div className="w-44 h-44 rounded-3xl overflow-hidden border-8 border-white/20 shadow-2xl bg-white/10 backdrop-blur-md flex items-center justify-center relative">
                     {user.image ? (
-                      <img
+                      <Image
                         src={user.image}
                         alt={user.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
+                        unoptimized
                       />
                     ) : (
                       <User className="w-20 h-20 text-white" />
@@ -215,15 +218,17 @@ export function StudentProfileCard({ user }: StudentProfileCardProps) {
                     <p className="text-[9px] font-black text-white/40 uppercase tracking-widest text-center">
                       Digital Signature
                     </p>
-                    <div className="h-16 w-full bg-black/20 rounded-xl border border-white/10 flex items-center justify-center p-3">
+                    <div className="h-16 w-full relative bg-black/20 rounded-xl border border-white/10 flex items-center justify-center p-3 overflow-hidden">
                       {user.signatureUrl ? (
-                        <img
+                        <Image
                           src={user.signatureUrl}
                           alt="Signature"
-                          className="max-h-full max-w-full object-contain filter invert opacity-80"
+                          fill
+                          className="object-contain filter invert opacity-80 p-2"
+                          unoptimized
                         />
                       ) : (
-                        <p className="text-sm text-white/30 font-serif italic font-medium select-none truncate px-4">
+                        <p className="text-sm text-white/30 font-serif italic font-medium select-none truncate px-4 text-center w-full">
                           {user.name}
                         </p>
                       )}

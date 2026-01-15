@@ -29,19 +29,14 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { QrCodeDisplay } from "@/components/qr-code-display";
-import { ProfileFormValues } from "../hooks/use-profile";
+import { ProfileFormValues, ProfileData } from "../hooks/use-profile";
 
 interface ProfileFormProps {
   onSubmit: (data: ProfileFormValues) => void;
   isSaving: boolean;
   departments: { id: number; code: string; name: string }[];
   age: number | null;
-  profileData?: {
-    id: string;
-    name: string;
-    role?: string;
-    enrolledAt?: string;
-  };
+  profileData?: ProfileData;
 }
 
 export const ProfileForm = ({
@@ -185,12 +180,8 @@ export const ProfileForm = ({
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent className="bg-popover border-border/50">
-                            <SelectItem value="1st Semester">
-                              1st Sem
-                            </SelectItem>
-                            <SelectItem value="2nd Semester">
-                              2nd Sem
-                            </SelectItem>
+                            <SelectItem value="1">1st Sem</SelectItem>
+                            <SelectItem value="2">2nd Sem</SelectItem>
                           </SelectContent>
                         </Select>
                       </FormItem>

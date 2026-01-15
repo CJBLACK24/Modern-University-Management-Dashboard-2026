@@ -62,32 +62,16 @@ export default function ProfileSettingsPage() {
             <h2 className="text-xl font-bold mb-4 px-1">Class Schedule</h2>
             <ClassScheduleTable
               schedules={
-                profileData?.enrollments?.map(
-                  (e: {
-                    class?: {
-                      subject?: {
-                        code?: string;
-                        name?: string;
-                        credits?: number;
-                      };
-                      schedules?: {
-                        startTime: string;
-                        endTime: string;
-                        day: string;
-                        room?: string;
-                      }[];
-                    };
-                  }) => ({
-                    code: e.class?.subject?.code || "N/A",
-                    course: e.class?.subject?.name || "N/A",
-                    cr: e.class?.subject?.credits || 0,
-                    timeDays:
-                      e.class?.schedules
-                        ?.map((s) => `${s.startTime}-${s.endTime} ${s.day}`)
-                        .join(", ") || "TBA",
-                    room: e.class?.schedules?.[0]?.room || "TBA",
-                  })
-                ) || []
+                profileData?.enrollments?.map((e) => ({
+                  code: e.class?.subject?.code || "N/A",
+                  course: e.class?.subject?.name || "N/A",
+                  cr: e.class?.subject?.credits || 0,
+                  timeDays:
+                    e.class?.schedules
+                      ?.map((s) => `${s.startTime}-${s.endTime} ${s.day}`)
+                      .join(", ") || "TBA",
+                  room: e.class?.schedules?.[0]?.room || "TBA",
+                })) || []
               }
             />
           </div>
