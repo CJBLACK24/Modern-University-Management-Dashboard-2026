@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { bannerPhoto } from "@/lib/cloudinary";
+import { QrAttendanceScanner } from "@/components/qr-attendance-scanner";
 import { ClassDetails } from "@/types";
 
 type ClassUser = {
@@ -29,8 +30,9 @@ type ClassUser = {
 };
 
 const ClassesShow = () => {
-  const { id } = useParams();
-  const classId = id ?? "";
+  const params = useParams();
+  const classId =
+    typeof params.id === "string" ? params.id : params.id?.[0] ?? "";
 
   const { query } = useShow<ClassDetails>({
     resource: "classes",
@@ -254,6 +256,12 @@ const ClassesShow = () => {
           <DataTable table={studentsTable} paginationVariant="simple" />
         </CardContent>
       </Card>
+
+      {classDetails.teacher?.id && (
+        <div className="mt-8">
+          <QrAttendanceScanner classId={classId} />
+        </div>
+      )}
     </ShowView>
   );
 };

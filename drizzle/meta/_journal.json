@@ -15,6 +15,27 @@
       "when": 1768351695114,
       "tag": "0001_bored_spitfire",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1768435538317,
+      "tag": "0002_unique_rockslide",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1768437701864,
+      "tag": "0003_jittery_wilson_fisk",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1768438830612,
+      "tag": "0004_slimy_stranger",
+      "breakpoints": true
     }
   ]
 }

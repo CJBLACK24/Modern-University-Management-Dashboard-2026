@@ -3,7 +3,7 @@
 
 import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -29,6 +29,8 @@ import { useLink } from "@refinedev/core";
 import { AnimatedLogo } from "@/components/ui/animated-logo";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import { OAuthButtonSkeleton } from "@/components/ui/skeleton";
+import { InlineValidation } from "@/components/ui/validation-feedback";
 
 const signInSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -39,8 +41,10 @@ type SignInFormValues = z.infer<typeof signInSchema>;
 export const SignInForm = () => {
   const Link = useLink();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState<"google" | "github" | null>(null);
 
   const handleSocialSignIn = async (provider: "google" | "github") => {
+    setOauthLoading(provider);
     try {
       await authClient.signIn.social({
         provider,
@@ -49,6 +53,8 @@ export const SignInForm = () => {
     } catch (error) {
       console.error(`${provider} sign in error:`, error);
       toast.error(`Failed to sign in with ${provider}`);
+    } finally {
+      setOauthLoading(null);
     }
   };
 
@@ -122,12 +128,17 @@ export const SignInForm = () => {
                       <Input
                         id="email"
                         type="email"
-                        placeholder=" Your email address"
-                        variantSize="lg"
+                        placeholder="Your email address"
                         {...field}
                       />
                     </FormControl>
                     <FormMessage />
+                    {!form.formState.errors.email && field.value && (
+                      <InlineValidation 
+                        status="success" 
+                        message="Valid email address" 
+                      />
+                    )}
                   </FormItem>
                 )}
               />
@@ -149,12 +160,17 @@ export const SignInForm = () => {
 
               <div className="social">
                 <div className="social-grid flex flex-col gap-3">
-                  <Button
-                    variant="outline"
-                    className="social-button w-full"
-                    type="button"
-                    onClick={() => handleSocialSignIn("google")}
-                  >
+                  <Suspense fallback={<OAuthButtonSkeleton />}>
+                    <Button
+                      variant="outline"
+                      className="social-button w-full touch-target"
+                      type="button"
+                      onClick={() => handleSocialSignIn("google")}
+                      disabled={oauthLoading === "google"}
+                    >
+                      {oauthLoading === "google" ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
                     <svg
                       width="21"
                       height="20"
@@ -167,14 +183,21 @@ export const SignInForm = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <div>Log in with Google</div>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="social-button w-full"
-                    type="button"
-                    onClick={() => handleSocialSignIn("github")}
-                  >
+                      )}
+                      <div>Log in with Google</div>
+                    </Button>
+                  </Suspense>
+                  <Suspense fallback={<OAuthButtonSkeleton />}>
+                    <Button
+                      variant="outline"
+                      className="social-button w-full touch-target"
+                      type="button"
+                      onClick={() => handleSocialSignIn("github")}
+                      disabled={oauthLoading === "github"}
+                    >
+                      {oauthLoading === "github" ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
                     <svg
                       width="21"
                       height="20"
@@ -189,8 +212,10 @@ export const SignInForm = () => {
                         fill="currentColor"
                       />
                     </svg>
-                    <div>Log in with GitHub</div>
-                  </Button>
+                      )}
+                      <div>Log in with GitHub</div>
+                    </Button>
+                  </Suspense>
                 </div>
               </div>
             </form>

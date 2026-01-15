@@ -29,3 +29,4 @@ export * from "./FormSkeleton";
 export * from "./DashboardSkeleton";
 export * from "./ProfileSkeleton";
 export * from "./AuthSkeleton";
+export * from "./OAuthSkeleton";

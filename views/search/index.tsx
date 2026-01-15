@@ -25,7 +25,7 @@ export const SearchView = () => {
   return (
     <div className="flex min-h-[80vh] flex-col items-center justify-center p-4">
       <div className="mx-auto w-full max-w-md text-center mb-8">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent mb-2">
+        <h1 className="text-4xl font-bold bg-linear-to-r from-primary to-orange-500 bg-clip-text text-transparent mb-2">
           Student Portal
         </h1>
         <p className="text-muted-foreground">

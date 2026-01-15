@@ -41,6 +41,15 @@ const SeedClassSchema = z.object({
 const SeedEnrollmentSchema = z.object({
   classInviteCode: z.string(),
   studentId: z.string(),
+  grade: z.number().optional(),
+});
+
+const SeedAttendanceSchema = z.object({
+  studentId: z.string(),
+  classInviteCode: z.string(),
+  date: z.string(), // ISO string
+  status: z.enum(["present", "absent", "late", "excused"]),
+  remarks: z.string().optional(),
 });
 
 const SeedDataSchema = z.object({
@@ -49,6 +58,7 @@ const SeedDataSchema = z.object({
   subjects: z.array(SeedSubjectSchema),
   classes: z.array(SeedClassSchema),
   enrollments: z.array(SeedEnrollmentSchema),
+  attendance: z.array(SeedAttendanceSchema),
 });
 
 type SeedUser = z.infer<typeof SeedUserSchema>;
@@ -56,6 +66,7 @@ type SeedDepartment = z.infer<typeof SeedDepartmentSchema>;
 type SeedSubject = z.infer<typeof SeedSubjectSchema>;
 type SeedClass = z.infer<typeof SeedClassSchema>;
 type SeedEnrollment = z.infer<typeof SeedEnrollmentSchema>;
+type SeedAttendance = z.infer<typeof SeedAttendanceSchema>;
 
 // Real Departments from User Request
 const departmentsList = [
@@ -336,6 +347,7 @@ const subjectTemplates = [
 const subjects: SeedSubject[] = [];
 const classes: SeedClass[] = [];
 const enrollments: SeedEnrollment[] = [];
+const attendance: SeedAttendance[] = [];
 const sections = ["A", "B", "C"];
 
 // Generate Students - Boosting count to satisfy "many number of students"
@@ -399,7 +411,7 @@ departments.forEach((dept) => {
   });
 });
 
-// Enroll students in classes
+// Enroll students in classes and generate Grades + Attendance
 students.forEach((student) => {
   // Find subjects for their department
   const deptSubs = subjects.filter(
@@ -409,10 +421,53 @@ students.forEach((student) => {
   // Enroll in all of them for their section
   deptSubs.forEach((sub) => {
     const classInviteCode = `${sub.code}-${student.section}`;
+
+    // Add Grade (random 1.0 - 5.0)
+    // 90% chance of having a grade
+    const hasGrade = Math.random() > 0.1;
+    let grade: number | undefined = undefined;
+    if (hasGrade) {
+      const gradesPool = [
+        1.0, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.25, 2.5, 2.75, 3.0,
+        4.0, 5.0,
+      ];
+      // Weighted towards passing
+      const rand = Math.random();
+      if (rand > 0.1) {
+        // 90% chance of passing (1.0 - 3.0)
+        grade = gradesPool[Math.floor(Math.random() * 14)];
+      } else {
+        // 10% chance of failing (4.0 or 5.0)
+        grade = gradesPool[14 + Math.floor(Math.random() * 2)];
+      }
+    }
+
     enrollments.push({
       classInviteCode,
       studentId: student.id,
+      grade,
     });
+
+    // Generate 5 days of attendance
+    for (let day = 1; day <= 5; day++) {
+      const date = new Date();
+      date.setDate(date.getDate() - day);
+
+      // Random status: 90% present, 5% absent, 3% late, 2% excused
+      const rand = Math.random();
+      let status: "present" | "absent" | "late" | "excused" = "present";
+      if (rand > 0.98) status = "excused";
+      else if (rand > 0.95) status = "late";
+      else if (rand > 0.9) status = "absent";
+
+      attendance.push({
+        studentId: student.id,
+        classInviteCode,
+        date: date.toISOString(),
+        status,
+        remarks: status === "absent" ? "No notification" : undefined,
+      });
+    }
   });
 });
 
@@ -433,6 +488,7 @@ const finalData = {
   subjects,
   classes,
   enrollments,
+  attendance,
 };
 
 // Validate and Write
@@ -440,7 +496,7 @@ try {
   const validatedData = SeedDataSchema.parse(finalData);
   fs.writeFileSync("seed/data.json", JSON.stringify(validatedData, null, 2));
   console.log(
-    `✅ Production-ready data.json generated with ${students.length} students!`
+    `✅ Production-ready data.json generated with ${students.length} students, ${enrollments.length} enrollments, and ${attendance.length} attendance records!`
   );
 } catch (error) {
   if (error instanceof z.ZodError) {

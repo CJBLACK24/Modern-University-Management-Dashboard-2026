@@ -33,6 +33,11 @@ export const user = pgTable("user", {
   yearLevel: integer("year_level"),
   section: text("section"),
 
+  // Profile details
+  username: text("username").unique(),
+  bio: text("bio"),
+  skills: text("skills"), // JSON string or comma-separated
+
   ...timestamps,
 });
 

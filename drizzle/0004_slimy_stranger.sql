@@ -1,0 +1,1 @@
+ALTER TABLE "enrollments" ALTER COLUMN "grade" SET DATA TYPE real;

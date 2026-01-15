@@ -13,6 +13,7 @@ import {
   session,
   subjects,
   user,
+  attendance, // Added import
 } from "../db/schema";
 
 async function checkConnection() {
@@ -65,6 +66,15 @@ type SeedClass = {
 type SeedEnrollment = {
   classInviteCode: string;
   studentId: string;
+  grade?: number; // Added grade
+};
+
+type SeedAttendance = {
+  studentId: string;
+  classInviteCode: string;
+  date: string;
+  status: "present" | "absent" | "late" | "excused";
+  remarks?: string;
 };
 
 type SeedData = {
@@ -73,6 +83,7 @@ type SeedData = {
   subjects: SeedSubject[];
   classes: SeedClass[];
   enrollments: SeedEnrollment[];
+  attendance: SeedAttendance[]; // Added attendance
 };
 
 const __filename = fileURLToPath(import.meta.url);
@@ -95,6 +106,8 @@ const ensureMapValue = <T>(map: Map<string, T>, key: string, label: string) => {
 const seed = async () => {
   const data = await loadSeedData();
 
+  console.log("Cleaning database...");
+  await db.delete(attendance); // Clean attendance
   await db.delete(enrollments);
   await db.delete(classes);
   await db.delete(subjects);
@@ -103,6 +116,7 @@ const seed = async () => {
   await db.delete(account);
   await db.delete(user);
 
+  console.log("Seeding users...");
   if (data.users.length) {
     // Batch users and accounts
     const BATCH_SIZE = 500;
@@ -141,6 +155,7 @@ const seed = async () => {
     }
   }
 
+  console.log("Seeding departments...");
   if (data.departments.length) {
     await db
       .insert(departments)
@@ -166,6 +181,7 @@ const seed = async () => {
     departmentRows.map((row) => [row.code, row.id])
   );
 
+  console.log("Seeding subjects...");
   if (data.subjects.length) {
     const BATCH_SIZE = 500;
     for (let i = 0; i < data.subjects.length; i += BATCH_SIZE) {
@@ -198,6 +214,7 @@ const seed = async () => {
           .where(inArray(subjects.code, subjectCodes));
   const subjectMap = new Map(subjectRows.map((row) => [row.code, row.id]));
 
+  console.log("Seeding classes...");
   if (data.classes.length) {
     const BATCH_SIZE = 500;
     for (let i = 0; i < data.classes.length; i += BATCH_SIZE) {
@@ -235,6 +252,7 @@ const seed = async () => {
     .where(inArray(classes.inviteCode, classInviteCodes));
   const classMap = new Map(classRows.map((row) => [row.inviteCode, row.id]));
 
+  console.log("Seeding enrollments...");
   if (data.enrollments.length) {
     const BATCH_SIZE = 1000;
     for (let i = 0; i < data.enrollments.length; i += BATCH_SIZE) {
@@ -249,6 +267,27 @@ const seed = async () => {
               enrollment.classInviteCode,
               "class"
             ),
+            grade: enrollment.grade, // Added grade
+          }))
+        )
+        .onConflictDoNothing();
+    }
+  }
+
+  console.log("Seeding attendance...");
+  if (data.attendance && data.attendance.length) {
+    const BATCH_SIZE = 1000;
+    for (let i = 0; i < data.attendance.length; i += BATCH_SIZE) {
+      const batch = data.attendance.slice(i, i + BATCH_SIZE);
+      await db
+        .insert(attendance)
+        .values(
+          batch.map((att) => ({
+            studentId: att.studentId,
+            classId: ensureMapValue(classMap, att.classInviteCode, "class"),
+            date: new Date(att.date),
+            status: att.status,
+            remarks: att.remarks,
           }))
         )
         .onConflictDoNothing();

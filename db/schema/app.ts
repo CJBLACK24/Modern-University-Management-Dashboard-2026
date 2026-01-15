@@ -5,6 +5,7 @@ import {
   index,
   pgEnum,
   pgTable,
+  real,
   text,
   timestamp,
   varchar,
@@ -24,6 +25,13 @@ export const classStatusEnum = pgEnum("class_status", [
   "active",
   "inactive",
   "archived",
+]);
+
+export const attendanceStatusEnum = pgEnum("attendance_status", [
+  "present",
+  "absent",
+  "late",
+  "excused",
 ]);
 
 export const departments = pgTable("departments", {
@@ -98,6 +106,7 @@ export const enrollments = pgTable(
     classId: integer("class_id")
       .notNull()
       .references(() => classes.id, { onDelete: "cascade" }),
+    grade: real("grade"),
 
     ...timestamps,
   },
@@ -108,6 +117,29 @@ export const enrollments = pgTable(
       table.studentId,
       table.classId
     ),
+  })
+);
+
+export const attendance = pgTable(
+  "attendance",
+  {
+    id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+    studentId: text("student_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    classId: integer("class_id")
+      .notNull()
+      .references(() => classes.id, { onDelete: "cascade" }),
+    date: timestamp("date").notNull(),
+    status: attendanceStatusEnum("status").notNull(),
+    remarks: text("remarks"),
+
+    ...timestamps,
+  },
+  (table) => ({
+    studentIdIdx: index("attendance_student_id_idx").on(table.studentId),
+    classIdIdx: index("attendance_class_id_idx").on(table.classId),
+    dateIdx: index("attendance_date_idx").on(table.date),
   })
 );
 
@@ -146,6 +178,17 @@ export const enrollmentsRelations = relations(enrollments, ({ one }) => ({
   }),
 }));
 
+export const attendanceRelations = relations(attendance, ({ one }) => ({
+  student: one(user, {
+    fields: [attendance.studentId],
+    references: [user.id],
+  }),
+  class: one(classes, {
+    fields: [attendance.classId],
+    references: [classes.id],
+  }),
+}));
+
 export type Department = typeof departments.$inferSelect;
 export type NewDepartment = typeof departments.$inferInsert;
 
@@ -160,3 +203,6 @@ export type NewEnrollment = typeof enrollments.$inferInsert;
 
 export type AcademicCalendar = typeof academicCalendar.$inferSelect;
 export type NewAcademicCalendar = typeof academicCalendar.$inferInsert;
+
+export type Attendance = typeof attendance.$inferSelect;
+export type NewAttendance = typeof attendance.$inferInsert;
