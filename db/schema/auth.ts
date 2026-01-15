@@ -19,6 +19,7 @@ const timestamps = {
 };
 
 export const roleEnum = pgEnum("role", ["student", "teacher", "admin"]);
+export const genderEnum = pgEnum("gender", ["male", "female", "other"]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -27,9 +28,17 @@ export const user = pgTable("user", {
   emailVerified: boolean("email_verified").notNull(),
   image: text("image"),
   role: roleEnum("role").notNull().default("student"),
+  gender: genderEnum("gender"),
   imageCldPubId: text("image_cld_pub_id"),
 
   // Student details
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  birthday: timestamp("birthday"),
+  universityId: text("university_id").unique(),
+  semester: integer("semester").default(1), // 1 for 1st Sem, 2 for 2nd Sem
+  signatureUrl: text("signature_url"),
+  departmentId: integer("department_id"), // References departments.id in app.ts
   yearLevel: integer("year_level"),
   section: text("section"),
 
@@ -102,11 +111,6 @@ export const verification = pgTable(
     identifierIdx: index("verification_identifier_idx").on(table.identifier),
   })
 );
-
-export const usersRelations = relations(user, ({ many }) => ({
-  sessions: many(session),
-  accounts: many(account),
-}));
 
 export const sessionsRelations = relations(session, ({ one }) => ({
   user: one(user, {

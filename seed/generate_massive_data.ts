@@ -120,6 +120,16 @@ const departmentsList = [
     name: "BS Marine Transportation",
     desc: "The official department for BS Marine Transportation",
   },
+  {
+    code: "BSIT",
+    name: "BS Information Technology",
+    desc: "The official department for BS Information Technology",
+  },
+  {
+    code: "BSCS",
+    name: "BS Computer Science",
+    desc: "The official department for BS Computer Science",
+  },
 ];
 
 const departments: SeedDepartment[] = departmentsList.map((d) => ({

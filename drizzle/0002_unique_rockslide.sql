@@ -1,4 +1,8 @@
-CREATE TYPE "public"."attendance_status" AS ENUM('present', 'absent', 'late', 'excused');--> statement-breakpoint
+DO $$ BEGIN
+    CREATE TYPE "public"."attendance_status" AS ENUM('present', 'absent', 'late', 'excused');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;--> statement-breakpoint
 CREATE TABLE "attendance" (
 	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "attendance_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
 	"student_id" text NOT NULL,
@@ -10,9 +14,9 @@ CREATE TABLE "attendance" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-DROP TABLE "exam_periods" CASCADE;--> statement-breakpoint
-DROP TABLE "exams" CASCADE;--> statement-breakpoint
-DROP TABLE "rooms" CASCADE;--> statement-breakpoint
+DROP TABLE IF EXISTS "exam_periods" CASCADE;--> statement-breakpoint
+DROP TABLE IF EXISTS "exams" CASCADE;--> statement-breakpoint
+DROP TABLE IF EXISTS "rooms" CASCADE;--> statement-breakpoint
 ALTER TABLE "enrollments" ADD COLUMN "grade" integer;--> statement-breakpoint
 ALTER TABLE "user" ADD COLUMN "year_level" integer;--> statement-breakpoint
 ALTER TABLE "user" ADD COLUMN "section" text;--> statement-breakpoint
@@ -21,4 +25,4 @@ ALTER TABLE "attendance" ADD CONSTRAINT "attendance_class_id_classes_id_fk" FORE
 CREATE INDEX "attendance_student_id_idx" ON "attendance" USING btree ("student_id");--> statement-breakpoint
 CREATE INDEX "attendance_class_id_idx" ON "attendance" USING btree ("class_id");--> statement-breakpoint
 CREATE INDEX "attendance_date_idx" ON "attendance" USING btree ("date");--> statement-breakpoint
-DROP TYPE "public"."room_type";
+DROP TYPE IF EXISTS "public"."room_type";

@@ -13,7 +13,7 @@ import {
   session,
   subjects,
   user,
-  attendance, // Added import
+  attendance,
 } from "../db/schema";
 
 async function checkConnection() {
@@ -37,6 +37,9 @@ type SeedUser = {
   image: string;
   yearLevel?: number;
   section?: string;
+  gender?: "male" | "female" | "other";
+  semester?: number;
+  departmentCode?: string;
 };
 
 type SeedDepartment = {
@@ -50,6 +53,9 @@ type SeedSubject = {
   name: string;
   description: string;
   departmentCode: string;
+  yearLevel: number;
+  semester: number;
+  credits: number;
 };
 
 type SeedClass = {
@@ -61,12 +67,14 @@ type SeedClass = {
   subjectCode: string;
   teacherId: string;
   bannerUrl: string;
+  section: string;
+  semester: number;
 };
 
 type SeedEnrollment = {
   classInviteCode: string;
   studentId: string;
-  grade?: number; // Added grade
+  grade?: number;
 };
 
 type SeedAttendance = {
@@ -83,7 +91,7 @@ type SeedData = {
   subjects: SeedSubject[];
   classes: SeedClass[];
   enrollments: SeedEnrollment[];
-  attendance: SeedAttendance[]; // Added attendance
+  attendance: SeedAttendance[];
 };
 
 const __filename = fileURLToPath(import.meta.url);
@@ -107,53 +115,14 @@ const seed = async () => {
   const data = await loadSeedData();
 
   console.log("Cleaning database...");
-  await db.delete(attendance); // Clean attendance
+  await db.delete(attendance);
   await db.delete(enrollments);
   await db.delete(classes);
   await db.delete(subjects);
-  await db.delete(departments);
   await db.delete(session);
   await db.delete(account);
   await db.delete(user);
-
-  console.log("Seeding users...");
-  if (data.users.length) {
-    // Batch users and accounts
-    const BATCH_SIZE = 500;
-    for (let i = 0; i < data.users.length; i += BATCH_SIZE) {
-      const batch = data.users.slice(i, i + BATCH_SIZE);
-      await db
-        .insert(user)
-        .values(
-          batch.map((seedUser) => ({
-            id: seedUser.id,
-            name: seedUser.name,
-            email: seedUser.email,
-            emailVerified: true,
-            image: seedUser.image,
-            role: seedUser.role,
-            yearLevel: seedUser.yearLevel,
-            section: seedUser.section,
-          }))
-        )
-        .onConflictDoNothing({ target: user.id });
-
-      await db
-        .insert(account)
-        .values(
-          batch.map((seedUser) => ({
-            id: `acc_${seedUser.id}`,
-            userId: seedUser.id,
-            accountId: seedUser.email,
-            providerId: "credentials",
-            password: seedUser.password,
-          }))
-        )
-        .onConflictDoNothing({
-          target: [account.providerId, account.accountId],
-        });
-    }
-  }
+  await db.delete(departments);
 
   console.log("Seeding departments...");
   if (data.departments.length) {
@@ -181,9 +150,54 @@ const seed = async () => {
     departmentRows.map((row) => [row.code, row.id])
   );
 
+  console.log("Seeding users...");
+  // Limit users to 8000 (enough for full realistic dataset)
+  const usersToSeed = data.users.slice(0, 8000);
+  if (usersToSeed.length) {
+    const BATCH_SIZE = 50; // Smaller batches for better reliability with many fields
+    for (let i = 0; i < usersToSeed.length; i += BATCH_SIZE) {
+      const batch = usersToSeed.slice(i, i + BATCH_SIZE);
+      await db
+        .insert(user)
+        .values(
+          batch.map((seedUser) => ({
+            id: seedUser.id,
+            name: seedUser.name,
+            email: seedUser.email,
+            emailVerified: true,
+            image: seedUser.image,
+            role: seedUser.role,
+            gender: seedUser.gender,
+            yearLevel: seedUser.yearLevel,
+            section: seedUser.section,
+            semester: seedUser.semester ?? 1,
+            departmentId: seedUser.departmentCode
+              ? departmentMap.get(seedUser.departmentCode)
+              : null,
+          }))
+        )
+        .onConflictDoNothing({ target: user.id });
+
+      await db
+        .insert(account)
+        .values(
+          batch.map((seedUser) => ({
+            id: `acc_${seedUser.id}`,
+            userId: seedUser.id,
+            accountId: seedUser.email,
+            providerId: "credentials",
+            password: seedUser.password,
+          }))
+        )
+        .onConflictDoNothing({
+          target: [account.providerId, account.accountId],
+        });
+    }
+  }
+
   console.log("Seeding subjects...");
   if (data.subjects.length) {
-    const BATCH_SIZE = 500;
+    const BATCH_SIZE = 200;
     for (let i = 0; i < data.subjects.length; i += BATCH_SIZE) {
       const batch = data.subjects.slice(i, i + BATCH_SIZE);
       await db
@@ -193,6 +207,9 @@ const seed = async () => {
             code: subject.code,
             name: subject.name,
             description: subject.description,
+            yearLevel: subject.yearLevel,
+            semester: subject.semester,
+            credits: subject.credits,
             departmentId: ensureMapValue(
               departmentMap,
               subject.departmentCode,
@@ -216,7 +233,7 @@ const seed = async () => {
 
   console.log("Seeding classes...");
   if (data.classes.length) {
-    const BATCH_SIZE = 500;
+    const BATCH_SIZE = 200;
     for (let i = 0; i < data.classes.length; i += BATCH_SIZE) {
       const batch = data.classes.slice(i, i + BATCH_SIZE);
       await db
@@ -235,7 +252,8 @@ const seed = async () => {
             ),
             teacherId: classItem.teacherId,
             bannerUrl: classItem.bannerUrl,
-            bannerCldPubId: null,
+            section: classItem.section,
+            semester: classItem.semester,
             schedules: [],
           }))
         )
@@ -254,7 +272,7 @@ const seed = async () => {
 
   console.log("Seeding enrollments...");
   if (data.enrollments.length) {
-    const BATCH_SIZE = 1000;
+    const BATCH_SIZE = 500;
     for (let i = 0; i < data.enrollments.length; i += BATCH_SIZE) {
       const batch = data.enrollments.slice(i, i + BATCH_SIZE);
       await db
@@ -267,27 +285,7 @@ const seed = async () => {
               enrollment.classInviteCode,
               "class"
             ),
-            grade: enrollment.grade, // Added grade
-          }))
-        )
-        .onConflictDoNothing();
-    }
-  }
-
-  console.log("Seeding attendance...");
-  if (data.attendance && data.attendance.length) {
-    const BATCH_SIZE = 1000;
-    for (let i = 0; i < data.attendance.length; i += BATCH_SIZE) {
-      const batch = data.attendance.slice(i, i + BATCH_SIZE);
-      await db
-        .insert(attendance)
-        .values(
-          batch.map((att) => ({
-            studentId: att.studentId,
-            classId: ensureMapValue(classMap, att.classInviteCode, "class"),
-            date: new Date(att.date),
-            status: att.status,
-            remarks: att.remarks,
+            grade: enrollment.grade,
           }))
         )
         .onConflictDoNothing();

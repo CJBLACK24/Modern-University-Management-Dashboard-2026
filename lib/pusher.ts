@@ -11,9 +11,11 @@ export const pusherServer = new PusherServer({
 });
 
 // Client-side Pusher instance
-export const pusherClient = new PusherClient(
-  process.env.NEXT_PUBLIC_PUSHER_KEY!,
-  {
-    cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-  }
-);
+export const pusherClient =
+  typeof window !== "undefined"
+    ? new PusherClient(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
+        cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+        forceTLS: true,
+        enabledTransports: ["ws", "wss"],
+      })
+    : null;

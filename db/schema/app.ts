@@ -10,7 +10,7 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
-import { user } from "./auth";
+import { user, session, account } from "./auth";
 import type { Schedule } from "@/types";
 
 const timestamps = {
@@ -53,6 +53,9 @@ export const subjects = pgTable("subjects", {
   name: varchar("name", { length: 255 }).notNull(),
   code: varchar("code", { length: 50 }).notNull().unique(),
   description: text("description"),
+  credits: integer("credits").notNull().default(3),
+  yearLevel: integer("year_level").notNull().default(1),
+  semester: integer("semester").notNull().default(1),
 
   ...timestamps,
 });
@@ -76,6 +79,8 @@ export const classes = pgTable(
     capacity: integer("capacity").notNull().default(50),
     description: text("description"),
     status: classStatusEnum("status").notNull().default("active"),
+    section: text("section").notNull().default("A"),
+    semester: integer("semester").notNull().default(1),
     schedules: jsonb("schedules").$type<Schedule[]>().notNull(),
 
     ...timestamps,
@@ -107,6 +112,7 @@ export const enrollments = pgTable(
       .notNull()
       .references(() => classes.id, { onDelete: "cascade" }),
     grade: real("grade"),
+    enrolledAt: timestamp("enrolled_at").defaultNow(),
 
     ...timestamps,
   },
@@ -142,6 +148,17 @@ export const attendance = pgTable(
     dateIdx: index("attendance_date_idx").on(table.date),
   })
 );
+
+export const usersRelations = relations(user, ({ one, many }) => ({
+  sessions: many(session),
+  accounts: many(account),
+  department: one(departments, {
+    fields: [user.departmentId],
+    references: [departments.id],
+  }),
+  enrollments: many(enrollments),
+  attendance: many(attendance),
+}));
 
 export const departmentsRelations = relations(departments, ({ many }) => ({
   subjects: many(subjects),

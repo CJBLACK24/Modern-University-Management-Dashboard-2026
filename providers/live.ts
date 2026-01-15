@@ -4,6 +4,8 @@ import { pusherClient } from "@/lib/pusher";
 
 export const liveProvider: LiveProvider = {
   subscribe: ({ channel, types, callback }) => {
+    if (!pusherClient) return;
+
     const pusherChannel = pusherClient.subscribe(channel);
 
     pusherChannel.bind_global((event: string, data: any) => {
@@ -20,6 +22,6 @@ export const liveProvider: LiveProvider = {
     return pusherChannel;
   },
   unsubscribe: (pusherChannel) => {
-    pusherClient.unsubscribe(pusherChannel.name);
+    pusherClient?.unsubscribe(pusherChannel.name);
   },
 };

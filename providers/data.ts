@@ -16,6 +16,9 @@ const options: CreateDataProviderOptions = {
 
         params.page = page;
         params.limit = pageSize;
+      } else {
+        // If pagination is off, we still need a large limit for the API defaults
+        params.limit = 99999;
       }
 
       filters?.forEach((filter) => {

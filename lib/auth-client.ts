@@ -5,9 +5,8 @@ import { USER_ROLES } from "@/constants";
 export const authClient = createAuthClient({
   baseURL:
     typeof window !== "undefined"
-      ? `${window.location.origin}/api/auth`
-      : (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api") +
-        "/auth",
+      ? window.location.origin
+      : process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000",
 
   user: {
     additionalFields: {

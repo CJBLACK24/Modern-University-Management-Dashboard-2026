@@ -36,6 +36,20 @@
       "when": 1768438830612,
       "tag": "0004_slimy_stranger",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1768446481739,
+      "tag": "0005_wealthy_lilith",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1768488796447,
+      "tag": "0006_orange_golden_guardian",
+      "breakpoints": true
     }
   ]
 }

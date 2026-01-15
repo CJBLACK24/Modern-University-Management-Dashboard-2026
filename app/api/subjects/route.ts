@@ -36,42 +36,27 @@ export async function GET(request: NextRequest) {
     const whereClause =
       filterConditions.length > 0 ? and(...filterConditions) : undefined;
 
-    // Cache the subjects fetch based on query params
-    const getCachedSubjects = unstable_cache(
-      async (offset: number, limit: number, where: any) => {
-        const countResult = await db
-          .select({ count: sql<number>`count(*)` })
-          .from(subjects)
-          .leftJoin(departments, eq(subjects.departmentId, departments.id))
-          .where(where);
+    const countResult = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(subjects)
+      .leftJoin(departments, eq(subjects.departmentId, departments.id))
+      .where(whereClause);
 
-        const totalCount = countResult[0]?.count ?? 0;
+    const totalCount = countResult[0]?.count ?? 0;
 
-        const subjectsList = await db
-          .select({
-            ...getTableColumns(subjects),
-            department: {
-              ...getTableColumns(departments),
-            },
-          })
-          .from(subjects)
-          .leftJoin(departments, eq(subjects.departmentId, departments.id))
-          .where(where)
-          .orderBy(desc(subjects.createdAt))
-          .limit(limit)
-          .offset(offset);
-
-        return { subjectsList, totalCount };
-      },
-      [`subjects-${page}-${limit}-${search}-${department}`],
-      { tags: ["subjects"], revalidate: 3600 }
-    );
-
-    const { subjectsList, totalCount } = await getCachedSubjects(
-      offset,
-      limitPerPage,
-      whereClause
-    );
+    const subjectsList = await db
+      .select({
+        ...getTableColumns(subjects),
+        department: {
+          ...getTableColumns(departments),
+        },
+      })
+      .from(subjects)
+      .leftJoin(departments, eq(subjects.departmentId, departments.id))
+      .where(whereClause)
+      .orderBy(desc(subjects.createdAt))
+      .limit(limitPerPage)
+      .offset(offset);
 
     return NextResponse.json({
       data: subjectsList,

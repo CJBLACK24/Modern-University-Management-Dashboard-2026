@@ -10,8 +10,9 @@ import {
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { useGetIdentity, useLogout, useRefineOptions } from "@refinedev/core";
-import { LogOutIcon } from "lucide-react";
+import { LogOutIcon, User as UserIcon } from "lucide-react";
 import type { User } from "@/types";
+import Link from "next/link";
 
 export const Header = () => {
   const { isMobile } = useSidebar();
@@ -145,6 +146,13 @@ const UserDropdown = () => {
             </span>
           )}
         </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/settings/profile" className="flex w-full items-center">
+            <UserIcon className="mr-2 h-4 w-4" />
+            <span>My Profile</span>
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {

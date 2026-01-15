@@ -17,8 +17,17 @@ const profileSchema = z.object({
     )
     .optional(),
   bio: z.string().max(500).optional(),
-  skills: z.string().optional(), // Comma separated for simplicity in DB, handled by UI
+  skills: z.string().optional(),
   name: z.string().min(1).optional(),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  birthday: z.string().optional(),
+  universityId: z.string().optional(),
+  semester: z.string().optional(),
+  signatureUrl: z.string().optional(),
+  departmentId: z.number().optional(),
+  yearLevel: z.number().optional(),
+  section: z.string().optional(),
 });
 
 export async function GET() {
@@ -31,17 +40,17 @@ export async function GET() {
 
   const profile = await db.query.user.findFirst({
     where: eq(user.id, session.user.id),
-    columns: {
-      id: true,
-      name: true,
-      email: true,
-      image: true,
-      username: true,
-      bio: true,
-      skills: true,
-      role: true,
-      yearLevel: true,
-      section: true,
+    with: {
+      department: true,
+      enrollments: {
+        with: {
+          class: {
+            with: {
+              subject: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -60,7 +69,6 @@ export async function PATCH(req: Request) {
     const body = await req.json();
     const validated = profileSchema.parse(body);
 
-    // Check username uniqueness if changing
     if (validated.username) {
       const existing = await db.query.user.findFirst({
         where: eq(user.username, validated.username),
@@ -77,6 +85,7 @@ export async function PATCH(req: Request) {
       .update(user)
       .set({
         ...validated,
+        birthday: validated.birthday ? new Date(validated.birthday) : undefined,
         updatedAt: new Date(),
       })
       .where(eq(user.id, session.user.id))

@@ -31,11 +31,9 @@ _Last Verified: 2026-01-12_
 
 **Mandatory Page Wrapper (Never Bypass):**
 
-```
+```tsx
 <Authenticated>
-  <Layout>
-    {children}
-  </Layout>
+  <Layout>{children}</Layout>
 </Authenticated>
 ```
 
@@ -52,7 +50,7 @@ _Last Verified: 2026-01-12_
 
 ### 2. Component Hierarchy (Verified)
 
-```
+```text
 <RefineContext>
 └── <RootLayout>
     └── <Authenticated>
@@ -74,14 +72,14 @@ _Last Verified: 2026-01-12_
 
 **Light Mode**
 
-```
+```css
 --primary: oklch(0.8348 0.1302 160.908);
 --background: oklch(0.9911 0 0);
 ```
 
 **Dark Mode**
 
-```
+```css
 --primary: oklch(0.4365 0.1044 156.7556);
 --background: oklch(0.1822 0 0);
 ```
@@ -95,7 +93,7 @@ _Last Verified: 2026-01-12_
 
 ### Gradients
 
-```
+```css
 .text-gradient-orange {
   background: linear-gradient(135deg, #f59e0b, #d97706);
   -webkit-background-clip: text;
@@ -122,7 +120,7 @@ Available variants:
 - `ghost`
 - `link`
 
-```
+```tsx
 <Button variant="default">Primary</Button>
 <Button variant="secondary" size="sm">Secondary</Button>
 ```
@@ -177,7 +175,7 @@ No Zod = not production-ready.
 
 ## 📁 FOLDER STRUCTURE (STRICT)
 
-```
+```text
 /app                 → Routes & layouts
 /views               → Pure UI / page content
 /components/ui       → Atomic shadcn-style components
@@ -194,15 +192,15 @@ No Zod = not production-ready.
 
 Example:
 
-```
+```tsx
 resources: [
   { name: "subjects", list: "/subjects" },
   { name: "departments", list: "/departments" },
   { name: "users", list: "/faculty" },
   { name: "enrollments", list: "/enrollments/create" },
   { name: "classes", list: "/classes" },
-  { name: "academic-calendar", list: "/academic-calendar" }
-]
+  { name: "academic-calendar", list: "/academic-calendar" },
+];
 ```
 
 ---
@@ -212,7 +210,7 @@ resources: [
 - **Font:** Outfit (Google Fonts Variable)
 - **Spacing:** Tailwind default 4px scale
 
-```
+```css
 .page-title {
   @apply text-3xl font-bold text-foreground tracking-tight;
 }
@@ -230,7 +228,7 @@ Use `.text-gradient-orange` for high-importance headers only.
 app/academic-calendar/page.tsx
 ```
 
-```
+```tsx
 export default function AcademicCalendarPage() {
   return (
     <ListView>
@@ -251,9 +249,9 @@ export default function AcademicCalendarPage() {
 app/academic-calendar/loading.tsx
 ```
 
-```
+```tsx
 export default function Loading() {
-  return <DashboardSkeleton />
+  return <DashboardSkeleton />;
 }
 ```
 
@@ -271,6 +269,11 @@ Before shipping:
 - Skeletons are centralized
 - Typography uses Outfit
 - Resource is registered in Refine context
+- Always use our components ui dont create another ui components
+- Always organize, Clean, Maintainable docummented code
+- strictly avoid the component god file
+- strictly follow the Fundamentals
+- use always the modern code 2026 this is the documentation of Next Js the one that we use Next js https://nextjs.org/
 
 ---
 
@@ -295,7 +298,7 @@ Before shipping:
 
 ## 🛠️ QUICK VERIFICATION COMMANDS
 
-```
+```bash
 # Verify container usage
 grep -r "container mx-auto" components/ app/
 

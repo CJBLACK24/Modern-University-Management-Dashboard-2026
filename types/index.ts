@@ -3,8 +3,13 @@ export type Subject = {
   name: string;
   code: string;
   description: string;
-  department: string;
+  yearLevel: number;
+  semester: number;
+  credits: number;
+  departmentId?: number;
+  department?: Department;
   createdAt?: string;
+  updatedAt?: string;
 };
 
 export type ListResponse<T = unknown> = {
@@ -79,39 +84,50 @@ export type User = {
   updatedAt: string;
   email: string;
   name: string;
-  role: UserRole;
+  role: "student" | "teacher" | "admin";
+  gender?: "male" | "female" | "other";
+  yearLevel?: number;
+  section?: string;
+  semester?: number;
   image?: string;
   imageCldPubId?: string;
-  department?: string;
+  departmentId?: number;
+  department?: Department;
 };
 
 export type Schedule = {
   day: string;
   startTime: string;
   endTime: string;
+  room?: string;
 };
 
 export type Department = {
   id: number;
   name: string;
+  code: string;
   description: string;
 };
 
-export type ClassDetails = {
+export type Class = {
   id: number;
   name: string;
   description: string;
-  status: "active" | "inactive";
   capacity: number;
-  courseCode: string;
-  courseName: string;
+  status: "active" | "inactive" | "archived";
+  inviteCode: string;
+  subjectId: number;
+  teacherId: string;
   bannerUrl?: string;
   bannerCldPubId?: string;
+  section: string;
+  semester: number;
+  schedules: Schedule[];
   subject?: Subject;
   teacher?: User;
   department?: Department;
-  schedules: Schedule[];
-  inviteCode?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type SignUpPayload = {
