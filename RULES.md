@@ -1,319 +1,133 @@
-# RULES.md — VERIFIED DEVELOPMENT PROTOCOL
+# RULES.md — VERIFIED DEVELOPMENT PROTOCOL v2.0 (2026 Edition)
 
-_Status: Production-Ready_  
-_Last Verified: 2026-01-12_
-
----
-
-## 🎯 CORE MINDSET — **VIBE CODER**
-
-1. **Systemic Thinking**  
-   Always understand the full flow: **User → UI → API → Database**.
-
-2. **Fundamental Excellence**  
-   Prioritize:
-
-   - OKLCH-based color systems
-   - Semantic HTML
-   - Zod-driven validation
-
-3. **Entrepreneur Spirit**  
-   Build solutions that:
-   - Solve real problems
-   - Use memorable, founder-led design decisions
-   - Ship clean, usable features
+_Status: Production-Ready / Extreme Responsiveness Enabled_  
+_Last Verified: 2026-01-17_
 
 ---
 
-## 🏗️ VERIFIED CORE ARCHITECTURE
+## 🎯 CORE MINDSET: THE SENIOR ARCHITECT / VIBE CODER
 
-### 1. Layout & Container Patterns
+1.  **Systemic Integration**
+    *   Think in full-stack architecture: **User → View → Controller/API → Model/Database**.
+    *   No feature is complete until it handles loading, error, and empty states gracefully.
 
-**Mandatory Page Wrapper (Never Bypass):**
+2.  **Uncompromising Responsiveness (Mobile-First)**
+    *   **Mobile-First is NOT optional.** Every component must be built starting from `base` (mobile) and scaled up via Tailwind breakpoints (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`).
+    *   **The 3-Device Test:** Every UI change must be verified on Mobile (390px), Tablet (768px), and Desktop (1440px).
 
+3.  **Fundamental Excellence**
+    *   **Visual Fidelity:** Use OKLCH color systems for perceptually uniform gradients and states.
+    *   **Accessibility:** Semantic HTML is the foundation. ARIA labels and keyboard navigation are standard.
+    *   **Robustness:** Zod-driven validation for all inputs, outputs, and environment variables.
+
+---
+
+## 🏗️ ARCHITECTURAL STANDARDS
+
+### 1. Adaptive Layout & Container Patterns
+
+**Mandatory Page Wrapper:**
 ```tsx
 <Authenticated>
   <Layout>{children}</Layout>
 </Authenticated>
 ```
 
-**Verified Main Container Classes:**
+**Verified Responsive Container Classes:**
+*   **Mobile (Default):** `px-4 pt-4 w-full overflow-x-hidden`
+    *   *Rule:* Use `px-4` minimum for breathing room on small screens.
+*   **Tablet (`md:`):** `md:p-6`
+*   **Desktop (`lg:`):** `lg:px-8 lg:pt-8 max-w-[1600px] mx-auto`
 
-- Mobile: `px-2 pt-4`
-- Tablet: `md:p-4`
-- Desktop: `lg:px-6 lg:pt-6`
-
-**Canonical Implementation:**
-`components/refine-ui/layout/layout.tsx`
+### 2. Layout Stability (Zero Shift Policy)
+*   **Avoid Jumpiness:** Use fixed-height skeletons or minimum heights (`min-h-[...]`) for dynamic content containers.
+*   **Interaction Stability:** Selectors, dropdowns, and modals must not cause layout shifts in the underlying page content. Use absolute positioning or portals for overlays.
 
 ---
 
-### 2. Component Hierarchy (Verified)
+## 🎨 DESIGN SYSTEM & RESPONSIVENESS (Tailwind v4 / OKLCH)
 
+### Responsive Typography & Spacing
+*   **Fluid Text:** Use clamped or responsive font sizes: `text-xl md:text-2xl lg:text-3xl`.
+*   **Stacking Logic:** Elements that are horizontal on desktop `flex-row` **must** stack vertically on mobile `flex-col` unless explicitly horizontal (like icons).
+
+### Responsive Charts (Recharts/Victory/etc)
+*   **Label Management:** On mobile, rotate labels `angle={-45}` or hide every Nth label to prevent overlap.
+*   **Aspect Ratio:** Use `ResponsiveContainer` and adjust `aspect` props based on screen size (e.g., `aspect={1}` for mobile, `aspect={1.6}` for desktop).
+
+### Component Hierarchy
 ```text
 <RefineContext>
 └── <RootLayout>
     └── <Authenticated>
         └── <Layout>
-            ├── <Sidebar>
-            ├── <Header>
-            ├── <Breadcrumb>
+            ├── <Sidebar> (Collapsible/Drawer on Mobile)
+            ├── <Header> (Sticky with Mobile Menu Trigger)
+            ├── <Breadcrumb> (Hidden or Truncated on Mobile)
             └── <Main>
-                └── {page content}
+                └── {Page Content}
 ```
 
-**Rule:** Every page must follow this hierarchy exactly.
+---
+
+## 🔘 COMPONENT STANDARDS (STRICT)
+
+### Form & Input Excellence
+*   **Touch Targets:** Inputs and buttons must be at least `h-11` on mobile for easy tapping.
+*   **Dropdowns:** Use mobile-optimized sheets or drawers for complex selectors if the dropdown list is long.
+
+### Centralized Loading (Skeletons)
+*   Location: `components/ui/skeleton/`
+*   **Rule:** Every page/component MUST have a corresponding skeleton that matches its final layout exactly to minimize visual pop-in.
 
 ---
 
-## 🎨 DESIGN SYSTEM — Tailwind v4 + OKLCH
-
-### Color Tokens (globals.css)
-
-**Light Mode**
-
-```css
---primary: oklch(0.8348 0.1302 160.908);
---background: oklch(0.9911 0 0);
-```
-
-**Dark Mode**
-
-```css
---primary: oklch(0.4365 0.1044 156.7556);
---background: oklch(0.1822 0 0);
-```
-
-### Usage Rules
-
-- **Text:** `text-foreground`
-- **Backgrounds:** `bg-background`, `bg-card`
-- **Borders:** `border-border`
-- **Never hardcode colors**
-
-### Gradients
-
-```css
-.text-gradient-orange {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-```
-
-Use **only** for major titles and key headers.
+## 🧠 TECHNICAL STACK & DATABASE
+*   **Next.js 14/15:** App Router, Server Components by default.
+*   **Tailwind CSS:** Utility-first, strict adherence to the configuration.
+*   **Drizzle ORM:** For type-safe database interactions.
+*   **Zod:** Mandatory for all API schemas and Form validation.
+*   **Refine:** For rapid dashboard orchestration.
 
 ---
 
-## 🔘 COMPONENT STANDARDS (VERIFIED)
-
-### Buttons
-
-Source: `components/ui/button.tsx`
-
-Available variants:
-
-- `default`
-- `secondary`
-- `outline`
-- `destructive`
-- `ghost`
-- `link`
-
-```tsx
-<Button variant="default">Primary</Button>
-<Button variant="secondary" size="sm">Secondary</Button>
-```
-
-**Rule:** No custom button styles outside these variants.
-
----
-
-### Forms
-
-Stack:
-
-- React Hook Form
-- Zod
-- shadcn/ui
-
-**Rule:**
-
-- Always wrap with `Form`
-- Every form must have a Zod schema
-
----
-
-### Skeleton Loaders
-
-Location: `components/ui/skeleton/`
-
-Centralized skeletons:
-
-- `CardSkeleton`
-- `TableSkeleton`
-- `FormSkeleton`
-- `DashboardSkeleton`
-- `AuthSkeleton`
-
-**Rule:**
-
-- Never create inline loaders
-- Always use centralized skeleton components
-
----
-
-## 🧠 DATABASE & API RULES
-
-- **Database:** PostgreSQL (Neon)
-- **ORM:** Drizzle ORM
-- **Validation:** Zod is mandatory for all API inputs
-
-No Zod = not production-ready.
-
----
-
-## 📁 FOLDER STRUCTURE (STRICT)
-
+## 📁 FOLDER STRUCTURE (ENFORCED)
 ```text
-/app                 → Routes & layouts
-/views               → Pure UI / page content
-/components/ui       → Atomic shadcn-style components
-/components/refine-ui→ Layout, sidebar, header, navigation
+/app                 → Routes, Layouts, Loading, Error states
+/views               → Domain-specific Page Components (Keep logic here)
+/components/ui       → Atomic, Reusable primitives (shadcn-style)
+/components/refine-ui→ Layout, Sidebar, Header, Branded navigation
+/lib                 → Utilities, Constants, Zod Schemas
+/hooks               → Reusable React hooks
 ```
 
 ---
 
-## 🔧 REFINE CONFIGURATION (VERIFIED)
+## ✅ VIBE CODER COMPLETION CHECKLIST
 
-- **Auth Provider:** NextAuth
-- **Data Provider:** Custom REST / NestJS-style
-- **Resources:** Defined in `components/refine-context.tsx`
-
-Example:
-
-```tsx
-resources: [
-  { name: "subjects", list: "/subjects" },
-  { name: "departments", list: "/departments" },
-  { name: "users", list: "/faculty" },
-  { name: "enrollments", list: "/enrollments/create" },
-  { name: "classes", list: "/classes" },
-  { name: "academic-calendar", list: "/academic-calendar" },
-];
-```
-
----
-
-## 🧾 TYPOGRAPHY STANDARDS
-
-- **Font:** Outfit (Google Fonts Variable)
-- **Spacing:** Tailwind default 4px scale
-
-```css
-.page-title {
-  @apply text-3xl font-bold text-foreground tracking-tight;
-}
-```
-
-Use `.text-gradient-orange` for high-importance headers only.
-
----
-
-## 🚀 NEW PAGE IMPLEMENTATION RULES
-
-### Example: Academic Calendar Page
-
-```
-app/academic-calendar/page.tsx
-```
-
-```tsx
-export default function AcademicCalendarPage() {
-  return (
-    <ListView>
-      <Breadcrumb />
-      <h1 className="page-title">Academic Calendar 2026</h1>
-      <div className="intro-row">
-        <p>View and manage the official university academic calendar.</p>
-      </div>
-      {/* ... Content ... */}
-    </ListView>
-  );
-}
-```
-
-### Loading State
-
-```
-app/academic-calendar/loading.tsx
-```
-
-```tsx
-export default function Loading() {
-  return <DashboardSkeleton />;
-}
-```
-
----
-
-## ✅ VIBE CODER VERIFICATION CHECKLIST
-
-Before shipping:
-
-- Container spacing matches verified pattern
-- Layout hierarchy is preserved
-- Colors use CSS variables only
-- Buttons use approved variants
-- Forms use Zod + Form wrapper
-- Skeletons are centralized
-- Typography uses Outfit
-- Resource is registered in Refine context
-- Always use our components ui dont create another ui components
-- Always organize, Clean, Maintainable docummented code
-- strictly avoid the component god file
-- strictly follow the Fundamentals
-- use always the modern code 2026 this is the documentation of Next Js the one that we use Next js https://nextjs.org/
-
----
-
-## 🧠 VIBE CODER PRINCIPLES (ENFORCED)
-
-**Systemic Thinking**
-
-- End-to-end flow is understood
-- Layout and data flow respected
-
-**Fundamental Engineering**
-
-- Real Tailwind v4 + OKLCH usage
-- Verified component references
-
-**Entrepreneur Execution**
-
-- Builds on working systems
-- Ships consistent, scalable features
+1.  [ ] **Breakpoint Check:** Is it broken on 390px? 768px? 1024px?
+2.  [ ] **Stability Check:** Does clicking a selector move the page?
+3.  [ ] **Stacking Check:** Do grids collapse to 1 column on mobile?
+4.  [ ] **Color Check:** Using `var(--primary)` or `oklch`? (No hex codes)
+5.  [ ] **Validation Check:** Is there a Zod schema for this form/API?
+6.  [ ] **Cleanliness Check:** Is this a "God File"? (If > 300 lines, split it).
+7.  [ ] **UX Check:** Does it feel premium? Are there micro-animations (Framer Motion)?
 
 ---
 
 ## 🛠️ QUICK VERIFICATION COMMANDS
-
 ```bash
-# Verify container usage
-grep -r "container mx-auto" components/ app/
+# Check for non-responsive grid usage
+grep -r "grid-cols-[23456789]" app/ views/ | grep -v "md:"
 
-# Verify color variables
-grep -r "var(--primary)" components/ app/
+# Check for hardcoded colors
+grep -r "#[0-9a-fA-F]\{3,6\}" app/ views/
 
-# List skeleton components
-find components/ui/skeleton -name "*.tsx"
-
-# Inspect layout source
-cat components/refine-ui/layout/layout.tsx | head -50
+# Verify responsive container padding
+grep -r "px-" app/layout.tsx components/refine-ui/layout/
 ```
 
 ---
 
-### 🧠 Vibe Coder Mantra
-
-> **"Verify reality. Document truth. Build consistently."**
+### 🧠 Senior Mantra
+> **"Mobile is the primary user experience. Desktop is the luxury extension. Build for the small, optimize for the large."**

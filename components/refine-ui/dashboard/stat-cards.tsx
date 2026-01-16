@@ -52,52 +52,73 @@ export const StatCards = ({
 
   return (
     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-      {stats.map((stat) => (
+      {stats.map((stat, idx) => (
         <Card
           key={stat.label}
-          className="group relative overflow-hidden border border-border bg-card shadow-sm transition-all duration-500 hover:border-primary/40 hover:shadow-[0_0_40px_-15px_rgba(var(--primary),0.3)]"
+          className="group relative overflow-hidden border border-border/50 bg-card/60 backdrop-blur-xl transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:-translate-y-2 sparkle-container"
         >
-          {/* Animated Accent Border */}
-          <div
-            className={`absolute inset-x-0 top-0 h-1 opacity-70 transition-all duration-500 group-hover:h-1.5 group-hover:opacity-100 ${stat.color
-              .split(" ")[0]
-              .replace("text-", "bg-")}`}
-          />
+          {/* Sparkle Micro-FX */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="animate-sparkle opacity-0 group-hover:opacity-100"
+                style={{
+                  top: `${20 + i * 25}%`,
+                  left: `${30 + i * 20}%`,
+                  animationDelay: `${i * 0.5}s`,
+                  color: `var(--${stat.color.split(" ")[0].split("-")[1]})`,
+                }}
+              >
+                ✦
+              </div>
+            ))}
+          </div>
 
-          <CardContent className="p-8">
+          <CardContent className="p-7 md:p-8 relative z-10">
             <div className="flex items-center justify-between mb-8">
-              <div className="space-y-3">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/80">
+              <div className="space-y-1">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
                   {stat.label}
                 </p>
-                <div className="text-5xl font-black tracking-tighter text-foreground font-outfit">
+                <div className="text-4xl md:text-5xl font-black tracking-tighter text-foreground font-outfit drop-shadow-sm">
                   {stat.value}
                 </div>
               </div>
               <div
-                className={`p-5 rounded-2xl shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 ${stat.color} bg-opacity-20`}
+                className={`p-4 md:p-5 rounded-2xl shadow-xl group-hover:scale-110 group-hover:rotate-[10deg] transition-all duration-500 ${stat.color} bg-opacity-10 flex-shrink-0 animate-float`}
+                style={{ animationDelay: `${idx * 0.2}s` }}
               >
-                <stat.icon className="h-7 w-7" />
+                <stat.icon className="h-6 w-6 md:h-8 md:w-8" />
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div className="relative h-2.5 w-full bg-muted rounded-full overflow-hidden">
+            <div className="space-y-5">
+              <div className="relative h-2.5 w-full bg-muted/50 rounded-full overflow-hidden border border-border/5">
                 <div
-                  className={`absolute left-0 top-0 h-full transition-all duration-1000 ease-out rounded-full ${stat.color
+                  className={`absolute left-0 top-0 h-full transition-all duration-1000 ease-out rounded-full bg-gradient-to-r ${stat.color
                     .split(" ")[0]
-                    .replace("text-", "bg-")}`}
+                    .replace("text-", "from-")}-500 ${stat.color
+                    .split(" ")[0]
+                    .replace(
+                      "text-",
+                      "to-"
+                    )}-400 shadow-[0_0_12px_rgba(0,0,0,0.1)]`}
                   style={{ width: `${stat.progress}%` }}
                 />
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
-                  <span className="text-[11px] font-bold text-muted-foreground/80 tracking-tight">
+                <div className="flex items-center gap-2.5">
+                  <span
+                    className={`flex h-2 w-2 rounded-full animate-pulse ${stat.color
+                      .split(" ")[0]
+                      .replace("text-", "bg-")}`}
+                  />
+                  <span className="text-xs font-bold text-muted-foreground tracking-tight">
                     {stat.trend}
                   </span>
                 </div>
-                <div className="px-2 py-0.5 rounded-md bg-muted">
+                <div className="px-2.5 py-1 rounded-lg bg-background/80 border border-border/50 shadow-inner">
                   <span className="text-[10px] font-black text-primary uppercase tabular-nums">
                     {stat.progress}%
                   </span>
@@ -108,7 +129,7 @@ export const StatCards = ({
 
           {/* Decorative Corner Glow */}
           <div
-            className={`absolute -right-12 -bottom-12 h-32 w-32 rounded-full blur-[60px] opacity-20 transition-all duration-700 group-hover:opacity-40 group-hover:scale-125 ${stat.color
+            className={`absolute -right-16 -bottom-16 h-40 w-40 rounded-full blur-[70px] opacity-10 transition-all duration-700 group-hover:opacity-30 group-hover:scale-150 ${stat.color
               .split(" ")[0]
               .replace("text-", "bg-")}`}
           />

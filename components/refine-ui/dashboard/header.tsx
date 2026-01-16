@@ -16,18 +16,28 @@ export const DashboardHeader = ({
   timeRange,
   setTimeRange,
 }: DashboardHeaderProps) => (
-  <div className="flex items-center justify-between flex-wrap gap-4">
-    <div>
-      <h1 className="page-title">Dashboard</h1>
-      <p className="text-muted-foreground mt-1 text-body">
-        Academic Year 2026 - Semester 1 Overview
+  <div className="flex items-center justify-between flex-wrap gap-6 pb-2 border-b border-border/10">
+    <div className="space-y-1.5">
+      <div className="flex items-center gap-3">
+        <div className="p-2 bg-primary/10 rounded-lg animate-float">
+          <LayoutDashboard className="w-6 h-6 text-primary" />
+        </div>
+        <h1 className="text-4xl font-extrabold tracking-tight text-gradient-premium">
+          Dashboard
+        </h1>
+      </div>
+      <p className="text-muted-foreground flex items-center gap-2 text-sm font-medium pl-11">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        Academic Year 2026 • Semester 1 Overview
       </p>
     </div>
-    <div className="flex items-center gap-2 flex-wrap">
+    <div className="flex items-center gap-3 flex-wrap">
       <TimeRangeSelector value={timeRange} onChange={setTimeRange} />
-      <Badge variant="outline" className="px-3 py-1 text-sm touch-target-sm">
-        <LayoutDashboard className="w-3 h-3 mr-2" />
-        Overview
+      <Badge
+        variant="secondary"
+        className="px-4 py-1.5 text-xs font-bold uppercase tracking-wider bg-primary/5 border-primary/20 text-primary shadow-sm hover:bg-primary/10 transition-colors cursor-default"
+      >
+        Live Updates
       </Badge>
     </div>
   </div>

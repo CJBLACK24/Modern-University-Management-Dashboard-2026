@@ -81,12 +81,25 @@ export function DataTable<TData extends BaseRecord>({
   }, [tableQuery.data?.data, pageSize]);
 
   return (
-    <div className={cn("flex", "flex-col", "flex-1", "gap-4")}>
-      <div ref={tableContainerRef} className={cn("rounded-md", "border")}>
+    <div className={cn("flex", "flex-col", "flex-1", "gap-6")}>
+      <div
+        ref={tableContainerRef}
+        className={cn(
+          "rounded-2xl",
+          "border",
+          "border-border/50",
+          "glass-card",
+          "overflow-hidden",
+          "shadow-xl"
+        )}
+      >
         <Table ref={tableRef} style={{ tableLayout: "fixed", width: "100%" }}>
           <TableHeader>
             {getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow
+                key={headerGroup.id}
+                className="hover:bg-transparent border-b border-border/50 bg-muted/30"
+              >
                 {headerGroup.headers.map((header) => {
                   const isPlaceholder = header.isPlaceholder;
 
@@ -99,13 +112,16 @@ export function DataTable<TData extends BaseRecord>({
                           isOverflowing: isOverflowing,
                         }),
                       }}
+                      className="h-14 px-6"
                     >
                       {isPlaceholder ? null : (
-                        <div className={cn("flex", "items-center", "gap-1")}>
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                        <div className={cn("flex", "items-center", "gap-2")}>
+                          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/80">
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                          </span>
                         </div>
                       )}
                     </TableHead>
@@ -122,6 +138,7 @@ export function DataTable<TData extends BaseRecord>({
                     <TableRow
                       key={`skeleton-row-${rowIndex}`}
                       aria-hidden="true"
+                      className="border-b border-border/50"
                     >
                       {leafColumns.map((column) => (
                         <TableCell
@@ -132,9 +149,9 @@ export function DataTable<TData extends BaseRecord>({
                               isOverflowing: isOverflowing,
                             }),
                           }}
-                          className={cn("truncate")}
+                          className={cn("truncate", "px-6", "py-4")}
                         >
-                          <div className="h-8" />
+                          <div className="h-6 w-full bg-muted/40 rounded-md animate-pulse" />
                         </TableCell>
                       ))}
                     </TableRow>
@@ -145,28 +162,20 @@ export function DataTable<TData extends BaseRecord>({
                     colSpan={columns.length}
                     className={cn("absolute", "inset-0", "pointer-events-none")}
                   >
-                    <Loader2
-                      className={cn(
-                        "absolute",
-                        "top-1/2",
-                        "left-1/2",
-                        "animate-spin",
-                        "text-primary",
-                        "h-8",
-                        "w-8",
-                        "-translate-x-1/2",
-                        "-translate-y-1/2"
-                      )}
-                    />
+                    <div className="flex items-center justify-center h-full w-full bg-background/20 backdrop-blur-[2px]">
+                      <Loader2 className="h-10 w-10 animate-spin text-primary opacity-50" />
+                    </div>
                   </TableCell>
                 </TableRow>
               </>
             ) : getRowModel().rows?.length ? (
-              getRowModel().rows.map((row) => {
+              getRowModel().rows.map((row, i) => {
                 return (
                   <TableRow
                     key={row.original?.id ?? row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    className="border-b border-border/50 hover:bg-primary/5 transition-colors group animate-in fade-in slide-in-from-bottom-2 duration-300"
+                    style={{ animationDelay: `${i * 0.05}s` }}
                   >
                     {row.getVisibleCells().map((cell) => {
                       return (
@@ -178,8 +187,9 @@ export function DataTable<TData extends BaseRecord>({
                               isOverflowing: isOverflowing,
                             }),
                           }}
+                          className="px-6 py-4"
                         >
-                          <div className="truncate">
+                          <div className="truncate text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors">
                             {flexRender(
                               cell.column.columnDef.cell,
                               cell.getContext()
@@ -227,7 +237,7 @@ function DataTableNoData({
       <TableCell
         colSpan={columnsLength}
         className={cn("relative", "text-center")}
-        style={{ height: "490px" }}
+        style={{ height: "400px" }}
       >
         <div
           className={cn(
@@ -237,23 +247,47 @@ function DataTableNoData({
             "flex-col",
             "items-center",
             "justify-center",
-            "gap-2",
-            "bg-background"
+            "gap-4",
+            "bg-background/20",
+            "backdrop-blur-sm"
           )}
           style={{
             position: isOverflowing.horizontal ? "sticky" : "absolute",
-            left: isOverflowing.horizontal ? "50%" : "50%",
+            left: "50%",
             transform: "translateX(-50%)",
             zIndex: isOverflowing.horizontal ? 2 : 1,
             width: isOverflowing.horizontal ? "fit-content" : "100%",
             minWidth: "300px",
           }}
         >
-          <div className={cn("text-lg", "font-semibold", "text-foreground")}>
-            No data to display
+          <div className="p-4 bg-muted/50 rounded-full">
+            <div className="h-10 w-10 text-muted-foreground/30 flex items-center justify-center text-2xl font-black">
+              !
+            </div>
           </div>
-          <div className={cn("text-sm", "text-muted-foreground")}>
-            This table is empty for the time being.
+          <div className="space-y-1">
+            <div
+              className={cn(
+                "text-sm",
+                "font-black",
+                "uppercase",
+                "tracking-widest",
+                "text-foreground"
+              )}
+            >
+              No Records Found
+            </div>
+            <div
+              className={cn(
+                "text-[11px]",
+                "font-bold",
+                "text-muted-foreground/60",
+                "uppercase",
+                "tracking-tight"
+              )}
+            >
+              The current dataset is participating in a disappearing act.
+            </div>
           </div>
         </div>
       </TableCell>

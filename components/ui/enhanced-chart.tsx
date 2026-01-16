@@ -27,19 +27,30 @@ export const EnhancedChart = React.memo(function EnhancedChart({
 }: EnhancedChartProps) {
   return (
     <Card
-      className={cn("shadow-sm hover:shadow-md transition-shadow", className)}
+      className={cn(
+        "glass-card shadow-2xl border-border/50 overflow-hidden",
+        className
+      )}
     >
       {(title || actions) && (
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 p-8 pb-0">
-          <div className="space-y-1.5">
+        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 p-8 pb-0">
+          <div className="space-y-1">
             {title && (
-              <CardTitle className="card-title text-xl">{title}</CardTitle>
+              <CardTitle className="card-title text-xl font-black tracking-tighter">
+                {title}
+              </CardTitle>
             )}
             {description && (
-              <p className="text-sm text-muted-foreground">{description}</p>
+              <p className="text-[10px] sm:text-xs font-bold text-muted-foreground/60 uppercase tracking-widest">
+                {description}
+              </p>
             )}
           </div>
-          {actions && <div className="flex items-center gap-4">{actions}</div>}
+          {actions && (
+            <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
+              {actions}
+            </div>
+          )}
         </CardHeader>
       )}
       <CardContent className="p-8 pt-6">
